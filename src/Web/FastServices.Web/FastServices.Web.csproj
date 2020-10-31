@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>aspnet-FastServices-BBB373B5-EF3F-4DBB-B8AA-7152CEC275BF</UserSecretsId>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <CodeAnalysisRuleSet>..\..\Rules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <ItemGroup>
+    <AdditionalFiles Include="..\..\stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.9" />
+    <PackageReference Include="BuildBundlerMinifier" Version="3.2.449" />
+    <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.1.113" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.9" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.9" />
+    <PackageReference Include="StyleCop.Analyzers" Version="1.2.0-beta.205" PrivateAssets="all">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\FastServices.Common\FastServices.Common.csproj" />
+    <ProjectReference Include="..\..\Data\FastServices.Data.Models\FastServices.Data.Models.csproj" />
+    <ProjectReference Include="..\..\Data\FastServices.Data\FastServices.Data.csproj" />
+    <ProjectReference Include="..\..\Services\FastServices.Services.Data\FastServices.Services.Data.csproj" />
+    <ProjectReference Include="..\..\Services\FastServices.Services.Mapping\FastServices.Services.Mapping.csproj" />
+    <ProjectReference Include="..\..\Services\FastServices.Services.Messaging\FastServices.Services.Messaging.csproj" />
+    <ProjectReference Include="..\..\Services\FastServices.Services\FastServices.Services.csproj" />
+    <ProjectReference Include="..\FastServices.Web.Infrastructure\FastServices.Web.Infrastructure.csproj" />
+    <ProjectReference Include="..\FastServices.Web.ViewModels\FastServices.Web.ViewModels.csproj" />
+  </ItemGroup>
+</Project>
