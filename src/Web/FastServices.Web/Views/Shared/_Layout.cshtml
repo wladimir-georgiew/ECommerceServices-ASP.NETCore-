@@ -20,7 +20,17 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <link href="//fonts.googleapis.com/css?family=Roboto:400,500,700,900" rel="stylesheet">
 <link href="//fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet">
 
-
+<style>
+    #footer {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 2.5rem; /* Footer height */
+    }
+    .cursor-pointer {
+        cursor: pointer;
+    }
+</style>
 
 
 <header>
@@ -59,20 +69,21 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
                 </li>
 
-                @if (this.SignInManager.IsSignedIn(this.User))
-                {
-    <li>
-        <form style="color:red" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@(this.Url.Action("Index", "Home", new { area = string.Empty }))">
-            <button style="margin:15px 0px 0px 15px" background-color="Transparent" type="submit" class="astext"><i class="fa fa-sign-out padd_right" aria-hidden="true"></i></button>
-        </form>
-    </li>
- }
-else
-{
-<li class="w3">
-    <a class="nav-link" asp-area="Identity" asp-controller="Account" asp-action="Login">Login</a>
-</li>
-}
+            @if (this.SignInManager.IsSignedIn(this.User))
+            {
+                    <form style="margin-top: 8px;" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@(this.Url.Action("Index", "Home", new { area = string.Empty }))">
+                        <button class="btn-danger cursor-pointer" type="submit">Logout</button>
+                    </form>
+            }
+            else
+            {
+                <li class="w3">
+                    <a class="nav-link" asp-area="Identity" asp-controller="Account" asp-action="Login">Login</a>
+                </li>
+                <li class="w3">
+                    <a class="nav-link" asp-area="Identity" asp-controller="Account" asp-action="Register">Register</a>
+                </li>
+            }
 
             </ul>
         </div>
@@ -83,7 +94,8 @@ else
 
 @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
 {
-<partial name="/Views/Shared/_AdminPanel.cshtml"></partial>}
+<partial name="/Views/Shared/_AdminPanel.cshtml"></partial>
+}
 
 
 @this.RenderBody()
@@ -330,40 +342,7 @@ else
         dots[slideIndex - 1].className += " active";
     }
 </script>
-<!-- start-smoth-scrolling -->
-<!-- here stars scrolling icon -->
-<script type="text/javascript">
-    $(document).ready(function () {
-        /*
-            var defaults = {
-            containerID: 'toTop', // fading element id
-            containerHoverID: 'toTopHover', // fading element hover id
-            scrollSpeed: 1200,
-            easingType: 'linear'
-            };
-        */
 
-        $().UItoTop({ easingType: 'easeOutQuart' });
-
-    });
-</script>
-<!-- //here ends scrolling icon -->
-<!-- scrolling script -->
-<script type="text/javascript">
-    jQuery(document).ready(function ($) {
-        $(".scroll").click(function (event) {
-            event.preventDefault();
-            $('html,body').animate({ scrollTop: $(this.hash).offset().top }, 1000);
-        });
-    });
-</script>
-<script type="text/javascript">
-    $(function () {
-        $('[data-toggle="popover"]').popover()
-    })
-</script>
-<!-- //scrolling script -->
-<!--//start-smoth-scrolling -->
 
 @await this.RenderSectionAsync("Scripts", required: false)
 

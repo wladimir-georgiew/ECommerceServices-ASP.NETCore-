@@ -5,47 +5,76 @@
     ViewData["Title"] = "Log in";
 }
 
-<h1>@ViewData["Title"]</h1>
-<div class="row">
-    <div class="col-md-4">
-        <section id="LoginSec">
-            <form id="account" method="post">
-                <h4>Use a local account to log in.</h4>
-                <hr />
-                <div asp-validation-summary="All" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="Input.Email"></label>
-                    <input asp-for="Input.Email" class="form-control" />
-                    <span asp-validation-for="Input.Email" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Input.Password"></label>
-                    <input asp-for="Input.Password" class="form-control" />
-                    <span asp-validation-for="Input.Password" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <div class="checkbox">
-                        <label asp-for="Input.RememberMe">
-                            <input asp-for="Input.RememberMe" />
-                            @Html.DisplayNameFor(m => m.Input.RememberMe)
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <button type="submit" class="btn btn-primary">Log in</button>
-                </div>
-                <div class="form-group">
-                    <p>
-                        <a id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
-                    </p>
-                    <p>
-                        <a asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
-                    </p>
-                </div>
-            </form>
-        </section>
-    </div>
-</div>
+<style>
+    .site-container {
+        width: 100%;
+        min-height: 100vh;
+        height: 100vh;
+        top: 0;
+    }
+    body {
+        background:
+        /* top, transparent black, faked with gradient */
+        linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ),
+        /* bottom, image */
+        url(/Template/images/bg2.jpg);
+        background-size: 100%;
+        text-align: center;
+        background-attachment: fixed;
+        overflow: hidden;
+
+        color:white;
+    }
+
+    .centerForm {
+        display: inline-block;
+        margin-top: 80px;
+    }
+
+    footer {
+        /*position: absolute;
+        bottom: 0;
+        width: 100%;
+        height: 2.5rem;*/ /* Footer height */
+                          visibility:hidden;
+    }
+
+</style>
+
+<section class="site-container">
+    <form class="centerForm col-md-3" id="account" method="post">
+        <h1>@ViewData["Title"]</h1>
+        <h4>Use a local account to log in.</h4>
+        <hr />
+        <div class="form-group">
+            <input asp-for="Input.Email" class="form-control" placeholder="Email" />
+            <span asp-validation-for="Input.Email" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <input asp-for="Input.Password" class="form-control" placeholder="Password" />
+            <span asp-validation-for="Input.Password" class="text-danger"></span>
+        </div>
+        <div class="form-group">
+            <div class="checkbox">
+                <label asp-for="Input.RememberMe">
+                    <input asp-for="Input.RememberMe" />
+                    @Html.DisplayNameFor(m => m.Input.RememberMe)
+                </label>
+            </div>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-primary">Log in</button>
+        </div>
+        <div  class="form-group">
+            <p>
+                <a style="color:white" id="forgot-password" asp-page="./ForgotPassword">Forgot your password?</a>
+            </p>
+            <p>
+                <a style="color:white" asp-page="./Register" asp-route-returnUrl="@Model.ReturnUrl">Register as a new user</a>
+            </p>
+        </div>
+    </form>
+</section>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
