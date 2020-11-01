@@ -27,6 +27,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         width: 100%;
         height: 2.5rem; /* Footer height */
     }
+
     .cursor-pointer {
         cursor: pointer;
     }
@@ -57,33 +58,27 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         Dropdown
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Gallery">Gallery</a></li>
                         <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Typography">Typography</a></li>
-
-                        <li><a class="dropdown-item" href="error.html">Error</a></li>
-
+                        <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Error">Error</a></li>
                     </ul>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link " asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
-                </li>
 
-            @if (this.SignInManager.IsSignedIn(this.User))
-            {
+                @if (this.SignInManager.IsSignedIn(this.User))
+                {
                     <form style="margin-top: 8px;" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@(this.Url.Action("Index", "Home", new { area = string.Empty }))">
                         <button class="btn-danger cursor-pointer" type="submit">Logout</button>
                     </form>
-            }
-            else
-            {
-                <li class="w3">
-                    <a class="nav-link" asp-area="Identity" asp-controller="Account" asp-action="Login">Login</a>
-                </li>
-                <li class="w3">
-                    <a class="nav-link" asp-area="Identity" asp-controller="Account" asp-action="Register">Register</a>
-                </li>
-            }
+                }
+                else
+                {
+                    <li class="w3">
+                        <a class="nav-link" asp-area="Identity" asp-controller="Users" asp-action="Login">Login</a>
+                    </li>
+                    <li class="w3">
+                        <a class="nav-link" asp-area="Identity" asp-controller="Account" asp-action="Register">Register</a>
+                    </li>
+                }
 
             </ul>
         </div>
@@ -94,7 +89,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
 {
-<partial name="/Views/Shared/_AdminPanel.cshtml"></partial>
+    <partial name="/Views/Shared/_AdminPanel.cshtml" />
 }
 
 
@@ -134,7 +129,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="/Template/js/bootstrap.min.js"></script>
 <script src="/Template/js/move-top.js"></script>
 <script src="/Template/js/easing.js"></script>
-<script src="/Template/js/SmoothScroll.min.js"></script>
 
 <!-- banner Slider -->
 <script src="/Template/js/responsiveslides.min.js"></script>
@@ -185,54 +179,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     });
 </script>
 <!--//tabs-->
-<!--team-->
-<script type="text/javascript">
-    $(window).load(function () {
-        $("#flexiselDemo1").flexisel({
-            visibleItems: 4,
-            animationSpeed: 1000,
-            autoPlay: true,
-            autoPlaySpeed: 3000,
-            pauseOnHover: true,
-            enableResponsiveBreakpoints: true,
-            responsiveBreakpoints: {
-                portrait: {
-                    changePoint: 480,
-                    visibleItems: 1
-                },
-                landscape: {
-                    changePoint: 640,
-                    visibleItems: 2
-                },
-                tablet: {
-                    changePoint: 768,
-                    visibleItems: 3
-                }
-            }
-        });
 
-    });
-</script>
-<script type="text/javascript" src="/Template/js/jquery.flexisel.js"></script>
-
-<!--team-->
-<script src="/Template/js/jquery.magnific-popup.js" type="text/javascript"></script>
-<script>
-    $(document).ready(function () {
-        $('.popup-with-zoom-anim').magnificPopup({
-            type: 'inline',
-            fixedContentPos: false,
-            fixedBgPos: true,
-            overflowY: 'auto',
-            closeBtnInside: true,
-            preloader: false,
-            midClick: true,
-            removalDelay: 300,
-            mainClass: 'my-mfp-zoom-in'
-        });
-
-    });
-</script>
 <script type="text/javascript">
     var words = document.getElementsByClassName('word');
     var wordArray = [];
@@ -292,57 +239,55 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 </script>
 
 <!-- stats -->
-<script src="/Template/js/jquery.waypoints.min.js"></script>
-<script src="/Template/js/jquery.countup.js"></script>
-<script>
-    $('.counter').countUp();
-</script>
+@*<script src="/Template/js/jquery.waypoints.min.js"></script>
+    <script src="/Template/js/jquery.countup.js"></script>
+    <script>
+        $('.counter').countUp();
+    </script>*@
 <!-- //stats -->
 <!-- skills -->
-<script src="/Template/js/skill.bars.jquery.js"></script>
-<script>
-    $(document).ready(function () {
+@*<script src="/Template/js/skill.bars.jquery.js"></script>
+    <script>
+        $(document).ready(function () {
 
-        $('.skillbar').skillBars({
-            from: 0,
-            speed: 4000,
-            interval: 100,
-            decimals: 0,
+            $('.skillbar').skillBars({
+                from: 0,
+                speed: 4000,
+                interval: 100,
+                decimals: 0,
+            });
+
         });
-
-    });
-</script>
+    </script>*@
 <!-- //skills -->
+@*<script type="text/javascript">
+        var slideIndex = 1;
+        showSlides(slideIndex);
 
-<script type="text/javascript">
-    var slideIndex = 1;
-    showSlides(slideIndex);
-
-    function plusSlides(n) {
-        showSlides(slideIndex += n);
-    }
-
-    function currentSlide(n) {
-        showSlides(slideIndex = n);
-    }
-
-    function showSlides(n) {
-        var i;
-        var slides = document.getElementsByClassName("mySlides");
-        var dots = document.getElementsByClassName("dot");
-        if (n > slides.length) { slideIndex = 1 }
-        if (n < 1) { slideIndex = slides.length }
-        for (i = 0; i < slides.length; i++) {
-            slides[i].style.display = "none";
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
         }
-        for (i = 0; i < dots.length; i++) {
-            dots[i].className = dots[i].className.replace(" active", "");
-        }
-        slides[slideIndex - 1].style.display = "block";
-        dots[slideIndex - 1].className += " active";
-    }
-</script>
 
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+
+        function showSlides(n) {
+            var i;
+            var slides = document.getElementsByClassName("mySlides");
+            var dots = document.getElementsByClassName("dot");
+            if (n > slides.length) { slideIndex = 1 }
+            if (n < 1) { slideIndex = slides.length }
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex - 1].style.display = "block";
+            dots[slideIndex - 1].className += " active";
+        }
+    </script>*@
 
 @await this.RenderSectionAsync("Scripts", required: false)
 
