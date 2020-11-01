@@ -85,8 +85,4 @@
     <ProjectReference Include="..\FastServices.Web.Infrastructure\FastServices.Web.Infrastructure.csproj" />
     <ProjectReference Include="..\FastServices.Web.ViewModels\FastServices.Web.ViewModels.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Areas\Identity\Pages\Shared\" />
-  </ItemGroup>
 </Project>
