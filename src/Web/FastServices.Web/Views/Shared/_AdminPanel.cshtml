@@ -1,0 +1,34 @@
+﻿<link href="/Template/AdminPanel/css/simple-sidebar.css" rel="stylesheet">
+
+
+<div class="d-flex" id="wrapper">
+    <!-- BUTTON -->
+    <button style="position:absolute; z-index:999" class="btn btn-primary" id="menu-toggle">Admin Panel</button>
+
+    <!-- Sidebar -->
+    <div style="position:absolute; z-index:998" class="bg-light border-right onTop" id="sidebar-wrapper">
+        <div class="sidebar-heading"> </div>
+        <div class="list-group list-group-flush">
+            <a href="#" class="list-group-item list-group-item-action bg-light">Ban</a>
+            <a href="#" class="list-group-item list-group-item-action bg-light">Kick</a>
+            <a href="#" class="list-group-item list-group-item-action bg-light">Fuck</a>
+            <a href="#" class="list-group-item list-group-item-action bg-light">Nice</a>
+            <a href="#" class="list-group-item list-group-item-action bg-light">Profile</a>
+            <a href="#" class="list-group-item list-group-item-action bg-light">Status</a>
+        </div>
+    </div>
+    <!-- Sidebar end -->
+
+
+</div> <!-- /#wrapper --> <!-- Bootstrap core JavaScript -->
+<script src="/Template/AdminPanel/vendor/jquery/jquery.min.js"></script>
+<script src="/Template/AdminPanel/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Menu Toggle Script -->
+<script>
+    $("#wrapper").toggleClass("toggled");
+
+    $("#menu-toggle").click(function (e) {
+        e.preventDefault();
+        $("#wrapper").toggleClass("toggled");
+    });
+</script>
