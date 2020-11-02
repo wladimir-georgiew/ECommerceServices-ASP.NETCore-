@@ -8,7 +8,7 @@
 
     using FastServices.Data.Common.Models;
     using FastServices.Data.Models;
-
+    using HomeServices.Data.Models;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
 
@@ -25,6 +25,19 @@
         }
 
         public DbSet<Setting> Settings { get; set; }
+
+        public DbSet<Complaint> Complaints { get; set; }
+
+        public DbSet<Department> Departments { get; set; }
+
+        public DbSet<Order> Orders { get; set; }
+
+        public DbSet<Service> Services { get; set; }
+
+        public DbSet<Employee> Employees { get; set; }
+
+        public DbSet<EmployeeOrder> EmployeesOrders { get; set; }
+
 
         public override int SaveChanges() => this.SaveChanges(true);
 
@@ -47,6 +60,12 @@
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
+            builder.Entity<EmployeeOrder>().HasKey(x => new
+            {
+                x.OrderId,
+                x.EmployeeId,
+            });
+
             // Needed for Identity models configuration
             base.OnModelCreating(builder);
 
