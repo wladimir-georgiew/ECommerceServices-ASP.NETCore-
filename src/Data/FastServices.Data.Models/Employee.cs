@@ -41,6 +41,6 @@
         [Required]
         public decimal Salary { get; set; }
 
-        public ICollection<EmployeeOrder> EmployeeOrders { get; set; }
+        public virtual ICollection<EmployeeOrder> EmployeeOrders { get; set; }
     }
 }

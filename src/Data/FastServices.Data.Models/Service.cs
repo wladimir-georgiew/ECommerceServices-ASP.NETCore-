@@ -15,9 +15,6 @@
         [Required]
         public int DepartmentId { get; set; }
 
-        [MaxLength(300)]
-        public string Description { get; set; }
-
         [Required]
         public decimal Fee { get; set; }
     }
