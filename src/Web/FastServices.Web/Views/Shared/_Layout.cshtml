@@ -31,92 +31,97 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     .cursor-pointer {
         cursor: pointer;
     }
+    /*FIX BOOTSTRAP MODAL BUG*/
+    body:not(.modal) {
+        padding-right: 0px !important;
+        overflow:visible;
+    }
+    
 </style>
 
+<body>
+    <header>
+        <!-- header -->
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-<header>
-    <!-- header -->
-    <nav class="navbar navbar-expand-lg navbar-light">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item ">
-                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Services">Services</a>
-                </li>
-
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Dropdown
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Typography">Typography</a></li>
-                        <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Error">Error</a></li>
-                    </ul>
-                </li>
-
-
-                @if (this.SignInManager.IsSignedIn(this.User))
-                {
-                    <form style="margin-top: 8px;" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@(this.Url.Action("Index", "Home", new { area = string.Empty }))">
-                        <button class="btn-danger cursor-pointer" type="submit">Logout</button>
-                    </form>
-                }
-                else
-                {
-                    <li class="w3">
-                        <a class="nav-link" asp-area="Identity" asp-controller="Account" asp-action="Login">Login</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item ">
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home </a>
                     </li>
-                    <li class="w3">
-                        <a class="nav-link" asp-area="Identity" asp-controller="Account" asp-action="Register">Register</a>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">About</a>
                     </li>
-                }
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Services">Services</a>
+                    </li>
 
-            </ul>
-        </div>
-    </nav>
-</header>
-<!-- //header -->
-<!--  ADMIN PANEL  -->
-
-@if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
-{
-    <partial name="/Views/Shared/_AdminPanel.cshtml" />
-}
-
-
-@this.RenderBody()
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Dropdown
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Typography">Typography</a></li>
+                            <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Error">Error</a></li>
+                        </ul>
+                    </li>
 
 
-<!-- Footer-->
+                    @if (this.SignInManager.IsSignedIn(this.User))
+                    {
+                        <form style="margin-top: 8px;" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@(this.Url.Action("Index", "Home", new { area = string.Empty }))">
+                            <button class="btn-danger cursor-pointer" type="submit">Logout</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <li class="w3">
+                            <a class="nav-link" asp-area="Identity" asp-controller="Account" asp-action="Login">Login</a>
+                        </li>
+                        <li class="w3">
+                            <a class="nav-link" asp-area="Identity" asp-controller="Account" asp-action="Register">Register</a>
+                        </li>
+                    }
 
-<footer>
-    <section class="footer">
-        <div class="container">
-            <h3>Fast Service</h3>
-            <div class="wrapper">
-                <ul class="social-icons icon-circle icon-zoom list-unstyled list-inline">
-                    <li> <a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                    <li> <a href="#"><i class="fab fa-twitter"></i></a></li>
-                    <li> <a href="#"><i class="fab fa-linkedin-in"></i></a></li>
                 </ul>
             </div>
-            <div class="copyright">
-                <p>© 2018 Fast Service. All Rights Reserved | Design by <a href="https://w3layouts.com/">W3layouts</a></p>
+        </nav>
+    </header>
+    <!-- //header -->
+    <!--  ADMIN PANEL  -->
 
+    @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+    {
+        <partial name="/Views/Shared/_AdminPanel.cshtml" />
+    }
+
+    @this.RenderBody()
+
+
+    <!-- Footer-->
+
+    <footer>
+        <section class="footer">
+            <div class="container">
+                <h3>Fast Service</h3>
+                <div class="wrapper">
+                    <ul class="social-icons icon-circle icon-zoom list-unstyled list-inline">
+                        <li> <a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                        <li> <a href="#"><i class="fab fa-twitter"></i></a></li>
+                        <li> <a href="#"><i class="fab fa-linkedin-in"></i></a></li>
+                    </ul>
+                </div>
+                <div class="copyright">
+                    <p>© 2018 Fast Service. All Rights Reserved | Design by <a href="https://w3layouts.com/">W3layouts</a></p>
+
+                </div>
             </div>
-        </div>
-    </section>
-</footer>
-
+        </section>
+    </footer>
+</body>
 <!-- /Footer-->
 
 <script src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>

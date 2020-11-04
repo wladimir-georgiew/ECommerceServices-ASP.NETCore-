@@ -1,0 +1,35 @@
+﻿@model FastServices.Web.ViewComponents.DepartmentPopUpViewModel
+
+@*<style>
+    .modal {
+        padding-right: 0px !important;
+    }
+</style>*@
+
+<a class="btn btn-success" data-toggle="modal" data-target="#CommentModel"> Submit</a>
+
+<div id="CommentModel" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <label for="NoComment">@Model.Name</label>
+
+                @foreach (var item in Model.Services)
+                {
+                    <label for="NoComment">@item.Name</label>
+                }
+
+                <a class="close" data-dismiss="modal">&times;</a>
+            </div>
+            <div class="modal-body">
+                <label for="NoComment">Proceed Without Comment: </label>
+                <input id="NoComment" name="NoComment" type="checkbox" />
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary">Confirm</button>
+                <button class="btn btn-default" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
