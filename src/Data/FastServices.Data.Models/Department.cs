@@ -20,6 +20,15 @@
         [Required]
         public string Name { get; set; }
 
+        [Required]
+        public string BackgroundImgSrc { get; set; }
+
+        [Required]
+        public string CardImgSrc { get; set; }
+
+        [Required]
+        public string Description { get; set; }
+
         // Audit info
         public DateTime CreatedOn { get; set; }
 

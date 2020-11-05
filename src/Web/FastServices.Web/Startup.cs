@@ -9,6 +9,7 @@
     using FastServices.Data.Repositories;
     using FastServices.Data.Seeding;
     using FastServices.Services.Data;
+    using FastServices.Services.Departments;
     using FastServices.Services.Mapping;
     using FastServices.Services.Messaging;
     using FastServices.Web.ViewModels;
@@ -64,6 +65,7 @@
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<ISettingsService, SettingsService>();
+            services.AddTransient<IDepartmentsService, DepartmentsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -83,6 +85,7 @@
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
+                app.UseStatusCodePagesWithRedirects("/Home/Error?code={0}");
             }
             else
             {

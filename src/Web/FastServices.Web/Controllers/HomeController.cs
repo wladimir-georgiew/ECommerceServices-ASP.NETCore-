@@ -1,16 +1,38 @@
 ﻿namespace FastServices.Web.Controllers
 {
+    using System.Collections.Generic;
     using System.Diagnostics;
+    using System.Linq;
 
+    using FastServices.Services.Departments;
     using FastServices.Web.ViewModels;
-
+    using FastServices.Web.ViewModels.Home;
+    using HomeServices.Data.Models;
     using Microsoft.AspNetCore.Mvc;
 
     public class HomeController : BaseController
     {
+        private readonly IDepartmentsService departmentsServices;
+
+        public HomeController(IDepartmentsService departmentsServices)
+        {
+            this.departmentsServices = departmentsServices;
+        }
+
         public IActionResult Index()
         {
-            return this.View();
+            List<DepartmentViewModel> departmentsViewModel = this.departmentsServices
+                .GetAllDepartments()
+                .Select(x => new DepartmentViewModel
+            {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Description = x.Description,
+                    CardImgSrc = x.CardImgSrc,
+            })
+                .ToList();
+
+            return this.View(departmentsViewModel);
         }
 
         public IActionResult Privacy()
@@ -39,6 +61,11 @@
         }
 
         public IActionResult Typography()
+        {
+            return this.View();
+        }
+
+        public IActionResult Test()
         {
             return this.View();
         }

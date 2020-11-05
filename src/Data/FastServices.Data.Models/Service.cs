@@ -21,6 +21,9 @@
         [Required]
         public decimal Fee { get; set; }
 
+        [Required]
+        public string CardImgSrc { get; set; }
+
         // Audit info
         public DateTime CreatedOn { get; set; }
 

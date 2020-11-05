@@ -13,18 +13,19 @@
         <div class="modal-content">
             <div class="modal-header">
 
-                <label for="NoComment">@Model.Name</label>
+                <label for="NoComment">Services we provide</label>
 
-                @foreach (var item in Model.Services)
-                {
-                    <label for="NoComment">@item.Name</label>
-                }
 
                 <a class="close" data-dismiss="modal">&times;</a>
             </div>
             <div class="modal-body">
-                <label for="NoComment">Proceed Without Comment: </label>
-                <input id="NoComment" name="NoComment" type="checkbox" />
+
+                @foreach (var item in Model.Services)
+                {
+                <table>
+                    <a href="#" for="NoComment">@item.Name</a>
+                </table>
+                }
             </div>
             <div class="modal-footer">
                 <button class="btn btn-primary">Confirm</button>
