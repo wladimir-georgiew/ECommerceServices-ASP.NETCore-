@@ -12,6 +12,7 @@
     using FastServices.Services.Departments;
     using FastServices.Services.Mapping;
     using FastServices.Services.Messaging;
+    using FastServices.Services.Services;
     using FastServices.Web.ViewModels;
 
     using Microsoft.AspNetCore.Builder;
@@ -66,6 +67,7 @@
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<IDepartmentsService, DepartmentsService>();
+            services.AddTransient<IServicesService, ServicesService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -247,6 +247,16 @@ a:focus, a:hover {
     margin: 150px 0 50px;
 }
 /** Inner **/
+.bgAssembly1-img {
+    background: url(../images/depBgAssembly1.jpg) no-repeat 0px 0px;
+    background-size: cover;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    -ms-background-size: cover;
+    height: 400px;
+}
+
 .slider1-img {
     background: url(../images/2.jpg) no-repeat 0px 0px;
     background-size: cover;

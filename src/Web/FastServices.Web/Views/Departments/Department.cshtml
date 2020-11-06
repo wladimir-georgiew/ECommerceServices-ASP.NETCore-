@@ -1,9 +1,18 @@
-﻿<div class="slider1-img">
-    <div class="slider_banner_info">
-    </div>
-</div>
+﻿@model ICollection<FastServices.Web.ViewModels.Departments.ServicesViewModel>
+
 
 <style>
+    .topImageNav {
+        background:
+        /* top, transparent black, faked with gradient */
+        linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ),
+        /* bottom, image */
+        url('@Model.Select(x => x.DepartmentImgSrc).FirstOrDefault()');
+        background-size: 100%;
+        background-attachment: fixed;
+        color: white;
+    }
+
     .servicesLink {
         margin-bottom: 3em;
     }
@@ -77,39 +86,44 @@
     }
 </style>
 
+<!-- NAVIGATION BAR BACKGROUND IMAGE DEPENDING ON THE DEPARTMENT -->
+<div  class="topImageNav">
+    <div class="slider_banner_info">
+    </div>
+</div>
+
 <div class="container mt-2">
-    <!--   <div class="card card-block mb-2">
-        <h4 class="card-title">Card 1</h4>
-        <p class="card-text">Welcom to bootstrap card styles</p>
-        <a href="#" class="btn btn-primary">Submit</a>
-      </div>   -->
     <div class="row">
 
-
-        <div class="col-md-3 col-sm-6">
-            <div class="card card-block">
-                <h4 class="card-title text-center">Toilet plumbing</h4>
-                <img src="https://static.pexels.com/photos/7096/people-woman-coffee-meeting.jpg" alt="Photo of sunset">
-                <h5 class="card-title mt-3 mb-3">Sierra Web Development • Owner</h5>
-                <p class="card-text">This is a company that builds websites, web apps and e-commerce solutions.</p>
+        @foreach (var service in Model)
+        {
+            <div class="col-md-3 col-sm-6">
+                <div class="card card-block">
+                    <h3 class="card-title text-center">@service.Name</h3>
+                    <img src="@service.CardImgSrc">
+                    <h5 class="card-title mt-3 mb-3">Sierra Web Development • Owner</h5>
+                        <p class="card-text">This is a company that builds websites, web apps and e-commerce solutions.</p>
+                </div>
             </div>
-        </div>
+        }
+
+
 
         @*<div>
-            <h5>How many hours would you like to book?</h5>
-            <div class="cell small-12">
-                <select>
-                    <option value="3">3 hours</option>
-                    <option value="4">4 hours</option>
-                    <option value="5">5 hours</option>
-                    <option value="6">6 hours</option>
-                    <option value="7">7 hours</option>
-                    <option value="8">8 hours</option>
-                    <option value="9">9 hours</option>
-                    <option value="10">10 hours</option>
-                </select>
-            </div>
-        </div>*@
+                <h5>How many hours would you like to book?</h5>
+                <div class="cell small-12">
+                    <select>
+                        <option value="3">3 hours</option>
+                        <option value="4">4 hours</option>
+                        <option value="5">5 hours</option>
+                        <option value="6">6 hours</option>
+                        <option value="7">7 hours</option>
+                        <option value="8">8 hours</option>
+                        <option value="9">9 hours</option>
+                        <option value="10">10 hours</option>
+                    </select>
+                </div>
+            </div>*@
 
     </div>
 

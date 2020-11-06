@@ -49,12 +49,12 @@
                     {
                         Service newService = new Service();
 
+                        newService.Name = sname;
+                        newService.DepartmentId = department.Id;
+
                         // Cleaning Services
                         if (kvp.Key == "Cleaning")
                         {
-                            newService.Name = sname;
-                            newService.DepartmentId = department.Id;
-
                             if (sname == "Home Cleaning")
                             {
                                 newService.Fee = 10;
@@ -63,52 +63,43 @@
                             else if (sname == "Office Cleaning")
                             {
                                 newService.Fee = 15;
-                                newService.CardImgSrc = "https://denali2013.org/wp-content/uploads/2018/07/office-cleaning-1024x998.jpg";
+                                newService.CardImgSrc = "https://xceljanitorial.com/wp-content/uploads/2019/01/5bed093a9a01db72fc42e81d_office-cleaning-10-min-300x200.jpg";
                             }
                         }
 
                         // Assembly Services
                         else if (kvp.Key == "Assembly")
                         {
-                            newService.Name = sname;
-                            newService.DepartmentId = department.Id;
-
                             if (sname == "Small-Medium Furniture Assembly")
                             {
                                 newService.Fee = 8;
-                                newService.CardImgSrc = "https://i.pinimg.com/originals/22/18/64/221864c7da5b336dd425c91f9dd08f21.jpg";
+                                newService.CardImgSrc = "https://www.godownsize.com/wp-content/uploads/2013/09/furniture-to-small-spaces.jpg";
                             }
                             else if (sname == "Big Furniture Assembly")
                             {
                                 newService.Fee = 13;
-                                newService.CardImgSrc = "https://www.organizedinteriors.com/blog/wp-content/uploads/2016/03/xwardrobe-3.jpg.pagespeed.ic.KXQ4Whb-9M.jpg";
+                                newService.CardImgSrc = "https://www.hammonds-uk.com/sites/default/files/2018-05/Willoughby%20Overbed%20Storage%201.jpg";
                             }
                         }
 
                         // Plumbing Services
                         else if (kvp.Key == "Plumbing")
                         {
-                            newService.Name = sname;
-                            newService.DepartmentId = department.Id;
-
                             if (sname == "Toilet Plumbing")
                             {
                                 newService.Fee = 18;
-                                newService.CardImgSrc = "https://i.pinimg.com/originals/22/18/64/221864c7da5b336dd425c91f9dd08f21.jpg";
+                                newService.CardImgSrc = "https://fastplumbers.net.au/wp-content/uploads/2019/05/plumber-repairing-a-clogged-toilet-with-a-plunger.jpg";
                             }
                             else if (sname == "Drain Repair")
                             {
                                 newService.Fee = 20;
-                                newService.CardImgSrc = "https://i.pinimg.com/564x/42/2c/95/422c959a1783db0c8b1fa86f96e443d4.jpg";
+                                newService.CardImgSrc = "https://reckonplumbing.com/wp-content/uploads/2012/06/drain-repair-los-angeles-300x180.jpg";
                             }
                         }
 
                         // Electrical Services
                         else if (kvp.Key == "Electrical")
                         {
-                            newService.Name = sname;
-                            newService.DepartmentId = department.Id;
-
                             if (sname == "Outlet Installation")
                             {
                                 newService.Fee = 5;
@@ -134,9 +125,6 @@
                         // Painting Services
                         else if (kvp.Key == "Painting")
                         {
-                            newService.Name = sname;
-                            newService.DepartmentId = department.Id;
-
                             if (sname == "Interior Painting")
                             {
                                 newService.Fee = 35;
@@ -152,9 +140,6 @@
                         // Moving Services
                         else if (kvp.Key == "Moving")
                         {
-                            newService.Name = sname;
-                            newService.DepartmentId = department.Id;
-
                             if (sname == "Moving Help")
                             {
                                 newService.Fee = 20;

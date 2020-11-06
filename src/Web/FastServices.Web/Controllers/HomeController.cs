@@ -12,16 +12,16 @@
 
     public class HomeController : BaseController
     {
-        private readonly IDepartmentsService departmentsServices;
+        private readonly IDepartmentsService departmentServices;
 
-        public HomeController(IDepartmentsService departmentsServices)
+        public HomeController(IDepartmentsService departmentServices)
         {
-            this.departmentsServices = departmentsServices;
+            this.departmentServices = departmentServices;
         }
 
         public IActionResult Index()
         {
-            List<DepartmentViewModel> departmentsViewModel = this.departmentsServices
+            List<DepartmentViewModel> departmentsViewModel = this.departmentServices
                 .GetAllDepartments()
                 .Select(x => new DepartmentViewModel
             {
