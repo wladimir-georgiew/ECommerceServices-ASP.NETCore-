@@ -8,7 +8,6 @@
 
     using FastServices.Data.Common.Models;
     using FastServices.Data.Models;
-    using HomeServices.Data.Models;
     using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
     using Microsoft.EntityFrameworkCore;
 
@@ -37,7 +36,6 @@
         public DbSet<Employee> Employees { get; set; }
 
         public DbSet<EmployeeOrder> EmployeesOrders { get; set; }
-
 
         public override int SaveChanges() => this.SaveChanges(true);
 

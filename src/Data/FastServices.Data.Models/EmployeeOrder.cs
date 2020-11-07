@@ -1,9 +1,4 @@
-﻿using HomeServices.Data.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace FastServices.Data.Models
+﻿namespace FastServices.Data.Models
 {
     public class EmployeeOrder
     {

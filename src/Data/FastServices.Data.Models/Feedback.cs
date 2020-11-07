@@ -1,29 +1,28 @@
 ﻿namespace FastServices.Data.Models
 {
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     using FastServices.Data.Common.Models;
 
-    public class Service : IDeletableEntity, IAuditInfo
+    public class Feedback : IDeletableEntity, IAuditInfo
     {
         public int Id { get; set; }
 
         [Required]
-        [MaxLength(50)]
-        public string Name { get; set; }
+        [MaxLength(100)]
+        public string Comment { get; set; }
+
+        public int Stars { get; set; }
+
+        public ApplicationUser ApplicationUser { get; set; }
+
+        [Required]
+        public string ApplicationUserId { get; set; }
 
         public Department Department { get; set; }
 
-        [Required]
         public int DepartmentId { get; set; }
-
-        [Required]
-        public decimal Fee { get; set; }
-
-        [Required]
-        public string CardImgSrc { get; set; }
 
         // Audit info
         public DateTime CreatedOn { get; set; }

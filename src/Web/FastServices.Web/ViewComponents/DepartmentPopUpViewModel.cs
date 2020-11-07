@@ -4,7 +4,7 @@
     using System.Linq;
 
     using FastServices.Data;
-    using HomeServices.Data.Models;
+    using FastServices.Data.Models;
     using Microsoft.AspNetCore.Mvc;
 
     public class DepartmentPopUpViewModel

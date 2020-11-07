@@ -1,4 +1,4 @@
-﻿namespace HomeServices.Data.Models
+﻿namespace FastServices.Data.Models
 {
     using System;
     using System.ComponentModel.DataAnnotations;

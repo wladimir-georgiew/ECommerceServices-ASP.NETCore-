@@ -4,14 +4,16 @@ using FastServices.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FastServices.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201106234954_AddFeedbackEntity")]
+    partial class AddFeedbackEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -292,14 +294,14 @@ namespace FastServices.Data.Migrations
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("DepartmentId")
-                        .HasColumnType("int");
-
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("ServiceId")
+                        .HasColumnType("int");
 
                     b.Property<int>("Stars")
                         .HasColumnType("int");
@@ -308,9 +310,9 @@ namespace FastServices.Data.Migrations
 
                     b.HasIndex("ApplicationUserId");
 
-                    b.HasIndex("DepartmentId");
-
                     b.HasIndex("IsDeleted");
+
+                    b.HasIndex("ServiceId");
 
                     b.ToTable("Feedback");
                 });
@@ -587,9 +589,9 @@ namespace FastServices.Data.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("FastServices.Data.Models.Department", "Department")
+                    b.HasOne("FastServices.Data.Models.Service", "Service")
                         .WithMany("Feedbacks")
-                        .HasForeignKey("DepartmentId")
+                        .HasForeignKey("ServiceId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
                 });

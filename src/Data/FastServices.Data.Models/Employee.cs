@@ -1,10 +1,10 @@
-﻿namespace HomeServices.Data.Models
+﻿namespace FastServices.Data.Models
 {
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+
     using FastServices.Data.Common.Models;
-    using FastServices.Data.Models;
 
     public class Employee : IAuditInfo, IDeletableEntity
     {

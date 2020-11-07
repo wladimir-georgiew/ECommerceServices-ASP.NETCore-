@@ -7,7 +7,6 @@
     using FastServices.Services.Departments;
     using FastServices.Web.ViewModels;
     using FastServices.Web.ViewModels.Home;
-    using HomeServices.Data.Models;
     using Microsoft.AspNetCore.Mvc;
 
     public class HomeController : BaseController
@@ -67,14 +66,14 @@
 
         public IActionResult Test()
         {
-            return this.View();
+            return this.View("/Views/Shared/_RatingCommentForm.cshtml");
         }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return this.View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier });
-        }
+        //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        //public IActionResult Error()
+        //{
+        //    return this.View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? this.HttpContext.TraceIdentifier });
+        //}
 
         //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         //public IActionResult Error()

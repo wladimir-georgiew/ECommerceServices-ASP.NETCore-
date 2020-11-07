@@ -7,7 +7,5 @@
         public string Name { get; set; }
 
         public string CardImgSrc { get; set; }
-
-        public string DepartmentImgSrc { get; set; }
     }
 }

@@ -2,8 +2,9 @@
 {
     using System.Collections.Generic;
     using System.Linq;
+
     using FastServices.Data;
-    using HomeServices.Data.Models;
+    using FastServices.Data.Models;
 
     public class DepartmentsService : IDepartmentsService
     {
@@ -17,5 +18,9 @@
         public List<Department> GetAllDepartments() => this.db.Departments.Where(x => x.IsDeleted == false).ToList();
 
         public List<Department> GetAllDepartmentsWithDeleted() => this.db.Departments.ToList();
+
+        // public IEnumerable<Service> GetDepartmentServices(int departmentId) => this.db.Services.Where(x => x.DepartmentId == departmentId).ToList();
+
+        public IEnumerable<Service> GetDepartmentServices(int departmentId) => this.db.Departments.Where(x => x.Id == departmentId).Select(x => x.Services).FirstOrDefault();
     }
 }

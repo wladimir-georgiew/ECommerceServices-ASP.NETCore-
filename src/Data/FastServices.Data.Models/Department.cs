@@ -1,18 +1,18 @@
-﻿namespace HomeServices.Data.Models
+﻿namespace FastServices.Data.Models
 {
     using System;
-    using System.Collections;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
 
     using FastServices.Data.Common.Models;
-    using FastServices.Data.Common.Repositories;
 
     public class Department : IDeletableEntity, IAuditInfo
     {
         public Department()
         {
             this.Services = new HashSet<Service>();
+
+            this.Feedbacks = new HashSet<Feedback>();
         }
 
         public int Id { get; set; }
@@ -40,5 +40,7 @@
         public DateTime? DeletedOn { get; set; }
 
         public virtual ICollection<Service> Services { get; set; }
+
+        public virtual ICollection<Feedback> Feedbacks { get; set; }
     }
 }

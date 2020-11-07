@@ -1,13 +1,13 @@
-﻿@model ICollection<FastServices.Web.ViewModels.Departments.ServicesViewModel>
+﻿@model Tuple<
+    ICollection<FastServices.Web.ViewModels.Departments.ServicesViewModel>, 
+    FastServices.Web.ViewModels.Departments.OrderModalViewModel>
 
 
 <style>
     .topImageNav {
         background:
-        /* top, transparent black, faked with gradient */
         linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ),
-        /* bottom, image */
-        url('@Model.Select(x => x.DepartmentImgSrc).FirstOrDefault()');
+        url('@ViewData["url"]');
         background-size: 100%;
         background-attachment: fixed;
         color: white;
@@ -17,7 +17,7 @@
         margin-bottom: 3em;
     }
 
-    img {
+    .imgService {
         height: 150px;
         width: 100%;
     }
@@ -27,11 +27,6 @@
         padding-right: 5px;
     }
 
-    .card {
-        transition: 0.5s;
-        cursor: pointer;
-        margin-bottom: 5px;
-    }
 
     .card-title {
         font-size: 15px;
@@ -51,62 +46,31 @@
                 color: #18d4ca;
             }
 
-    .card:hover {
-        transform: scale(1.05);
-        box-shadow: 10px 10px 15px rgba(0,0,0,0.3);
-    }
-
-    .card-text {
-        height: 80px;
-    }
-
-    .card::before, .card::after {
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0;
-        left: 0;
-        transform: scale3d(0, 0, 1);
-        transition: transform .3s ease-out 0s;
-        background: rgba(255, 255, 255, 0.1);
-        content: '';
-        pointer-events: none;
-    }
-
-    .card::before {
-        transform-origin: left top;
-    }
-
-    .card::after {
-        transform-origin: right bottom;
-    }
-
-    .card:hover::before, .card:hover::after, .card:focus::before, .card:focus::after {
-        transform: scale3d(1, 1, 1);
-    }
 </style>
 
 <!-- NAVIGATION BAR BACKGROUND IMAGE DEPENDING ON THE DEPARTMENT -->
-<div  class="topImageNav">
+<div class="topImageNav">
     <div class="slider_banner_info">
+
+        <h1 style="text-align: center; color:azure;">@ViewData["depName"]</h1>
     </div>
+
 </div>
 
-<div class="container mt-2">
-    <div class="row">
+<partial name="/Views/Departments/MakeOrderPartialView.cshtml" model="Model.Item2" />
 
-        @foreach (var service in Model)
+
+<div class="container mt-2">
+    <div style="margin-bottom: 15.5em" class="row">
+        @foreach (var service in Model.Item1)
         {
             <div class="col-md-3 col-sm-6">
                 <div class="card card-block">
                     <h3 class="card-title text-center">@service.Name</h3>
-                    <img src="@service.CardImgSrc">
-                    <h5 class="card-title mt-3 mb-3">Sierra Web Development • Owner</h5>
-                        <p class="card-text">This is a company that builds websites, web apps and e-commerce solutions.</p>
+                    <img class="imgService" src="@service.CardImgSrc">
                 </div>
             </div>
         }
-
 
 
         @*<div>
@@ -128,3 +92,5 @@
     </div>
 
 </div>
+
+<partial name="/Views/Shared/_RatingCommentForm.cshtml" />

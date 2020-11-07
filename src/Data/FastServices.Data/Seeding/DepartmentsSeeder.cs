@@ -6,7 +6,7 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    using HomeServices.Data.Models;
+    using FastServices.Data.Models;
 
     public class DepartmentsSeeder : ISeeder
     {

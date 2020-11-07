@@ -1,0 +1,119 @@
+﻿@model FastServices.Web.ViewModels.Departments.OrderModalViewModel
+
+@{
+    ViewBag.Title = "Modal Form Demo";
+}
+
+<div class="container">
+
+    @if (!string.IsNullOrEmpty(Model.ResultMessage))
+    {
+        <div class="row">
+            <div class="col">
+
+                <div class="alert alert-success" role="alert">
+                    @Model.ResultMessage
+                </div>
+
+            </div>
+        </div>
+    }
+
+    <div class="row">
+        <div class="col">
+
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                Open Modal
+            </button>
+
+        </div>
+    </div>
+
+</div>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal Form Demo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+                {
+                    <div class="container-fluid">
+
+                        <div class="row">
+                            <div class="col">
+
+                                @Html.ValidationSummary()
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+
+                                    @Html.LabelFor(m => m.FirstName)
+                                    @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", maxlength = 25 })
+                                    @Html.ValidationMessageFor(m => m.FirstName)
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+
+                                    @Html.LabelFor(m => m.LastName)
+                                    @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", maxlength = 50 })
+                                    @Html.ValidationMessageFor(m => m.LastName)
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-group">
+
+                                    @Html.LabelFor(m => m.EmailAddress)
+                                    @Html.TextBoxFor(m => m.EmailAddress, new { @class = "form-control", maxlength = 100 })
+                                    @Html.ValidationMessageFor(m => m.EmailAddress)
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-4">
+                            <div class="col">
+
+                                <button class="btn btn-primary" type="submit">
+                                    Submit Form
+                                </button>
+
+                            </div>
+                            <div class="col">
+
+                                <button class="btn btn-secondary float-right" type="button" data-dismiss="modal">
+                                    Cancel
+                                </button>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    @Html.AntiForgeryToken()
+                }
+
+            </div>
+        </div>
+    </div>
+</div>

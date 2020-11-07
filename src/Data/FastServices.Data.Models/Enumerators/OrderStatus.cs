@@ -1,4 +1,4 @@
-﻿namespace HomeServices.Data.Models.Enumerators
+﻿namespace FastServices.Data.Models.Enumerators
 {
     public enum OrderStatus
     {

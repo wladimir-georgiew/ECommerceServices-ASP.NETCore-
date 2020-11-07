@@ -4,143 +4,97 @@ Author URL: http://w3layouts.com
 License: Creative Commons Attribution 3.0 Unported
 License URL: http://creativecommons.org/licenses/by/3.0/
 -->
+@using FastServices.Data.Models
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<ApplicationUser> SignInManager
 @model ICollection<FastServices.Web.ViewModels.Home.DepartmentViewModel>
 
-<title>Fast Service a Home Service Category Bootstrap Responsive Website Template | Home :: w3layouts</title>
+<style>
+    .topImageNav {
+        background: linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url('/Template/images/indexBg-1.jpg');
+        background-size: 100%;
+        background-attachment: fixed;
+        color: white;
+    }
+</style>
 
 
-<!-- banner -->
-<!-- banner-slider -->
-<div class="w3l_banner_info">
-    <div class="slider">
-        <div class="callbacks_container">
-            <ul class="rslides" id="slider3">
-                <li>
-                    <div class="slider-img">
-                        <div class="slider_banner_info">
-                            <div  class="text">
-                                <h3  class="word wisteria">Welcome to Fast Services!</h3>
-                                <p >Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
+@if (!this.SignInManager.IsSignedIn(this.User))
+{
+    <!-- banner -->
+    <!-- banner-slider -->
+    <div class="w3l_banner_info">
+        <div class="slider">
+            <div class="callbacks_container">
+                <ul class="rslides" id="slider3">
+                    <li>
+                        <div class="slider-img">
+                            <div class="slider_banner_info">
+                                <div class="text">
+                                    <h3 class="word wisteria">Welcome!</h3>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="slider-img-2">
-                        <div class="slider_banner_info">
-                            <div class="text">
-                                <h3 class="word wisteria">Making your Home Shine and Spotless Is Our Business And Priority</h3>
-                                <br />
-                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
+                    </li>
+                    <li>
+                        <div class="slider-img-2">
+                            <div class="slider_banner_info">
+                                <div class="text">
+                                    <h3 class="word wisteria">WeProvideTheBestServices!</h3>
+                                </div>
+
                             </div>
-
                         </div>
-                    </div>
-                </li>
-                <li>
-                    <div class="slider-img-3">
-                        <div class="slider_banner_info">
-                            <div class="text">
-                                <h3 class="word wisteria">Our Home Service Providers will Make You Proud in Society</h3>
-                                <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry</p>
+                    </li>
+                    <li>
+                        <div class="slider-img-3">
+                            <div class="slider_banner_info">
+                                <div class="text">
+                                    <h3 class="word wisteria">Enjoy Your Stay!</h3>
+                                </div>
+
                             </div>
-
                         </div>
-                    </div>
-                </li>
+                    </li>
 
-            </ul>
+                </ul>
+            </div>
         </div>
     </div>
-</div>
-<!-- //banner-slider -->
+    <!-- //banner-slider -->
+}
+else
+{
+    <div class="topImageNav">
+        <div class="slider_banner_info">
+        </div>
+    </div>
+}
 
 <vc:departments-pop-up dep-name="Plumbing"></vc:departments-pop-up>
 
-<section class="bannerbottom py-lg-5 py-md-4 py-md-3 py-2">
-    <div class="bannerbottom py-lg-5 py-md-4 py-md-3 py-2">
-        <div class="container">
-            <div class="row">
-                @foreach (var department in @Model)
-                {
-                    <div class="col-md-4 col-sm-12 w3_ban1">
-                        <div class="card">
-                            <img class="card-img-top" style="height: 225px; " src="@department.CardImgSrc" alt="Card image cap">
-                            <div class="card-body" style="height: 230px">
-                                <h5 class="card-title">@department.Name</h5>
-                                <p class="card-text">@department.Description.</p>
-                                <a href="/Departments/Department?id=@department.Id" class="btn btn-primary">See More</a>
-                            </div>
-                        </div>
-                    </div>
-                }
-            </div>
-        </div>
-    </div>
-</section>
-<section class="pricinglist ">
-    <div class="pricinglist ">
-        <h3 class="mb-lg-5 mb-md-4 mb-sm-3 mb-2">Our Prices OverView</h3>
-        <div class="container">
-            <div class="w3_1">
-                <div class="row">
-                    <div class="col-sm-6 w3_a1">
-                        <h4>Interior Decoration</h4>
-                        <p>Lorem Ipsum</p>
-                    </div>
-                    <div class="col-sm-6 w3_a2">
-                        <h4>$9.00</h4>
-                    </div>
-                </div>
-            </div>
-            <div class="w3_1">
-                <div class="row">
-                    <div class="col-sm-6 col-xs-6 w3_a1">
-                        <h4>Roofing</h4>
-                        <p>Lorem Ipsum</p>
-                    </div>
-                    <div class="col-sm-6 col-xs-6 w3_a2">
-                        <h4>$90.00</h4>
-                    </div>
-                </div>
-            </div>
-            <div class="w3_1">
-                <div class="row">
-                    <div class="col-sm-6 w3_a1">
-                        <h4>Gardening</h4>
-                        <p>Lorem Ipsum</p>
-                    </div>
-                    <div class="col-sm-6 w3_a2">
-                        <h4>$120.00</h4>
-                    </div>
-                </div>
-            </div>
-            <div class="w3_1">
-                <div class="row">
-                    <div class="col-sm-6 w3_a1">
-                        <h4>Flooring</h4>
-                        <p>Lorem Ipsum</p>
-                    </div>
-                    <div class="col-sm-6 w3_a2">
-                        <h4>$80.00</h4>
-                    </div>
-                </div>
-            </div>
-            <div class="w3_1">
-                <div class="row">
-                    <div class=" col-sm-6 w3_a1">
-                        <h4>Exterior Decoration</h4>
-                        <p>Lorem Ipsum</p>
-                    </div>
-                    <div class="col-sm-6 w3_a2">
-                        <h4>$99.00</h4>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
 
+<h1 style="text-align:center; margin-bottom:1em">Departments</h1>
+<div class="container">
+    <div class="row">
+        @foreach (var department in @Model)
+        {
+        <a href="/Departments/Department?id=@department.Id">
+            <div class="col-md-4 col-sm-12 w3_ban1">
+                <div style="border:double 3px"  class="card">
+                    <img class="card-img-top" style="height: 225px; " src="@department.CardImgSrc" alt="Card image cap">
+                    <div class="card-body" style="height: 230px">
+                        <h5 class="card-title">@department.Name</h5>
+                        <p class="card-text">@department.Description.</p>
+                        <a style="visibility:hidden"></a>
+                    </div>
+                </div>
+            </div>
+        </a>
+        }
+    </div>
+</div>
 
 
 <script type="text/javascript">
