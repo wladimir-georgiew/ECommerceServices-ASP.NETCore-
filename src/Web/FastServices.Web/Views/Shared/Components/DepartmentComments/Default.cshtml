@@ -1,8 +1,17 @@
 ﻿<meta charset="utf-8" />
+@using FastServices.Data.Models
+@using Microsoft.AspNetCore.Identity
+
 @model IEnumerable<FastServices.Web.ViewModels.Comments.CommentViewModel>
-
+@inject SignInManager<ApplicationUser> SignInManager
 <style>
-
+    .vertical-center {
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+    }
     /*STARS CSS*/
     .rating {
         display: flex;
@@ -145,51 +154,57 @@
             <form asp-controller="Departments" asp-action="AddComment">
                 <input style="visibility:hidden" name="DepartmentId" value="@Context.Request.Query["id"]" />
 
-                <div class="rating">
-                    <input id="Stars" type="text" name="Stars" value="1" />
-                    <input type="radio" onclick="getResult()" name="rating" value="5" id="5"><label for="5">☆</label>
-                    <input type="radio" onclick="getResult()" name="rating" value="4" id="4"><label for="4">☆</label>
-                    <input type="radio" onclick="getResult()" name="rating" value="3" id="3"><label for="3">☆</label>
-                    <input type="radio" onclick="getResult()" name="rating" value="2" id="2"><label for="2">☆</label>
-                    <input type="radio" onclick="getResult()" name="rating" value="1" id="1"><label for="1">☆</label>
-                </div>
+                @if (ViewContext.HttpContext.Request.Query["error"] == "NotAllowed")
+                {
+                    <partial name="/Views/Shared/_ErrorPopup.cshtml"/>
+                }
 
-                <script>
-                    function getResult() {
+                @if (this.SignInManager.IsSignedIn(this.User))
+                {
+                    <div class="rating">
+                        <input id="Stars" type="text" name="Stars" value="1" />
+                        <input type="radio" onclick="getResult()" name="rating" value="5" id="5"><label for="5">☆</label>
+                        <input type="radio" onclick="getResult()" name="rating" value="4" id="4"><label for="4">☆</label>
+                        <input type="radio" onclick="getResult()" name="rating" value="3" id="3"><label for="3">☆</label>
+                        <input type="radio" onclick="getResult()" name="rating" value="2" id="2"><label for="2">☆</label>
+                        <input type="radio" onclick="getResult()" name="rating" value="1" id="1"><label for="1">☆</label>
+                    </div>
 
-                        var result = 0;
+                    <script>
+                        function getResult() {
 
-                        //var input5 = document.getElementById("5");
-                        //var input4 = document.getElementById("4");
-                        //var input3 = document.getElementById("3");
-                        //var input2 = document.getElementById("2");
-                        //var input1 = document.getElementById("1");
+                            var result = 0;
 
-                        if (document.getElementById('5').checked) {
-                            result = document.getElementById('5').value;
+                            if (document.getElementById('5').checked) {
+                                result = document.getElementById('5').value;
+                            }
+                            else if (document.getElementById('4').checked) {
+                                result = document.getElementById('4').value;
+                            }
+                            else if (document.getElementById('3').checked) {
+                                result = document.getElementById('3').value;
+                            }
+                            else if (document.getElementById('2').checked) {
+                                result = document.getElementById('2').value;
+                            }
+                            else if (document.getElementById('1').checked) {
+                                result = document.getElementById('1').value;
+                            }
+
+                            document.getElementById("Stars").value = result;
                         }
-                        else if (document.getElementById('4').checked) {
-                            result = document.getElementById('4').value;
-                        }
-                        else if (document.getElementById('3').checked) {
-                            result = document.getElementById('3').value;
-                        }
-                        else if (document.getElementById('2').checked) {
-                            result = document.getElementById('2').value;
-                        }
-                        else if (document.getElementById('1').checked) {
-                            result = document.getElementById('1').value;
-                        }
+                    </script>
 
-                        document.getElementById("Stars").value = result;
-                    }
-                </script>
+                    <div style="text-align:center">
+                        <textarea style="width:80%; height:100px" type="text" name="CommentContent"></textarea>
+                    </div>
 
-                <div>
-                    <textarea style="position:center" type="text" name="CommentContent"></textarea>
-                </div>
-
-                <button type="submit">Add Comment</button>
+                    <button style="position:relative; left:45%; top:1em" class="btn btn-cyan" type="submit">Submit</button>
+                }
+                else
+                {
+                    <h1 style="text-align:center">Please sign in to leave a comment</h1>
+                }
             </form>
 
             <div class="comment-widgets">
@@ -198,7 +213,7 @@
                                     <div class="d-flex flex-row comment-row m-t-0">
                                         <div class="p-2"><img src="@comment.AvatarImgSrc" alt="user" width="50" class="rounded-circle"></div>
                                         <div class="comment-text w-100">
-                                            <h6 class="font-medium">@comment.Name</h6> 
+                                            <h6 class="font-medium">@comment.Name</h6>
                                             <h6 style="color:#FFD600">@comment.Stars/5</h6>
                                             <span class="m-b-15 d-block">@comment.CommentContent</span>
                                             <div class="comment-footer"> <span class="text-muted float-right">@comment.CreatedOn</span> <button type="button" class="btn btn-cyan btn-sm">Edit</button>  <button type="button" class="btn btn-danger btn-sm">Delete</button> </div>

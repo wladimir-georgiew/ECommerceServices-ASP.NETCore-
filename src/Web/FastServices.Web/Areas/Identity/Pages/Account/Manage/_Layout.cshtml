@@ -1,0 +1,49 @@
+﻿@{
+    if (ViewData.TryGetValue("ParentLayout", out var parentLayout))
+    {
+        Layout = (string)parentLayout;
+    }
+    else
+    {
+        Layout = "/Areas/Identity/Pages/_Layout.cshtml";
+    }
+}
+<style>
+    body {
+        background-color:ghostwhite;
+        color: black;
+    }
+
+    .topImageNavIdentity {
+        background: linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url('/Template/images/indexBg-1.jpg');
+        background-size: 100%;
+        background-attachment: fixed;
+        color: white;
+    }
+
+    footer{
+        visibility:hidden;
+    }
+
+</style>
+
+<div class="topImageNavIdentity">
+    <div class="slider_banner_info">
+    </div>
+</div>
+
+<div >
+    <hr />
+    <div class="row">
+        <div class="col-md-3">
+            <partial name="_ManageNav" />
+        </div>
+        <div class="col-md-9">
+            @RenderBody()
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @RenderSection("Scripts", required: false)
+}

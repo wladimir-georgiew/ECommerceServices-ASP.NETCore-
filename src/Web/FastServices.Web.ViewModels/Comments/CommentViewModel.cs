@@ -1,4 +1,6 @@
-﻿namespace FastServices.Web.ViewModels.Comments
+﻿using FastServices.Data.Models;
+
+namespace FastServices.Web.ViewModels.Comments
 {
     public class CommentViewModel
     {

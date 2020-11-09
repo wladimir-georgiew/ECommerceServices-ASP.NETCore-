@@ -23,6 +23,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 
 <style>
+    body {
+        background-color: ghostwhite;
+        color: black;
+    }
+
     #footer {
         position: absolute;
         bottom: 0;
@@ -61,9 +66,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <li class="nav-item">
                         <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Services">Services</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Test">Test</a>
-                    </li>
 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -79,8 +81,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
                     </li>
 
+
+
                     @if (this.SignInManager.IsSignedIn(this.User))
                     {
+                        // account img
+                        <div style="margin-right:1em"><vc:account-image></vc:account-image></div>
+
                         <form style="margin-top: 8px;" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@(this.Url.Action("Index", "Home", new { area = string.Empty }))">
                             <button class="btn-danger cursor-pointer" type="submit">Logout</button>
                         </form>
@@ -148,23 +155,23 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- banner Slider -->
 <script src="/Template/js/responsiveslides.min.js"></script>
 <script>
-   //$(window).load(function() {
-       $(function () {
-           // Slideshow 4
-           $("#slider3").responsiveSlides({
-               auto: true,
-               pager: true,
-               nav: false,
-               speed: 500,
-               namespace: "callbacks",
-               before: function () {
-                   $('.events').append("<li>before event fired.</li>");
-               },
-               after: function () {
-                   $('.events').append("<li>after event fired.</li>");
-               }
-           })
-       });
+    //$(window).load(function() {
+    $(function () {
+        // Slideshow 4
+        $("#slider3").responsiveSlides({
+            auto: true,
+            pager: true,
+            nav: false,
+            speed: 500,
+            namespace: "callbacks",
+            before: function () {
+                $('.events').append("<li>before event fired.</li>");
+            },
+            after: function () {
+                $('.events').append("<li>after event fired.</li>");
+            }
+        })
+    });
 
     //});
 </script>

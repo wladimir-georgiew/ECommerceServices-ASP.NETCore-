@@ -2,7 +2,7 @@
 {
     using System;
     using System.Linq;
-
+    using System.Security.Claims;
     using FastServices.Data;
     using FastServices.Web.ViewModels.Comments;
     using Microsoft.AspNetCore.Mvc;
@@ -29,7 +29,6 @@
             {
                 CommentContent = x.CommentContent,
                 CreatedOn = x.CreatedOn.ToString(format: "d"),
-                // maybe fix
                 Name = this.db.Users.Where(u => u.Id == x.ApplicationUserId).Select(u => u.Name).FirstOrDefault(),
                 AvatarImgSrc = this.db.Users.Where(u => u.Id == x.ApplicationUserId).Select(u => u.AvatarImgSrc).FirstOrDefault(),
                 Stars = x.Stars,

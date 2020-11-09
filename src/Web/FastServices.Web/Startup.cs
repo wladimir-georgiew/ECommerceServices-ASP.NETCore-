@@ -1,7 +1,7 @@
 ﻿namespace FastServices.Web
 {
     using System.Reflection;
-
+    using System.Security.Principal;
     using FastServices.Data;
     using FastServices.Data.Common;
     using FastServices.Data.Common.Repositories;
@@ -68,6 +68,9 @@
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<IDepartmentsService, DepartmentsService>();
             services.AddTransient<IServicesService, ServicesService>();
+
+            // inject current user anywhere
+            services.AddTransient<IPrincipal>(provider => provider.GetService<IHttpContextAccessor>().HttpContext.User);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -11,6 +11,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20201109013813_AddingMoreInfoToAspnetUsers4.cs" />
+    <Compile Remove="Migrations\20201109013813_AddingMoreInfoToAspnetUsers4.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <AdditionalFiles Include="..\..\stylecop.json" />
   </ItemGroup>
 

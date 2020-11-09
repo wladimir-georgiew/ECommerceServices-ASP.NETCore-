@@ -11,8 +11,8 @@
     using FastServices.Services.Departments;
     using FastServices.Web.ViewModels.Comments;
     using FastServices.Web.ViewModels.Departments;
+    using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.Routing;
 
     public class DepartmentsController : Controller
     {
@@ -72,10 +72,14 @@
             return this.View(model);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult> AddComment(CommentInputModel input)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            // Department ID
+            int id = input.DepartmentId;
 
             var comment = new Comment
             {
@@ -87,12 +91,23 @@
                 ApplicationUserId = userId,
             };
 
+            var userLatestComment = this.db.Comments.Where(x => x.ApplicationUserId == userId).OrderByDescending(x => x.CreatedOn).FirstOrDefault();
+
+            if (userLatestComment != null)
+            {
+                var dateDiff = DateTime.UtcNow.Subtract(userLatestComment.CreatedOn);
+
+                // Don't proceed if 24 hours haven't passed since last comment (spam protection)
+                if (dateDiff.Days < 1)
+                {
+                    return this.Redirect($"Department?id={id}&error=NotAllowed");
+                }
+            }
+
             await this.db.Comments.AddAsync(comment);
             await this.db.SaveChangesAsync();
 
-            int id = input.DepartmentId;
-
-            return this.RedirectToAction("Department", new { id });
+            return this.Redirect($"Department?id={id}");
         }
     }
 }

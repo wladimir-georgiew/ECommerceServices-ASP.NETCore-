@@ -1,0 +1,13 @@
+﻿@model string[]
+
+<li class="nav-item">
+    <a class="nav-link" asp-area="Identity" asp-controller="Account" asp-action="Manage">
+        <image style="height:28px;width:28px;border-radius:50%" x="0" y="0" height="100%" preserveAspectRatio="xMidYMid slice" width="100%" src="@Model[0]"></image>
+        <span id="name"></span>
+    </a>
+</li>
+
+<script>
+    var username = document.getElementById("name");
+    username.textContent = "@Model[1]";
+</script>
