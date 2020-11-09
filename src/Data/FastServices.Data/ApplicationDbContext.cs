@@ -25,6 +25,8 @@
 
         public DbSet<Setting> Settings { get; set; }
 
+        public DbSet<Comment> Comments { get; set; }
+
         public DbSet<Complaint> Complaints { get; set; }
 
         public DbSet<Department> Departments { get; set; }

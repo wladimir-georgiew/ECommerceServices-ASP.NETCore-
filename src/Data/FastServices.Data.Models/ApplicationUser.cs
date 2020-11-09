@@ -13,10 +13,15 @@ namespace FastServices.Data.Models
         public ApplicationUser()
         {
             this.Id = Guid.NewGuid().ToString();
+            this.Orders = new HashSet<Order>();
             this.Roles = new HashSet<IdentityUserRole<string>>();
             this.Claims = new HashSet<IdentityUserClaim<string>>();
             this.Logins = new HashSet<IdentityUserLogin<string>>();
         }
+
+        public string Name { get; set; }
+
+        public string AvatarImgSrc { get; set; }
 
         // Audit info
         public DateTime CreatedOn { get; set; }
@@ -27,6 +32,8 @@ namespace FastServices.Data.Models
         public bool IsDeleted { get; set; }
 
         public DateTime? DeletedOn { get; set; }
+
+        public virtual ICollection<Order> Orders { get; set; }
 
         public virtual ICollection<IdentityUserRole<string>> Roles { get; set; }
 

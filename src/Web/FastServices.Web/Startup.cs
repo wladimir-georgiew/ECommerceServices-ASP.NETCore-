@@ -87,7 +87,7 @@
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
-                app.UseStatusCodePagesWithRedirects("/Home/Error?code={0}");
+                //app.UseStatusCodePagesWithRedirects("/Home/Error?code={0}");
             }
             else
             {

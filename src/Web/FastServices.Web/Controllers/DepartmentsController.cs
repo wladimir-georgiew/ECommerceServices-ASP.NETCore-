@@ -3,12 +3,16 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Security.Claims;
     using System.Threading.Tasks;
 
     using FastServices.Data;
+    using FastServices.Data.Models;
     using FastServices.Services.Departments;
+    using FastServices.Web.ViewModels.Comments;
     using FastServices.Web.ViewModels.Departments;
     using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Routing;
 
     public class DepartmentsController : Controller
     {
@@ -32,6 +36,7 @@
                     Id = x.Id,
                     Name = x.Name,
                     CardImgSrc = x.CardImgSrc,
+                    DepartmentId = x.DepartmentId,
                 })
                 .ToList();
 
@@ -65,6 +70,29 @@
             model.ResultMessage = "Your form has been submitted.";
 
             return this.View(model);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> AddComment(CommentInputModel input)
+        {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            var comment = new Comment
+            {
+                CommentContent = input.CommentContent,
+                Stars = input.Stars,
+                CreatedOn = DateTime.UtcNow,
+                DepartmentId = input.DepartmentId,
+                IsDeleted = false,
+                ApplicationUserId = userId,
+            };
+
+            await this.db.Comments.AddAsync(comment);
+            await this.db.SaveChangesAsync();
+
+            int id = input.DepartmentId;
+
+            return this.RedirectToAction("Department", new { id });
         }
     }
 }

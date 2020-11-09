@@ -52,6 +52,11 @@ namespace FastServices.Web.Areas.Identity.Pages.Account
             public string Email { get; set; }
 
             [Required]
+            [StringLength(20, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 2)]
+            [Display(Name = "Name")]
+            public string Name { get; set; }
+
+            [Required]
             [RegularExpression(@"\(?\d{3}\)?-? *\d{3}-? *-?\d{4}", ErrorMessage = "Invalid phone number")]
             [Display(Name = "PhoneNumber")]
             public string PhoneNumber { get; set; }
@@ -80,7 +85,7 @@ namespace FastServices.Web.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, PhoneNumber = Input.PhoneNumber };
+                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, PhoneNumber = Input.PhoneNumber, Name = Input.Name, AvatarImgSrc = "/Template/images/defAvatarImg.png" };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

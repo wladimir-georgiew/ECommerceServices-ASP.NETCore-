@@ -5,13 +5,13 @@
 
     using FastServices.Data.Common.Models;
 
-    public class Feedback : IDeletableEntity, IAuditInfo
+    public class Comment : IDeletableEntity, IAuditInfo
     {
         public int Id { get; set; }
 
         [Required]
         [MaxLength(100)]
-        public string Comment { get; set; }
+        public string CommentContent { get; set; }
 
         public int Stars { get; set; }
 

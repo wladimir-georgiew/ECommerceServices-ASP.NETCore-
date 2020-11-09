@@ -4,14 +4,16 @@ using FastServices.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FastServices.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201108210931_AddingMoreInfoToAspnetUsers")]
+    partial class AddingMoreInfoToAspnetUsers
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -187,7 +189,7 @@ namespace FastServices.Data.Migrations
 
                     b.HasIndex("IsDeleted");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comment");
                 });
 
             modelBuilder.Entity("FastServices.Data.Models.Complaint", b =>
@@ -603,7 +605,7 @@ namespace FastServices.Data.Migrations
             modelBuilder.Entity("FastServices.Data.Models.Order", b =>
                 {
                     b.HasOne("FastServices.Data.Models.ApplicationUser", "ApplicationUser")
-                        .WithMany("Orders")
+                        .WithMany()
                         .HasForeignKey("ApplicationUserId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();

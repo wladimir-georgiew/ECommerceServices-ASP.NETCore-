@@ -12,7 +12,7 @@
         {
             this.Services = new HashSet<Service>();
 
-            this.Feedbacks = new HashSet<Feedback>();
+            this.Comments = new HashSet<Comment>();
         }
 
         public int Id { get; set; }
@@ -41,6 +41,6 @@
 
         public virtual ICollection<Service> Services { get; set; }
 
-        public virtual ICollection<Feedback> Feedbacks { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
     }
 }
