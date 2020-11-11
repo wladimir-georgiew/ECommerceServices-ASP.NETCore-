@@ -1,8 +1,7 @@
 ﻿namespace FastServices.Web.ViewComponents
 {
-    using System;
     using System.Linq;
-    using System.Security.Claims;
+
     using FastServices.Data;
     using FastServices.Web.ViewModels.Comments;
     using Microsoft.AspNetCore.Mvc;

@@ -76,38 +76,46 @@
         [HttpPost]
         public async Task<ActionResult> AddComment(CommentInputModel input)
         {
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            // Department ID
-            int id = input.DepartmentId;
-
-            var comment = new Comment
+            if (!this.ModelState.IsValid)
             {
-                CommentContent = input.CommentContent,
-                Stars = input.Stars,
-                CreatedOn = DateTime.UtcNow,
-                DepartmentId = input.DepartmentId,
-                IsDeleted = false,
-                ApplicationUserId = userId,
-            };
-
-            var userLatestComment = this.db.Comments.Where(x => x.ApplicationUserId == userId).OrderByDescending(x => x.CreatedOn).FirstOrDefault();
-
-            if (userLatestComment != null)
+                this.ViewData["Message"] = this.ModelState.Values.Select(x => x.Errors);
+            }
+            else
             {
-                var dateDiff = DateTime.UtcNow.Subtract(userLatestComment.CreatedOn);
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-                // Don't proceed if 24 hours haven't passed since last comment (spam protection)
-                if (dateDiff.Days < 1)
+                var comment = new Comment
                 {
-                    return this.Redirect($"Department?id={id}&error=NotAllowed");
+                    CommentContent = input.CommentContent,
+                    Stars = input.Stars,
+                    CreatedOn = DateTime.UtcNow,
+                    DepartmentId = input.DepartmentId,
+                    IsDeleted = false,
+                    ApplicationUserId = userId,
+                };
+
+                var userLatestComment = this.db.Comments.Where(x => x.ApplicationUserId == userId).OrderByDescending(x => x.CreatedOn).FirstOrDefault();
+
+                if (userLatestComment != null)
+                {
+                    var dateDiff = DateTime.UtcNow.Subtract(userLatestComment.CreatedOn);
+
+                    // Don't proceed if 24 hours haven't passed since last comment (spam protection)
+                    if (dateDiff.Days < 1)
+                    {
+                        this.ViewData["Message"] = "You need to wait 24 hours before posting new  comment!";
+
+                        return this.Redirect($"Department?id={input.DepartmentId}&error=not-allowed");
+                    }
                 }
+
+                await this.db.Comments.AddAsync(comment);
+                await this.db.SaveChangesAsync();
+
+                this.ViewData["Message"] = "Thank you for your feedback!";
             }
 
-            await this.db.Comments.AddAsync(comment);
-            await this.db.SaveChangesAsync();
-
-            return this.Redirect($"Department?id={id}");
+            return this.Redirect($"Department?id={input.DepartmentId}");
         }
     }
 }
