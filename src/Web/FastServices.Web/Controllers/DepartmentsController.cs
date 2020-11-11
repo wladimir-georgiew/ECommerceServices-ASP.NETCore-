@@ -65,7 +65,6 @@
 
             // do your stuff
 
-
             // add a success user message
             model.ResultMessage = "Your form has been submitted.";
 
@@ -78,7 +77,7 @@
         {
             if (!this.ModelState.IsValid)
             {
-                this.ViewData["Message"] = this.ModelState.Values.Select(x => x.Errors);
+                this.TempData["Message"] = this.ModelState.Values.SelectMany(modelState => modelState.Errors).FirstOrDefault().ErrorMessage;
             }
             else
             {
@@ -103,19 +102,21 @@
                     // Don't proceed if 24 hours haven't passed since last comment (spam protection)
                     if (dateDiff.Days < 1)
                     {
-                        this.ViewData["Message"] = "You need to wait 24 hours before posting new  comment!";
+                        this.TempData["Message"] = "You need to wait 24 hours before posting new  comment!";
 
-                        return this.Redirect($"Department?id={input.DepartmentId}&error=not-allowed");
+                        //return this.Redirect($"Department?id={input.DepartmentId}&error=not-allowed");
+
+                        return this.Redirect($"Department?id={input.DepartmentId}&try-submit=true");
                     }
                 }
 
                 await this.db.Comments.AddAsync(comment);
                 await this.db.SaveChangesAsync();
 
-                this.ViewData["Message"] = "Thank you for your feedback!";
+                this.TempData["Message"] = "Thank you for your feedback!";
             }
 
-            return this.Redirect($"Department?id={input.DepartmentId}");
+            return this.Redirect($"Department?id={input.DepartmentId}&try-submit=true");
         }
     }
 }

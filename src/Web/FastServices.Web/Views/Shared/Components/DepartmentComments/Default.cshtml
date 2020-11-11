@@ -153,9 +153,14 @@
             <form asp-controller="Departments" asp-action="AddComment">
                 <input style="visibility:hidden" name="DepartmentId" value="@Context.Request.Query["id"]" />
 
-                @if (ViewContext.HttpContext.Request.Query["error"] == "not-allowed")
+                @*@if (ViewContext.HttpContext.Request.Query["error"] == "not-allowed")
                 {
-                    <partial name="/Views/Shared/_ErrorPopup.cshtml"/>
+                    <partial data="@this.TempData["Message"]" name="/Views/Shared/_ErrorPopup.cshtml"/>
+                }*@
+
+                  @if (ViewContext.HttpContext.Request.Query["try-submit"] == "true")
+                {
+                    <partial data="@this.TempData["Message"]" name="/Views/Shared/_ErrorPopup.cshtml"/>
                 }
 
                 @if (this.SignInManager.IsSignedIn(this.User))

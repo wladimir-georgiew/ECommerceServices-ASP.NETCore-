@@ -6,9 +6,9 @@
     {
         public int DepartmentId { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Comment should be at least 5 characters long")]
         [MinLength(5, ErrorMessage = "Comment should be at least 5 characters long")]
-        [MaxLength(100, ErrorMessage = "Comment should no more than 100 characters long")]
+        [MaxLength(100, ErrorMessage = "Comment cannot be more than 100 characters long")]
         public string CommentContent { get; set; }
 
         [Range(0, 5)]
