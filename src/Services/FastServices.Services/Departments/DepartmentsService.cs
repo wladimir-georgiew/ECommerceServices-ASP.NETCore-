@@ -6,7 +6,7 @@
     using FastServices.Data;
     using FastServices.Data.Models;
 
-    public class DepartmentsService : IDepartmentsService
+    public class DepartmentsService : IDepartmenstService
     {
         private readonly ApplicationDbContext db;
 
@@ -19,7 +19,7 @@
 
         public List<Department> GetAllDepartmentsWithDeleted() => this.db.Departments.ToList();
 
-        // public IEnumerable<Service> GetDepartmentServices(int departmentId) => this.db.Services.Where(x => x.DepartmentId == departmentId).ToList();
+        public Department GetDepartment(int departmentId) => this.db.Departments.Where(x => x.Id == departmentId).FirstOrDefault();
 
         public IEnumerable<Service> GetDepartmentServices(int departmentId) => this.db.Departments.Where(x => x.Id == departmentId).Select(x => x.Services).FirstOrDefault();
     }

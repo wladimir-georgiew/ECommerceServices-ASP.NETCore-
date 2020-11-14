@@ -1,9 +1,9 @@
-﻿using FastServices.Data.Models;
-
-namespace FastServices.Web.ViewModels.Comments
+﻿namespace FastServices.Web.ViewModels.Comments
 {
     public class CommentViewModel
     {
+        public int CommentId { get; set; }
+
         public string CommentContent { get; set; }
 
         public string Name { get; set; }
@@ -15,5 +15,7 @@ namespace FastServices.Web.ViewModels.Comments
         public int DepartmentId { get; set; }
 
         public string AvatarImgSrc { get; set; }
+
+        public string UserId { get; set; }
     }
 }

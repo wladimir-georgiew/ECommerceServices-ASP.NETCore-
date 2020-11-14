@@ -22,7 +22,8 @@
                 .Where(x => x.Id == id)
                 .SelectMany(x => x.Comments)
                 .ToList()
-                .OrderByDescending(x => x.CreatedOn);
+                .OrderByDescending(x => x.CreatedOn)
+                .Take(5);
 
             var viewModel = departmentComments.Select(x => new CommentViewModel()
             {
@@ -32,7 +33,10 @@
                 AvatarImgSrc = this.db.Users.Where(u => u.Id == x.ApplicationUserId).Select(u => u.AvatarImgSrc).FirstOrDefault(),
                 Stars = x.Stars,
                 DepartmentId = id,
-            }).ToList();
+                UserId = x.ApplicationUserId,
+                CommentId = x.Id,
+            })
+                .ToList();
 
             return this.View(viewModel);
         }

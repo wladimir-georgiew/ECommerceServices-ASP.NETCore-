@@ -1,9 +1,16 @@
 ﻿<meta charset="utf-8" />
 @using FastServices.Data.Models
 @using Microsoft.AspNetCore.Identity
+@using FastServices.Common
 
 @model IEnumerable<FastServices.Web.ViewModels.Comments.CommentViewModel>
 @inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    var user = await UserManager.GetUserAsync(this.User);
+}
+
 <style>
     .vertical-center {
         margin: 0;
@@ -16,7 +23,8 @@
     .rating {
         display: flex;
         flex-direction: row-reverse;
-        justify-content: center
+        justify-content: center;
+        margin-top: -4em;
     }
 
         .rating > input {
@@ -84,7 +92,8 @@
     .card .card-title {
         position: relative;
         font-weight: 600;
-        margin-bottom: 10px
+        margin-bottom: 10px;
+        cursor: text;
     }
 
     .comment-widgets {
@@ -142,89 +151,107 @@
     }
 </style>
 
-    <div class="col-lg-8">
-        <div style="width:160%"  class="card">
-            <div class="card-body text-center">
-                <h4 class="card-title">Latest Comments For Current Department</h4>
-            </div>
+<div class="col-lg-8">
+    <div style="width:160%" class="card">
+        <div class="card-body text-center">
+            <h4 class="card-title">Last 5 comments for @ViewData["depName"].ToString().ToLower() department</h4>
+        </div>
 
 
 
-            <form asp-controller="Departments" asp-action="AddComment">
-                <input style="visibility:hidden" name="DepartmentId" value="@Context.Request.Query["id"]" />
+        <form asp-controller="Departments" asp-action="AddComment">
+            <input style="visibility:hidden" name="DepartmentId" value="@Context.Request.Query["id"]" />
 
-                @*@if (ViewContext.HttpContext.Request.Query["error"] == "not-allowed")
+            @*@if (ViewContext.HttpContext.Request.Query["error"] == "not-allowed")
                 {
                     <partial data="@this.TempData["Message"]" name="/Views/Shared/_ErrorPopup.cshtml"/>
                 }*@
 
-                  @if (ViewContext.HttpContext.Request.Query["try-submit"] == "true")
-                {
-                    <partial data="@this.TempData["Message"]" name="/Views/Shared/_ErrorPopup.cshtml"/>
-                }
+            @if (ViewContext.HttpContext.Request.Query["submit"] == "false")
+            {
+                <partial name="/Views/Shared/_ErrorPopup.cshtml" />
+            }
+            else if (ViewContext.HttpContext.Request.Query["submit"] == "true")
+            {
+                <partial name="/Views/Shared/_SuccessPopup.cshtml" />
+            }
 
-                @if (this.SignInManager.IsSignedIn(this.User))
-                {
-                    <div class="rating">
-                        <input id="Stars" type="text" name="Stars" value="1" />
-                        <input type="radio" onclick="getResult()" name="rating" value="5" id="5"><label for="5">☆</label>
-                        <input type="radio" onclick="getResult()" name="rating" value="4" id="4"><label for="4">☆</label>
-                        <input type="radio" onclick="getResult()" name="rating" value="3" id="3"><label for="3">☆</label>
-                        <input type="radio" onclick="getResult()" name="rating" value="2" id="2"><label for="2">☆</label>
-                        <input type="radio" onclick="getResult()" name="rating" value="1" id="1"><label for="1">☆</label>
-                    </div>
+            @if (this.SignInManager.IsSignedIn(this.User))
+            {
+                <div class="rating">
+                    <input id="Stars" type="text" name="Stars" value="1" />
+                    <input type="radio" onclick="getResult()" name="rating" value="5" id="5"><label for="5">☆</label>
+                    <input type="radio" onclick="getResult()" name="rating" value="4" id="4"><label for="4">☆</label>
+                    <input type="radio" onclick="getResult()" name="rating" value="3" id="3"><label for="3">☆</label>
+                    <input type="radio" onclick="getResult()" name="rating" value="2" id="2"><label for="2">☆</label>
+                    <input type="radio" onclick="getResult()" name="rating" value="1" id="1"><label for="1">☆</label>
+                </div>
 
-                    <script>
-                        function getResult() {
+                <script>
+                    function getResult() {
 
-                            var result = 0;
+                        var result = 0;
 
-                            if (document.getElementById('5').checked) {
-                                result = document.getElementById('5').value;
-                            }
-                            else if (document.getElementById('4').checked) {
-                                result = document.getElementById('4').value;
-                            }
-                            else if (document.getElementById('3').checked) {
-                                result = document.getElementById('3').value;
-                            }
-                            else if (document.getElementById('2').checked) {
-                                result = document.getElementById('2').value;
-                            }
-                            else if (document.getElementById('1').checked) {
-                                result = document.getElementById('1').value;
-                            }
-
-                            document.getElementById("Stars").value = result;
+                        if (document.getElementById('5').checked) {
+                            result = document.getElementById('5').value;
                         }
-                    </script>
+                        else if (document.getElementById('4').checked) {
+                            result = document.getElementById('4').value;
+                        }
+                        else if (document.getElementById('3').checked) {
+                            result = document.getElementById('3').value;
+                        }
+                        else if (document.getElementById('2').checked) {
+                            result = document.getElementById('2').value;
+                        }
+                        else if (document.getElementById('1').checked) {
+                            result = document.getElementById('1').value;
+                        }
 
-                    <div style="text-align:center">
-                        <textarea style="width:80%; height:100px" type="text" name="CommentContent"></textarea>
+                        document.getElementById("Stars").value = result;
+                    }
+                </script>
+
+                <div style="text-align:center">
+                    <textarea style="width:80%; height:100px" type="text" name="CommentContent"></textarea>
+                </div>
+
+                <button style="position:relative; left:45%; top:1em" class="btn btn-cyan" type="submit">Submit</button>
+            }
+            else
+            {
+                <h1 style="text-align:center">
+                    <a style="color:deepskyblue" asp-area="Identity" asp-controller="Account" asp-action="Login">Sign in</a>
+                    to leave a comment
+                </h1>
+            }
+        </form>
+
+        <div class="comment-widgets">
+            @foreach (var comment in Model)
+            {<!-- Comment Row -->
+            <form asp-controller="Departments" asp-action="DeleteComment">
+                <div class="d-flex flex-row comment-row m-t-0">
+                    <div class="p-2"><img src="@comment.AvatarImgSrc" alt="user" width="50" class="rounded-circle"></div>
+                    <div class="comment-text w-75">
+                        <h6 class="font-medium">@comment.Name</h6>
+                        <h6 style="color:#FFD600">@comment.Stars/5</h6>
+                        <span class="m-b-15 d-block">@comment.CommentContent</span>
+                        <div class="comment-footer">
+                            <span class="text-muted float-right">@comment.CreatedOn</span>
+                            @*<button type="button" class="btn btn-cyan btn-sm">Edit</button>*@
+
+                            @if (user?.Id == comment.UserId ||
+                                this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                            {
+                                <input style="visibility:hidden; position:absolute" id="departmentId" type="text" name="departmentId" value="@comment.DepartmentId" />
+                                <input style="visibility:hidden;  position:absolute" id="commentId" type="text" name="commentId" value="@comment.CommentId" />
+                                <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+                            }
+                        </div>
                     </div>
-
-                    <button style="position:relative; left:45%; top:1em" class="btn btn-cyan" type="submit">Submit</button>
-                }
-                else
-                {
-                    <h1 style="text-align:center">Please 
-                <a style="color:deepskyblue" asp-area="Identity"asp-controller="Account"asp-action="Login">sign in</a> 
-                to leave a comment</h1>
-                }
-            </form>
-
-            <div class="comment-widgets">
-                @foreach (var comment in Model)
-                {<!-- Comment Row -->
-                                    <div class="d-flex flex-row comment-row m-t-0">
-                                        <div class="p-2"><img src="@comment.AvatarImgSrc" alt="user" width="50" class="rounded-circle"></div>
-                                        <div class="comment-text w-75">
-                                            <h6 class="font-medium">@comment.Name</h6>
-                                            <h6 style="color:#FFD600">@comment.Stars/5</h6>
-                                            <span class="m-b-15 d-block">@comment.CommentContent</span>
-                                            <div class="comment-footer"> <span class="text-muted float-right">@comment.CreatedOn</span> <button type="button" class="btn btn-cyan btn-sm">Edit</button>  <button type="button" class="btn btn-danger btn-sm">Delete</button> </div>
-                                        </div>
-                                    </div> <!-- Comment Row -->}
-            </div> <!-- Card -->
-        </div>
+                </div>
+            </form><!-- Comment Row -->}
+        </div> <!-- Card -->
     </div>
+</div>

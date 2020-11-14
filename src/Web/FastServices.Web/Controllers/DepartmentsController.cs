@@ -8,7 +8,9 @@
 
     using FastServices.Data;
     using FastServices.Data.Models;
+    using FastServices.Services.Comments;
     using FastServices.Services.Departments;
+    using FastServices.Services.Users;
     using FastServices.Web.ViewModels.Comments;
     using FastServices.Web.ViewModels.Departments;
     using Microsoft.AspNetCore.Authorization;
@@ -16,19 +18,26 @@
 
     public class DepartmentsController : Controller
     {
-        private readonly IDepartmentsService departmentsService;
-        private readonly ApplicationDbContext db;
+        private readonly IDepartmenstService departmentsService;
+        private readonly ICommentsService commentsService;
+        private readonly IUsersService usersService;
 
-        public DepartmentsController(IDepartmentsService departmentsService, ApplicationDbContext db)
+        public DepartmentsController(IDepartmenstService departmentsService, ICommentsService commentsService, IUsersService usersService)
         {
             this.departmentsService = departmentsService;
-            this.db = db;
+            this.commentsService = commentsService;
+            this.usersService = usersService;
         }
 
         public IActionResult Department(int id)
         {
-            string bgUrl = this.db.Departments.FirstOrDefault(x => x.Id == id).BackgroundImgSrc;
-            string depName = this.db.Departments.FirstOrDefault(x => x.Id == id).Name;
+            Department department = this.departmentsService.GetDepartment(id);
+
+            string bgUrl = department.BackgroundImgSrc;
+            string depName = department.Name;
+
+            this.ViewData["url"] = bgUrl;
+            this.ViewData["depName"] = depName.ToUpper();
 
             List<ServicesViewModel> servicesViewModel = this.departmentsService.GetDepartmentServices(id)
                 .Select(x => new ServicesViewModel
@@ -40,44 +49,22 @@
                 })
                 .ToList();
 
-            this.ViewData["url"] = bgUrl;
-            this.ViewData["depName"] = depName.ToUpper();
-
-            var model = new Tuple<
-                ICollection<ServicesViewModel>, OrderModalViewModel
-                >(servicesViewModel, new OrderModalViewModel());
-
-            return this.View(model);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Department(OrderModalViewModel model)
-        {
-            // add a custom error
-            this.ModelState.AddModelError(string.Empty, "This is a custom error for testing!");
-
-            // check the model (you should also do front-end vlidation, as in the demo)
-            if (!this.ModelState.IsValid)
-            {
-                return this.View(model);
-            }
-
-            // do your stuff
-
-            // add a success user message
-            model.ResultMessage = "Your form has been submitted.";
-
-            return this.View(model);
+            return this.View(servicesViewModel);
         }
 
         [Authorize]
         [HttpPost]
-        public async Task<ActionResult> AddComment(CommentInputModel input)
+        public async Task<IActionResult> AddComment(CommentInputModel input)
         {
             if (!this.ModelState.IsValid)
             {
-                this.TempData["Message"] = this.ModelState.Values.SelectMany(modelState => modelState.Errors).FirstOrDefault().ErrorMessage;
+                this.TempData["Message"] = this.ModelState
+                    .Values
+                    .SelectMany(modelState => modelState.Errors)
+                    .FirstOrDefault()
+                    .ErrorMessage;
+
+                return this.Redirect($"Department?id={input.DepartmentId}&submit=false");
             }
             else
             {
@@ -93,30 +80,33 @@
                     ApplicationUserId = userId,
                 };
 
-                var userLatestComment = this.db.Comments.Where(x => x.ApplicationUserId == userId).OrderByDescending(x => x.CreatedOn).FirstOrDefault();
-
-                if (userLatestComment != null)
+                // Don't proceed if 24 hours haven't passed since last comment (spam protection)
+                if (!this.usersService.IsUserAllowedToComment(userId))
                 {
-                    var dateDiff = DateTime.UtcNow.Subtract(userLatestComment.CreatedOn);
+                    this.TempData["Message"] = "You need to wait 24 hours before posting new  comment!";
 
-                    // Don't proceed if 24 hours haven't passed since last comment (spam protection)
-                    if (dateDiff.Days < 1)
-                    {
-                        this.TempData["Message"] = "You need to wait 24 hours before posting new  comment!";
-
-                        //return this.Redirect($"Department?id={input.DepartmentId}&error=not-allowed");
-
-                        return this.Redirect($"Department?id={input.DepartmentId}&try-submit=true");
-                    }
+                    return this.Redirect($"Department?id={input.DepartmentId}&submit=false");
                 }
 
-                await this.db.Comments.AddAsync(comment);
-                await this.db.SaveChangesAsync();
+                await this.commentsService.AddComment(comment);
 
                 this.TempData["Message"] = "Thank you for your feedback!";
             }
 
-            return this.Redirect($"Department?id={input.DepartmentId}&try-submit=true");
+            return this.Redirect($"Department?id={input.DepartmentId}&submit=true");
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> DeleteComment(int departmentId, int commentId)
+        {
+            var comment = this.commentsService.GetCommentById(commentId);
+
+            await this.commentsService.DeleteComment(comment);
+
+            this.TempData["Message"] = "You have deleted your comment successfully!";
+
+            return this.Redirect($"Department?id={departmentId}&submit=true");
         }
     }
 }

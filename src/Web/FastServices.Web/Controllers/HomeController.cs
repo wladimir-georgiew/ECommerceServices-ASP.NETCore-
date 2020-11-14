@@ -11,9 +11,9 @@
 
     public class HomeController : BaseController
     {
-        private readonly IDepartmentsService departmentServices;
+        private readonly IDepartmenstService departmentServices;
 
-        public HomeController(IDepartmentsService departmentServices)
+        public HomeController(IDepartmenstService departmentServices)
         {
             this.departmentServices = departmentServices;
         }

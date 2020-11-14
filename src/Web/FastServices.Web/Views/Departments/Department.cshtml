@@ -1,7 +1,4 @@
-﻿@model Tuple<
-        ICollection<FastServices.Web.ViewModels.Departments.ServicesViewModel>,
-        FastServices.Web.ViewModels.Departments.OrderModalViewModel>
-
+﻿@model ICollection<FastServices.Web.ViewModels.Departments.ServicesViewModel>
 
 <style>
     footer{
@@ -17,7 +14,7 @@
         width: 50%;
         float: left;
         padding: 20px;
-    }  
+    }
     .topImageNav {
         background:
         linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ),
@@ -65,25 +62,26 @@
 <!-- NAVIGATION BAR BACKGROUND IMAGE DEPENDING ON THE DEPARTMENT -->
 <div style="height:30%" class="topImageNav">
 
-        <h1 style="text-align: center; padding-top:10%; color:azure;">@ViewData["depName"]</h1>
+    <h1 style="text-align: center; padding-top:10%; color:azure;">@ViewData["depName"]</h1>
 
 
 </div>
 
-    <div class="container mt-2 float-child" style="width:70%">
-        <div style="margin-bottom: 15.5em" class="row">
-            @foreach (var service in Model.Item1)
-            {
-                <div style="margin-bottom:1em" class="col-md-3 col-sm-6">
-                    <div class="card card-block">
-                        <h3 class="card-title text-center">@service.Name</h3>
-                        <img class="imgService" src="@service.CardImgSrc">
-                        <partial name="/Views/Departments/MakeOrderPartialView.cshtml" model="Model.Item2" />
-                    </div>
-                </div>
-            }
+<div class="container mt-2 float-child" style="width:70%">
+    <div style="margin-bottom: 15.5em" class="row">
+        @foreach (var service in @Model)
+        {
 
-            @*<div>
+            <div style="margin-bottom:1em" class="col-md-3 col-sm-6">
+                <div class="card card-block">
+                    <h3 class="card-title text-center">@service.Name</h3>
+                    <img class="imgService" src="@service.CardImgSrc">
+                </div>
+            </div>
+
+        }
+
+        @*<div>
             <h5>How many hours would you like to book?</h5>
             <div class="cell small-12">
                 <select>
@@ -99,8 +97,7 @@
             </div>
         </div>*@
 
-        </div>
-
     </div>
-    <div class="float-child" style="width:30%"><vc:department-comments id="@Model.Item1.FirstOrDefault().DepartmentId"></vc:department-comments></div>
-    
+
+</div>
+<div class="float-child" style="width:30%"><vc:department-comments id="@Model.FirstOrDefault().DepartmentId"></vc:department-comments></div>

@@ -4,12 +4,14 @@
 
     using FastServices.Data.Models;
 
-    public interface IDepartmentsService
+    public interface IDepartmenstService
     {
         public List<Department> GetAllDepartments();
 
         public List<Department> GetAllDepartmentsWithDeleted();
 
         public IEnumerable<Service> GetDepartmentServices(int departmentId);
+
+        public Department GetDepartment(int departmentId);
     }
 }
