@@ -1,0 +1,47 @@
+﻿@model ICollection<FastServices.Web.ViewModels.Employees.EmployeeViewModel>
+
+<style>
+    .topImageNav {
+        height: 3.5em;
+        background-color: black;
+    }
+    footer{
+        visibility:hidden;
+    }
+</style>
+
+<div class="topImageNav">
+</div>
+
+<table class="table table-light">
+    <thead class="thead-light">
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">UserId</th>
+            <th scope="col">DepartmentId</th>
+            <th scope="col">FirstN</th>
+            <th scope="col">LastN</th>
+            <th scope="col">Salary</th>
+            <th scope="col">Available</th>
+            <th scope="col">Created On</th>
+            <th scope="col">DeletedOn</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var employee in Model)
+        {
+            <tr class="@employee.HtmlClass">
+                <th scope="row">@employee.Id</th>
+                <td>@employee.UserId</td>
+                <td>@employee.DepartmentId</td>
+                <td>@employee.FirstName</td>
+                <td>@employee.LastName</td>
+                <td>@employee.Salary</td>
+                <td>@employee.IsAvailable</td>
+                <th scope="col">@employee.CreatedOn</th>
+                <th scope="col">@employee.DeletedOn</th>
+            </tr>
+        }
+
+    </tbody>
+</table>

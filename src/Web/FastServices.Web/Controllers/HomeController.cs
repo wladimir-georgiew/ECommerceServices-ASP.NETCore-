@@ -11,9 +11,9 @@
 
     public class HomeController : BaseController
     {
-        private readonly IDepartmenstService departmentServices;
+        private readonly IDepartmentsService departmentServices;
 
-        public HomeController(IDepartmenstService departmentServices)
+        public HomeController(IDepartmentsService departmentServices)
         {
             this.departmentServices = departmentServices;
         }
@@ -30,6 +30,8 @@
                     CardImgSrc = x.CardImgSrc,
             })
                 .ToList();
+
+            this.ViewData["topImageNavUrl"] = "/Template/images/indexBg-1.jpg";
 
             return this.View(departmentsViewModel);
         }

@@ -23,6 +23,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 
 <style>
+    nav{
+        font-family:Bahnschrift
+    }
     body {
         background-color: ghostwhite;
         color: black;
@@ -43,6 +46,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         padding-right: 0px !important;
         overflow: visible;
     }
+            .topImageNav {
+        background:
+        linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ),
+        url('@ViewData["topImageNavUrl"]');
+        background-size: 100%;
+        background-attachment: fixed;
+        color: white;
+        height:30%;
+        }
 </style>
 
 
@@ -55,7 +67,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <div class="collapse navbar-collapse">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item ">
                         <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home </a>
@@ -103,7 +114,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     }
 
                 </ul>
-            </div>
         </nav>
     </header>
     <!-- //header -->

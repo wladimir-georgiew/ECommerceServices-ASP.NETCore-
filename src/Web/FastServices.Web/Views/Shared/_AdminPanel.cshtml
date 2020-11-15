@@ -1,34 +1,104 @@
-﻿<link href="/Template/AdminPanel/css/simple-sidebar.css" rel="stylesheet">
+﻿<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+    body {
+        font-family: "Lato", sans-serif;
+    }
+    .adminSidebarTitle {
+        position: absolute;
+        padding: 8px 8px 8px 32px;
+        display:block;
+        top: 1em;
+        text-align: center;
+        margin-bottom: 2em;
+    }
+        .adminSidebarTitle h2 {
+            font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+            /*font-family: Bahnschrift;*/
+        }
+
+    .sidebar {
+        height: 100%;
+        width: 0;
+        position: fixed;
+        z-index: 999;
+        top: 0;
+        left: 0;
+        background-color: #111;
+        overflow-x: hidden;
+        transition: 0.5s;
+        padding-top: 60px;
+    }
+
+        .sidebar a {
+            padding: 8px 8px 8px 32px;
+            text-decoration: none;
+            font-size: 20px;
+            color: #818181;
+            display: block;
+            transition: 0.3s;
+        }
+
+            .sidebar a:hover {
+                color: #f1f1f1;
+            }
+
+        .sidebar .closebtn {
+            top: 0;
+            right: 25px;
+            font-size: 36px;
+            margin-left: 50px;
+            z-index: 998;
+            position: absolute;
+            outline: none;
+            border:none;
+        }
+
+    .openbtn {
+        font-size: 20px;
+        cursor: pointer;
+        z-index: 999;
+        position: fixed;
+        background-color: #111;
+        color: white;
+        padding: 10px 15px;
+        border: none;
+        outline:none;
+    }
+
+        .openbtn:hover {
+            background-color: #444;
+        }
+
+    #main {
+        transition: margin-left .5s;
+    }
+</style>
 
 
-<div class="d-flex" id="wrapper">
-    <!-- BUTTON -->
-    <button style="position:absolute; z-index:999" class="btn btn-primary" id="menu-toggle">Admin Panel</button>
-
-    <!-- Sidebar -->
-    <div style="position:absolute; z-index:998" class="bg-light border-right onTop" id="sidebar-wrapper">
-        <div class="sidebar-heading"> </div>
-        <div class="list-group list-group-flush">
-            <a href="#" class="list-group-item list-group-item-action bg-light">Ban</a>
-            <a href="#" class="list-group-item list-group-item-action bg-light">Kick</a>
-            <a href="#" class="list-group-item list-group-item-action bg-light">Fuck</a>
-            <a href="#" class="list-group-item list-group-item-action bg-light">Nice</a>
-            <a href="#" class="list-group-item list-group-item-action bg-light">Profile</a>
-            <a href="#" class="list-group-item list-group-item-action bg-light">Status</a>
-        </div>
+<div id="mySidebar" class="sidebar">
+    <div class="adminSidebarTitle">
+        <h2 style="color:#ffdd99; font-size:36px;">Admin</h2>
     </div>
-    <!-- Sidebar end -->
+    <a href="#">Add Department</a>
+    <a href="#">Add Service</a>
+    <a asp-area="Administration" asp-controller="Administration" asp-action="Employees">Employees</a>
+    <a href="#">Clients</a>
+</div>
 
+<div id="main">
+    <button id="openSideBarBtn" class="openbtn" onclick="openNav()">☰</button>
+</div>
 
-</div> <!-- /#wrapper --> <!-- Bootstrap core JavaScript -->
-<script src="/Template/AdminPanel/vendor/jquery/jquery.min.js"></script>
-<script src="/Template/AdminPanel/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- Menu Toggle Script -->
 <script>
-    $("#wrapper").toggleClass("toggled");
+    function openNav() {
+        document.getElementById("mySidebar").style.width = "250px";
+        document.getElementById("main").style.marginLeft = "250px";
+        document.getElementById("openSideBarBtn").setAttribute('onclick', 'closeNav()');
+    }
 
-    $("#menu-toggle").click(function (e) {
-        e.preventDefault();
-        $("#wrapper").toggleClass("toggled");
-    });
+    function closeNav() {
+        document.getElementById("mySidebar").style.width = "0";
+        document.getElementById("main").style.marginLeft = "0";
+        document.getElementById("openSideBarBtn").setAttribute('onclick', 'openNav()');
+    }
 </script>

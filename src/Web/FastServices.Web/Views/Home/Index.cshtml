@@ -11,12 +11,15 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 @model ICollection<FastServices.Web.ViewModels.Home.DepartmentViewModel>
 
 <style>
-    .topImageNav {
-        background: linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url('/Template/images/indexBg-1.jpg');
+        @*.topImageNav {
+        background:
+        linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ),
+        url('@ViewData["topImageNavUrl"]');
         background-size: 100%;
         background-attachment: fixed;
         color: white;
-    }
+        height:30%;
+        }*@
 </style>
 
 
@@ -72,9 +75,7 @@ else
     </div>
 }
 
-
-<h1 style="text-align:center; margin-bottom:1em">Departments</h1>
-<div class="container">
+<div style="margin-top:1em;" class="container">
     <div class="row">
         @foreach (var department in @Model)
         {

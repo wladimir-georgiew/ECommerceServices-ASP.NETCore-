@@ -1,36 +1,45 @@
 ﻿namespace FastServices.Services.Comments
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
     using FastServices.Data;
+    using FastServices.Data.Common.Repositories;
     using FastServices.Data.Models;
 
     public class CommentsService : ICommentsService
     {
         private readonly ApplicationDbContext db;
+        private readonly IRepository<Comment> repository;
 
-        public CommentsService(ApplicationDbContext db)
+        public CommentsService(ApplicationDbContext db, IRepository<Comment> repository)
         {
             this.db = db;
+            this.repository = repository;
         }
 
-        public async Task AddComment(Comment comment)
+        public IEnumerable<Comment> GetAllComments() => this.repository.All();
+
+        public async Task AddCommentAsync(Comment comment)
         {
-            await this.db.AddAsync(comment);
+            await this.repository.AddAsync(comment);
             await this.db.SaveChangesAsync();
         }
 
-        public async Task DeleteComment(Comment comment)
+        public void HardDeleteComment(Comment comment)
         {
-            this.db.Remove(comment);
-            await this.db.SaveChangesAsync();
+            this.repository.Delete(comment);
+            this.db.SaveChanges();
         }
 
-        public Comment GetCommentById(int id)
+        public void DeleteComment(Comment comment)
         {
-            return this.db.Comments.Where(x => x.Id == id).FirstOrDefault();
+            this.repository.Delete(comment);
+            this.db.SaveChanges();
         }
+
+        public Comment GetCommentById(int id) => this.GetAllComments().FirstOrDefault(x => x.Id == id);
     }
 }

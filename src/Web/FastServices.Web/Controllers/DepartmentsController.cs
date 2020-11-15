@@ -18,25 +18,25 @@
 
     public class DepartmentsController : Controller
     {
-        private readonly IDepartmenstService departmentsService;
+        private readonly IDepartmentsService departmentsService;
         private readonly ICommentsService commentsService;
         private readonly IUsersService usersService;
 
-        public DepartmentsController(IDepartmenstService departmentsService, ICommentsService commentsService, IUsersService usersService)
+        public DepartmentsController(IDepartmentsService departmentsService, ICommentsService commentsService, IUsersService usersService)
         {
             this.departmentsService = departmentsService;
             this.commentsService = commentsService;
             this.usersService = usersService;
         }
 
-        public IActionResult Department(int id)
+        public async Task<IActionResult> Department(int id)
         {
-            Department department = this.departmentsService.GetDepartment(id);
+            Department department = await this.departmentsService.GetDepartmentByIdAsync(id);
 
             string bgUrl = department.BackgroundImgSrc;
             string depName = department.Name;
 
-            this.ViewData["url"] = bgUrl;
+            this.ViewData["topImageNavUrl"] = bgUrl;
             this.ViewData["depName"] = depName.ToUpper();
 
             List<ServicesViewModel> servicesViewModel = this.departmentsService.GetDepartmentServices(id)
@@ -76,7 +76,6 @@
                     Stars = input.Stars,
                     CreatedOn = DateTime.UtcNow,
                     DepartmentId = input.DepartmentId,
-                    IsDeleted = false,
                     ApplicationUserId = userId,
                 };
 
@@ -88,7 +87,7 @@
                     return this.Redirect($"Department?id={input.DepartmentId}&submit=false");
                 }
 
-                await this.commentsService.AddComment(comment);
+                await this.commentsService.AddCommentAsync(comment);
 
                 this.TempData["Message"] = "Thank you for your feedback!";
             }
@@ -98,11 +97,11 @@
 
         [Authorize]
         [HttpPost]
-        public async Task<IActionResult> DeleteComment(int departmentId, int commentId)
+        public IActionResult DeleteComment(int departmentId, int commentId)
         {
             var comment = this.commentsService.GetCommentById(commentId);
 
-            await this.commentsService.DeleteComment(comment);
+            this.commentsService.HardDeleteComment(comment);
 
             this.TempData["Message"] = "You have deleted your comment successfully!";
 

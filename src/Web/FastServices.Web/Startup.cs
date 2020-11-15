@@ -12,6 +12,7 @@
     using FastServices.Services.Comments;
     using FastServices.Services.Data;
     using FastServices.Services.Departments;
+    using FastServices.Services.Employees;
     using FastServices.Services.Mapping;
     using FastServices.Services.Messaging;
     using FastServices.Services.Orders;
@@ -22,6 +23,7 @@
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Identity;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
@@ -70,11 +72,12 @@
             // Application services
             services.AddTransient<IEmailSender, NullMessageSender>();
             services.AddTransient<ISettingsService, SettingsService>();
-            services.AddTransient<IDepartmenstService, DepartmentsService>();
+            services.AddTransient<IDepartmentsService, DepartmentsService>();
             services.AddTransient<IServicesService, ServicesService>();
             services.AddTransient<IOrdersService, OrdersService>();
             services.AddTransient<ICommentsService, CommentsService>();
             services.AddTransient<IUsersService, UsersService>();
+            services.AddTransient<IEmployeesService, EmployeesService>();
 
             // inject current user anywhere
             services.AddTransient<IPrincipal>(provider => provider.GetService<IHttpContextAccessor>().HttpContext.User);
