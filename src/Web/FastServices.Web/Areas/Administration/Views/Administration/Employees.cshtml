@@ -5,31 +5,45 @@
         height: 3.5em;
         background-color: black;
     }
-    footer{
-        visibility:hidden;
+
+    footer {
+        visibility: hidden;
     }
 </style>
 
 <div class="topImageNav">
 </div>
 
-<table class="table table-light">
-    <thead class="thead-light">
-        <tr>
-            <th scope="col">Id</th>
-            <th scope="col">UserId</th>
-            <th scope="col">DepartmentId</th>
-            <th scope="col">FirstN</th>
-            <th scope="col">LastN</th>
-            <th scope="col">Salary</th>
-            <th scope="col">Available</th>
-            <th scope="col">Created On</th>
-            <th scope="col">DeletedOn</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var employee in Model)
-        {
+<div>
+    <div style="padding-left:40%" class="custom-select-lg">
+        <select id="selectChangeView" onchange="changeView(this,'@Url.Action("Employees")')">
+            <option value="0">Select Option</option>
+            <option value="1">All</option>
+            <option value="2">Available</option>
+            <option value="3">Deleted</option>
+        </select>
+    </div>
+</div>
+
+    <table class="table table-light table-bordered">
+        <thead class="thead-light">
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">UserId</th>
+                <th scope="col">DepartmentId</th>
+                <th scope="col">FirstN</th>
+                <th scope="col">LastN</th>
+                <th scope="col">Salary</th>
+                <th scope="col">Available</th>
+                <th scope="col">Created On</th>
+                <th scope="col">DeletedOn</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var employee in Model)
+            {
             <tr class="@employee.HtmlClass">
                 <th scope="row">@employee.Id</th>
                 <td>@employee.UserId</td>
@@ -38,10 +52,28 @@
                 <td>@employee.LastName</td>
                 <td>@employee.Salary</td>
                 <td>@employee.IsAvailable</td>
-                <th scope="col">@employee.CreatedOn</th>
-                <th scope="col">@employee.DeletedOn</th>
-            </tr>
-        }
+                <td>@employee.CreatedOn</td>
+                <td>@employee.DeletedOn</td>
+                @if (employee.IsDeleted == true)
+                {
+                    <td><a href="@(this.Context.Request.Path)?make=restore&id=@employee.Id" class="btn btn-success">Restore</a></td>
+                    @*<td><button type="submit" class="btn btn-success">Restore</button></td>*@
+                }
+                else
+                {
+                    <td><a href="@(this.Context.Request.Path)?make=delete&id=@employee.Id" class="btn btn-danger">Delete</a></td>
+                    @*<td><button type="submit" class="btn btn-danger">Delete</button></td>*@
+                }
 
-    </tbody>
-</table>
+            </tr>
+
+            }
+
+        </tbody>
+    </table>
+
+<script>
+    function changeView(item, baseUrl) {
+        window.location.href = baseUrl + '?selectedOption=' + item.value;
+    }
+</script>

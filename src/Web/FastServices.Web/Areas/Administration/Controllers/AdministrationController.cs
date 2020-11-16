@@ -2,7 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Linq;
-
+    using System.Threading.Tasks;
     using FastServices.Common;
     using FastServices.Data.Models;
     using FastServices.Services.Employees;
@@ -24,11 +24,34 @@
         }
 
         [HttpGet]
-        public IActionResult Employees()
+        public async Task<IActionResult> Employees(int selectedOption, string make, string id)
         {
-            string htmlClass = string.Empty;
+            if (!string.IsNullOrEmpty(make))
+            {
+                if (make == "restore")
+                {
+                    await this.employeesService.UndeleteByIdAsync(id);
+                }
+                else if (make == "delete")
+                {
+                    await this.employeesService.DeleteByIdAsync(id);
+                }
 
-            var model = this.employeesService.GetAllEmployees()
+                return this.RedirectToAction("Employees");
+            }
+
+            var employees = this.employeesService.GetAllWithDeleted();
+
+            if (selectedOption == 2)
+            {
+                employees = this.employeesService.GetAvailable();
+            }
+            else if (selectedOption == 3)
+            {
+                employees = this.employeesService.GetDeleted();
+            }
+
+            var model = employees
                 .Select(x => new EmployeeViewModel
                 {
                     Id = x.Id,
@@ -41,9 +64,9 @@
                     IsDeleted = x.IsDeleted,
                     DeletedOn = x.DeletedOn?.ToString(format: "d"),
                     CreatedOn = x.CreatedOn.ToString(format: "d"),
-                    HtmlClass = x.IsAvailable == false ? "table-warning"
-                                : x.IsDeleted == true ? "table-danger"
-                                : string.Empty,
+                    HtmlClass = x.IsDeleted == true ? "table-danger"
+                                : x.IsAvailable == false ? "table-warning"
+                                : "table-info",
                 })
                 .ToList();
 
