@@ -12,6 +12,9 @@
 }
 
 <style>
+    .commentSection {
+    }
+
     .vertical-center {
         margin: 0;
         position: absolute;
@@ -167,15 +170,6 @@
                     <partial data="@this.TempData["Message"]" name="/Views/Shared/_ErrorPopup.cshtml"/>
                 }*@
 
-            @if (ViewContext.HttpContext.Request.Query["submit"] == "false")
-            {
-                <partial name="/Views/Shared/_ErrorPopup.cshtml" />
-            }
-            else if (ViewContext.HttpContext.Request.Query["submit"] == "true")
-            {
-                <partial name="/Views/Shared/_SuccessPopup.cshtml" />
-            }
-
             @if (this.SignInManager.IsSignedIn(this.User))
             {
                 <div class="rating">
@@ -230,28 +224,39 @@
         <div class="comment-widgets">
             @foreach (var comment in Model)
             {<!-- Comment Row -->
-            <form asp-controller="Departments" asp-action="DeleteComment">
-                <div class="d-flex flex-row comment-row m-t-0">
-                    <div class="p-2"><img src="@comment.AvatarImgSrc" alt="user" width="50" class="rounded-circle"></div>
-                    <div class="comment-text w-75">
-                        <h6 class="font-medium">@comment.Name</h6>
-                        <h6 style="color:#FFD600">@comment.Stars/5</h6>
-                        <span class="m-b-15 d-block">@comment.CommentContent</span>
-                        <div class="comment-footer">
-                            <span class="text-muted float-right">@comment.CreatedOn</span>
-                            @*<button type="button" class="btn btn-cyan btn-sm">Edit</button>*@
 
-                            @if (user?.Id == comment.UserId ||
-                                this.User.IsInRole(GlobalConstants.AdministratorRoleName))
-                            {
-                                <input style="visibility:hidden; position:absolute" id="departmentId" type="text" name="departmentId" value="@comment.DepartmentId" />
-                                <input style="visibility:hidden;  position:absolute" id="commentId" type="text" name="commentId" value="@comment.CommentId" />
-                                <button class="btn btn-danger btn-sm" type="submit">Delete</button>
-                            }
+                <article>
+                    <div class="d-flex flex-row comment-row m-t-0 commentSection">
+                        <div class="p-2"><img src="@comment.AvatarImgSrc" alt="user" width="50" class="rounded-circle"></div>
+                        <div class="comment-text w-75">
+                            <h6 class="font-medium">@comment.Name</h6>
+                            <h6 style="color:#FFD600">@comment.Stars/5</h6>
+                            <span class="m-b-15 d-block">@comment.CommentContent</span>
+                            <div class="comment-footer">
+                                <span class="text-muted float-right">@comment.CreatedOn</span>
+                                @*<button type="button" class="btn btn-cyan btn-sm">Edit</button>*@
+
+                                @if (user?.Id == comment.UserId ||
+                             this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                                {
+                                    <form asp-controller="Departments" asp-action="DeleteComment" asp-route-departmentId="@comment.DepartmentId" asp-route-commentId="@comment.CommentId" data-ajax="true" data-ajax-success="deleteItem(this)">
+                                        <input style="visibility:hidden; position:absolute" id="departmentId" type="text" name="departmentId" value="@comment.DepartmentId" />
+                                        <input style="visibility:hidden;  position:absolute" id="commentId" type="text" name="commentId" value="@comment.CommentId" />
+                                        <button class="btn btn-danger btn-sm" type="submit">Delete</button>
+                                    </form>
+                                }
+                            </div>
                         </div>
                     </div>
-                </div>
-            </form><!-- Comment Row -->}
+                </article>
+            }
         </div> <!-- Card -->
+
     </div>
 </div>
+
+<script>
+    function deleteItem(form) {
+        $(form).parentsUntil("article").remove();
+    }
+</script>

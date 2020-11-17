@@ -1,5 +1,7 @@
 ﻿@model ICollection<FastServices.Web.ViewModels.Employees.EmployeeViewModel>
 
+
+
 <style>
     .topImageNav {
         height: 3.5em;
@@ -11,19 +13,20 @@
     }
 </style>
 
-<div class="topImageNav">
-</div>
-
-<div>
-    <div style="padding-left:40%" class="custom-select-lg">
-        <select id="selectChangeView" onchange="changeView(this,'@Url.Action("Employees")')">
-            <option value="0">Select Option</option>
-            <option value="1">All</option>
-            <option value="2">Available</option>
-            <option value="3">Deleted</option>
-        </select>
+<body>
+    <div class="topImageNav">
     </div>
-</div>
+
+    <div>
+        <div style="padding-left:40%" class="custom-select-lg">
+            <select id="selectChangeView" onchange="changeView(this,'@Url.Action("Employees")')">
+                <option disabled="disabled" value="0">Select Option</option>
+                <option value="1">All</option>
+                <option value="2">Available</option>
+                <option value="3">Deleted</option>
+            </select>
+        </div>
+    </div>
 
     <table class="table table-light table-bordered">
         <thead class="thead-light">
@@ -44,35 +47,38 @@
         <tbody>
             @foreach (var employee in Model)
             {
-            <tr class="@employee.HtmlClass">
-                <th scope="row">@employee.Id</th>
-                <td>@employee.UserId</td>
-                <td>@employee.DepartmentId</td>
-                <td>@employee.FirstName</td>
-                <td>@employee.LastName</td>
-                <td>@employee.Salary</td>
-                <td>@employee.IsAvailable</td>
-                <td>@employee.CreatedOn</td>
-                <td>@employee.DeletedOn</td>
-                @if (employee.IsDeleted == true)
-                {
-                    <td><a href="@(this.Context.Request.Path)?make=restore&id=@employee.Id" class="btn btn-success">Restore</a></td>
-                    @*<td><button type="submit" class="btn btn-success">Restore</button></td>*@
-                }
-                else
-                {
-                    <td><a href="@(this.Context.Request.Path)?make=delete&id=@employee.Id" class="btn btn-danger">Delete</a></td>
-                    @*<td><button type="submit" class="btn btn-danger">Delete</button></td>*@
-                }
+                <tr class="@employee.HtmlClass">
+                    <th scope="row">@employee.Id</th>
+                    <td>@employee.UserId</td>
+                    <td>@employee.DepartmentId</td>
+                    <td>@employee.FirstName</td>
+                    <td>@employee.LastName</td>
+                    <td>@employee.Salary</td>
+                    <td>@employee.IsAvailable</td>
+                    <td>@employee.CreatedOn</td>
+                    <td>@employee.DeletedOn</td>
+                    @if (employee.IsDeleted == true)
+                    {
+                        <td><a id="returnhref" href="@(this.Context.Request.Path)?selectedOption=@this.TempData["SelectedOption"]&make=restore&id=@employee.Id" class="btn btn-success">Restore</a></td>
+                        @*<td><button type="submit" class="btn btn-success">Restore</button></td>*@
+                    }
+                    else
+                    {
+                        <td><a href="@(this.Context.Request.Path)?selectedOption=@this.TempData["SelectedOption"]&make=delete&id=@employee.Id" class="btn btn-danger">Delete</a></td>
+                        @*<td><button type="submit" class="btn btn-danger">Delete</button></td>*@
+                    }
 
-            </tr>
+                </tr>
 
             }
 
         </tbody>
     </table>
-
+</body>
 <script>
+    var selectChangeView = document.getElementById('selectChangeView');
+    selectChangeView.value = @this.TempData["SelectedOption"];
+
     function changeView(item, baseUrl) {
         window.location.href = baseUrl + '?selectedOption=' + item.value;
     }

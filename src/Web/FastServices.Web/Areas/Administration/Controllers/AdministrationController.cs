@@ -37,7 +37,7 @@
                     await this.employeesService.DeleteByIdAsync(id);
                 }
 
-                return this.RedirectToAction("Employees");
+                return this.Redirect($"/Administration/Administration/Employees?selectedOption={selectedOption}");
             }
 
             var employees = this.employeesService.GetAllWithDeleted();
@@ -50,6 +50,8 @@
             {
                 employees = this.employeesService.GetDeleted();
             }
+
+            this.TempData["SelectedOption"] = selectedOption;
 
             var model = employees
                 .Select(x => new EmployeeViewModel
@@ -66,7 +68,7 @@
                     CreatedOn = x.CreatedOn.ToString(format: "d"),
                     HtmlClass = x.IsDeleted == true ? "table-danger"
                                 : x.IsAvailable == false ? "table-warning"
-                                : "table-info",
+                                : "table-success",
                 })
                 .ToList();
 

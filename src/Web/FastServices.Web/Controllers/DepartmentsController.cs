@@ -105,7 +105,7 @@
 
             this.TempData["Message"] = "You have deleted your comment successfully!";
 
-            return this.Redirect($"Department?id={departmentId}&submit=true");
+            return this.NoContent();
         }
     }
 }
