@@ -16,9 +16,11 @@
     .validation-summary-errors ul {
         list-style: none;
         padding-left: 1em;
-        margin-bottom:1em;
-        font-size:14px;
+        margin-bottom: 1em;
+        font-size: 14px;
+        font-family: Bahnschrift;
     }
+
     .commentSection {
     }
 
@@ -30,42 +32,42 @@
         transform: translateY(-50%);
     }
     /*STARS CSS*/
-    .rating {
-        display: flex;
-        flex-direction: row-reverse;
-        justify-content: center;
-        margin-top: -4em;
+    .star-rating {
+        font-size: 0;
     }
 
-        .rating > input {
-            display: none
+    .star-rating__wrap {
+        display: inline-block;
+        font-size: 40px;
+        margin-bottom: 10px;
+        margin-left: 16.6%;
+    }
+
+        .star-rating__wrap:after {
+            content: "";
+            display: table;
+            clear: both;
         }
 
-        .rating > label {
-            position: relative;
-            width: 1em;
-            font-size: 4vw;
-            color: #FFD600;
-            cursor: pointer;
+    .star-rating__ico {
+        float: right;
+        padding-left: 2px;
+        cursor: pointer;
+        color: #FFB300;
+    }
+
+        .star-rating__ico:last-child {
+            padding-left: 0;
         }
 
-            .rating > label::before {
-                content: "\2605";
-                position: absolute;
-                opacity: 0
-            }
+    .star-rating__input {
+        display: none;
+    }
 
-            .rating > label:hover:before,
-            .rating > label:hover ~ label:before {
-                opacity: 1 !important
-            }
-
-        .rating > input:checked ~ label:before {
-            opacity: 1
-        }
-
-        .rating:hover > input:checked ~ label:before {
-            opacity: 0.4
+        .star-rating__ico:hover:before,
+        .star-rating__ico:hover ~ .star-rating__ico:before,
+        .star-rating__input:checked ~ .star-rating__ico:before {
+            content: "\f005";
         }
     /*STARS CSS END*/
 
@@ -96,7 +98,7 @@
         -webkit-box-flex: 1;
         -ms-flex: 1 1 auto;
         flex: 1 1 auto;
-        padding: 1.25rem
+        padding: 1.25rem;
     }
 
     .card .card-title {
@@ -104,11 +106,12 @@
         font-weight: 600;
         margin-bottom: 10px;
         cursor: text;
+        font-family: Bahnschrift;
     }
 
     .comment-widgets {
         position: relative;
-        margin-bottom: 10px
+        margin-bottom: 10px;
     }
 
         .comment-widgets .comment-row {
@@ -117,16 +120,17 @@
             display: -webkit-box;
             display: -ms-flexbox;
             display: flex;
-            margin: 10px 0
+            margin: 10px 0;
         }
 
     .p-2 {
-        padding: 0.5rem !important
+        padding: 0.5rem !important;
     }
 
     .comment-text {
         padding-left: 15px;
-        font-family: 'Calibri', sans-serif !important
+        font-weight: 200;
+        font-family: Bahnschrift;
     }
 
     .w-100 {
@@ -171,19 +175,28 @@
             <input style="visibility:hidden" name="DepartmentId" value="@Context.Request.Query["id"]" />
 
             @*@if (ViewContext.HttpContext.Request.Query["error"] == "not-allowed")
-        {
-            <partial data="@this.TempData["Message"]" name="/Views/Shared/_ErrorPopup.cshtml"/>
-        }*@
+                {
+                    <partial data="@this.TempData["Message"]" name="/Views/Shared/_ErrorPopup.cshtml"/>
+                }*@
 
             @if (this.SignInManager.IsSignedIn(this.User))
             {
-                <div class="rating">
-                    <input id="Stars" type="text" name="Stars" value="1" />
-                    <input type="radio" onclick="getResult()" name="rating" value="5" id="5"><label for="5">☆</label>
-                    <input type="radio" onclick="getResult()" name="rating" value="4" id="4"><label for="4">☆</label>
-                    <input type="radio" onclick="getResult()" name="rating" value="3" id="3"><label for="3">☆</label>
-                    <input type="radio" onclick="getResult()" name="rating" value="2" id="2"><label for="2">☆</label>
-                    <input type="radio" onclick="getResult()" name="rating" value="1" id="1"><label for="1">☆</label>
+                <div class="star-rating">
+                    <div class="star-rating__wrap">
+
+                        <input style="visibility:hidden;position:absolute;" id="Stars" type="text" name="Stars" value="1" />
+
+                        <input onclick="getResult()" class="star-rating__input" id="star-rating-5" type="radio" name="rating" value="5">
+                        <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-5" title="5 out of 5 stars"></label>
+                        <input onclick="getResult()" class="star-rating__input" id="star-rating-4" type="radio" name="rating" value="4">
+                        <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-4" title="4 out of 5 stars"></label>
+                        <input onclick="getResult()" class="star-rating__input" id="star-rating-3" type="radio" name="rating" value="3">
+                        <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-3" title="3 out of 5 stars"></label>
+                        <input onclick="getResult()" class="star-rating__input" id="star-rating-2" type="radio" name="rating" value="2">
+                        <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-2" title="2 out of 5 stars"></label>
+                        <input onclick="getResult()" class="star-rating__input" id="star-rating-1" type="radio" name="rating" value="1">
+                        <label class="star-rating__ico fa fa-star-o fa-lg" for="star-rating-1" title="1 out of 5 stars"></label>
+                    </div>
                 </div>
 
                 <script>
@@ -191,20 +204,20 @@
 
                         var result = 0;
 
-                        if (document.getElementById('5').checked) {
-                            result = document.getElementById('5').value;
+                        if (document.getElementById('star-rating-5').checked) {
+                            result = document.getElementById('star-rating-5').value;
                         }
-                        else if (document.getElementById('4').checked) {
-                            result = document.getElementById('4').value;
+                        else if (document.getElementById('star-rating-4').checked) {
+                            result = document.getElementById('star-rating-4').value;
                         }
-                        else if (document.getElementById('3').checked) {
-                            result = document.getElementById('3').value;
+                        else if (document.getElementById('star-rating-3').checked) {
+                            result = document.getElementById('star-rating-3').value;
                         }
-                        else if (document.getElementById('2').checked) {
-                            result = document.getElementById('2').value;
+                        else if (document.getElementById('star-rating-2').checked) {
+                            result = document.getElementById('star-rating-2').value;
                         }
-                        else if (document.getElementById('1').checked) {
-                            result = document.getElementById('1').value;
+                        else if (document.getElementById('star-rating-1').checked) {
+                            result = document.getElementById('star-rating-1').value;
                         }
 
                         document.getElementById("Stars").value = result;
@@ -215,7 +228,7 @@
 
 
                 <div style="text-align:center">
-                    <textarea asp-for="InputModel.CommentContent" style="width:80%; height:100px" type="text" name="CommentContent"></textarea>
+                    <textarea asp-for="InputModel.CommentContent" style="width:92%; height:100px" type="text" name="CommentContent"></textarea>
                 </div>
 
                 <button style="position:relative; width:50%; left:25%; top:1em" class="btn btn-cyan" type="submit">Submit</button>
@@ -223,8 +236,8 @@
             else
             {
                 <h1 style="text-align:center">
-                    <a style="color:deepskyblue" asp-area="Identity" asp-controller="Account" asp-action="Login">Sign in</a>
-                    to leave a comment
+                    <a style=" color: darkslateblue; font-family: Bahnschrift; font-weight: bolder" asp-area="Identity" asp-controller="Account" asp-action="Login">Login</a>
+                    <span style="font-family:Bahnschrift">to leave a comment</span>
                 </h1>
             }
         </form>
@@ -234,21 +247,28 @@
 
 
         <div class="comment-widgets">
+            @if (!Model.ViewModel.Any())
+            {
+                <h4 style="text-align:center; padding-top:1em;font-family:Bahnschrift"><span class="m-b-15 d-block">The comment section for this department is empty</span></h4>
+            }
             @foreach (var comment in Model.ViewModel)
             {<!-- Comment Row -->
                 <article>
                     <div class="d-flex flex-row comment-row m-t-0 commentSection">
                         <div class="p-2"><img src="@comment.AvatarImgSrc" alt="user" width="50" class="rounded-circle"></div>
                         <div class="comment-text w-75">
-                            <h6 class="font-medium">@comment.Name</h6>
-                            <h6 style="color:#FFD600">@comment.Stars/5</h6>
+                            <h6 class="font-medium" style="font-family:Bahnschrift; font-weight:600">@comment.Name</h6>
+                            @for (int i = 0; i < comment.Stars; i++)
+                            {
+                                <i style="color:#FFB300;" class="fa fa-star" aria-hidden="true"></i>
+                            }
                             <span class="m-b-15 d-block">@comment.CommentContent</span>
                             <span style="position:absolute; left:75%" class="text-muted float-right">@comment.CreatedOn</span>
                             <div class="comment-footer">
                                 @*<button type="button" class="btn btn-cyan btn-sm">Edit</button>*@
 
                                 @if (user?.Id == comment.UserId ||
-                      this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+this.User.IsInRole(GlobalConstants.AdministratorRoleName))
                                 {
                                     <form asp-controller="Departments" asp-action="DeleteComment" asp-route-departmentId="@comment.DepartmentId" asp-route-commentId="@comment.CommentId" data-ajax="true" data-ajax-success="deleteItem(this)">
                                         <input style="visibility:hidden; position:absolute" id="departmentId" type="text" name="departmentId" value="@comment.DepartmentId" />

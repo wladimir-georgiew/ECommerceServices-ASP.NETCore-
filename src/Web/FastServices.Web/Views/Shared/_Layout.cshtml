@@ -21,6 +21,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <link rel="stylesheet" type="text/css" href="/Template/css/style1.css" />
 <link rel="stylesheet" type="text/css" href="/Template/css/style_common.css" />
 <link href="/Toastr/toastr.css" rel="stylesheet" />
+<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
 
 <style>
@@ -28,9 +29,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         top: 8%;
         left: 49%;
         margin-left: -150px;
-    } 
+    }
     nav{
-        font-family:Bahnschrift
+        font-family:Bahnschrift;
     }
     body {
         background-color: ghostwhite;
@@ -73,53 +74,51 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item ">
-                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home </a>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item ">
+                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Services">Services</a>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Dropdown
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Typography">Typography</a></li>
+                        <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Error">Error</a></li>
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
+                </li>
+
+
+
+                @if (this.SignInManager.IsSignedIn(this.User))
+                {
+                    // account img
+                    <li>
+                        <vc:account-image></vc:account-image>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">About</a>
+                }
+                else
+                {
+                    <li class="w3">
+                        <a class="nav-link" asp-area="Identity" asp-controller="Account" asp-action="Login">Login</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Services">Services</a>
+                    <li class="w3">
+                        <a class="nav-link" asp-area="Identity" asp-controller="Account" asp-action="Register">Register</a>
                     </li>
+                }
 
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Dropdown
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Typography">Typography</a></li>
-                            <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Error">Error</a></li>
-                        </ul>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
-                    </li>
-
-
-
-                    @if (this.SignInManager.IsSignedIn(this.User))
-                    {
-                        // account img
-                        <div style="margin-right:1em"><vc:account-image></vc:account-image></div>
-
-                        <form style="margin-top: 8px;" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@(this.Url.Action("Index", "Home", new { area = string.Empty }))">
-                            <button class="btn-danger cursor-pointer" type="submit">Logout</button>
-                        </form>
-                    }
-                    else
-                    {
-                        <li class="w3">
-                            <a class="nav-link" asp-area="Identity" asp-controller="Account" asp-action="Login">Login</a>
-                        </li>
-                        <li class="w3">
-                            <a class="nav-link" asp-area="Identity" asp-controller="Account" asp-action="Register">Register</a>
-                        </li>
-                    }
-
-                </ul>
+            </ul>
         </nav>
     </header>
     <!-- //header -->
