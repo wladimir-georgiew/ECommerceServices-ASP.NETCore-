@@ -4,6 +4,7 @@
 @using FastServices.Common
 
 @model IEnumerable<FastServices.Web.ViewModels.Comments.CommentViewModel>
+
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
 
@@ -160,15 +161,13 @@
             <h4 class="card-title">Last 5 comments for @ViewData["depName"].ToString().ToLower() department</h4>
         </div>
 
-
-
         <form asp-controller="Departments" asp-action="AddComment">
             <input style="visibility:hidden" name="DepartmentId" value="@Context.Request.Query["id"]" />
 
             @*@if (ViewContext.HttpContext.Request.Query["error"] == "not-allowed")
-                {
-                    <partial data="@this.TempData["Message"]" name="/Views/Shared/_ErrorPopup.cshtml"/>
-                }*@
+            {
+                <partial data="@this.TempData["Message"]" name="/Views/Shared/_ErrorPopup.cshtml"/>
+            }*@
 
             @if (this.SignInManager.IsSignedIn(this.User))
             {
@@ -206,6 +205,9 @@
                     }
                 </script>
 
+                <div style="text-align:left" asp-validation-summary="All" class="text-danger"></div>
+
+
                 <div style="text-align:center">
                     <textarea style="width:80%; height:100px" type="text" name="CommentContent"></textarea>
                 </div>
@@ -221,10 +223,13 @@
             }
         </form>
 
+
+
+
+
         <div class="comment-widgets">
             @foreach (var comment in Model)
             {<!-- Comment Row -->
-
                 <article>
                     <div class="d-flex flex-row comment-row m-t-0 commentSection">
                         <div class="p-2"><img src="@comment.AvatarImgSrc" alt="user" width="50" class="rounded-circle"></div>
@@ -237,7 +242,7 @@
                                 @*<button type="button" class="btn btn-cyan btn-sm">Edit</button>*@
 
                                 @if (user?.Id == comment.UserId ||
-                             this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                        this.User.IsInRole(GlobalConstants.AdministratorRoleName))
                                 {
                                     <form asp-controller="Departments" asp-action="DeleteComment" asp-route-departmentId="@comment.DepartmentId" asp-route-commentId="@comment.CommentId" data-ajax="true" data-ajax-success="deleteItem(this)">
                                         <input style="visibility:hidden; position:absolute" id="departmentId" type="text" name="departmentId" value="@comment.DepartmentId" />
@@ -258,5 +263,16 @@
 <script>
     function deleteItem(form) {
         $(form).parentsUntil("article").remove();
+
+        $(document).ready(function () {
+
+            // show when page load
+            toastr.error('@FastServices.Common.GlobalConstants.DeletedCommentPostMessage');
+        });
     }
+
 </script>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

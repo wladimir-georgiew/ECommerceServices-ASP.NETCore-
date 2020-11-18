@@ -36,6 +36,7 @@
             string bgUrl = department.BackgroundImgSrc;
             string depName = department.Name;
 
+            this.TempData["messageValue"] = FastServices.Common.GlobalConstants.SuccessCommentPostMessage;
             this.ViewData["topImageNavUrl"] = bgUrl;
             this.ViewData["depName"] = depName.ToUpper();
 
@@ -58,17 +59,17 @@
         {
             if (!this.ModelState.IsValid)
             {
-                this.TempData["Message"] = this.ModelState
-                    .Values
-                    .SelectMany(modelState => modelState.Errors)
-                    .FirstOrDefault()
-                    .ErrorMessage;
-
-                return this.Redirect($"Department?id={input.DepartmentId}&submit=false");
+                return this.NoContent();
             }
             else
             {
                 var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+                // Don't proceed if 24 hours haven't passed since last comment (spam protection)
+                if (!this.usersService.IsUserAllowedToComment(userId))
+                {
+                    return this.Redirect($"Department?id={input.DepartmentId}&submit=false");
+                }
 
                 var comment = new Comment
                 {
@@ -79,17 +80,7 @@
                     ApplicationUserId = userId,
                 };
 
-                // Don't proceed if 24 hours haven't passed since last comment (spam protection)
-                if (!this.usersService.IsUserAllowedToComment(userId))
-                {
-                    this.TempData["Message"] = "You need to wait 24 hours before posting new  comment!";
-
-                    return this.Redirect($"Department?id={input.DepartmentId}&submit=false");
-                }
-
                 await this.commentsService.AddCommentAsync(comment);
-
-                this.TempData["Message"] = "Thank you for your feedback!";
             }
 
             return this.Redirect($"Department?id={input.DepartmentId}&submit=true");

@@ -7,5 +7,11 @@
         public const string AdministratorRoleName = "Administrator";
 
         public const string EmployeeRoleName = "Employee";
+
+        public const string SuccessCommentPostMessage = "Thank you for your feedback!";
+
+        public const string ErrorCommentPostSpamMessage = "You have to wait 24h after posting comment";
+
+        public const string DeletedCommentPostMessage = "Comment has been deleted";
     }
 }

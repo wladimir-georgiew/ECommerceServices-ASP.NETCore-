@@ -67,6 +67,9 @@
 
 </div>
 
+
+
+<a id='linkButton'>Show Message</a>
 <div class="container mt-2 float-child" style="width:70%">
     <div style="margin-bottom: 15.5em" class="row">
         @foreach (var service in @Model)
@@ -82,3 +85,18 @@
 
 </div>
 <div class="float-child" style="width:30%"><vc:department-comments id="@Model.FirstOrDefault().DepartmentId"></vc:department-comments></div>
+
+@if (Context.Request.QueryString.ToString()
+   .Split("&")
+   .ToArray()
+   .Contains("submit=true"))
+{
+    <script>
+   $(document).ready(function() {
+
+        // show when page load
+        toastr.success('@(this.TempData["messageValue"])');
+    });
+    </script>
+}
+
