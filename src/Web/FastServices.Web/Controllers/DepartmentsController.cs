@@ -31,7 +31,7 @@
 
         public async Task<IActionResult> Department(int id)
         {
-            // Service model
+            // Services model
             Department department = await this.departmentsService.GetDepartmentByIdAsync(id);
 
             string bgUrl = department.BackgroundImgSrc;
@@ -84,60 +84,6 @@
             };
 
             return this.View(model);
-        }
-
-        [Authorize]
-        [HttpPost]
-        public async Task<IActionResult> AddComment(CommentInputModel input)
-        {
-            input.CommentContent.Trim();
-
-            if (!this.ModelState.IsValid)
-            {
-                return this.Redirect($"Department?id={input.DepartmentId}");
-            }
-            else
-            {
-                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-                // Don't proceed if 24 hours haven't passed since last comment (spam protection)
-                if (!this.usersService.IsUserAllowedToComment(userId))
-                {
-                    return this.Redirect($"Department?id={input.DepartmentId}&submit=false");
-                }
-
-                var comment = new Comment
-                {
-                    CommentContent = input.CommentContent.Trim(),
-                    Stars = input.Stars,
-                    CreatedOn = DateTime.UtcNow,
-                    DepartmentId = input.DepartmentId,
-                    ApplicationUserId = userId,
-                };
-
-                await this.commentsService.AddCommentAsync(comment);
-            }
-
-            return this.Redirect($"Department?id={input.DepartmentId}&submit=true");
-        }
-
-        [Authorize]
-        [HttpPost]
-        public async Task<IActionResult> DeleteComment(int departmentId, int commentId)
-        {
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            var comment = this.commentsService.GetById(commentId);
-
-            if (!this.User.IsInRole("Administrator") &&
-                comment.ApplicationUserId != userId)
-            {
-                return this.Forbid();
-            }
-
-            await this.commentsService.DeleteCommentAsync(comment);
-
-            return this.NoContent();
         }
     }
 }
