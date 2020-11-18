@@ -125,7 +125,15 @@
         [HttpPost]
         public async Task<IActionResult> DeleteComment(int departmentId, int commentId)
         {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
             var comment = this.commentsService.GetById(commentId);
+
+            if (!this.User.IsInRole("Administrator") &&
+                comment.ApplicationUserId != userId)
+            {
+                return this.Forbid();
+            }
 
             await this.commentsService.DeleteCommentAsync(comment);
 

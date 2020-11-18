@@ -19,7 +19,7 @@
     </a>
     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
         <a  asp-area="Identity" asp-controller="Account" asp-action="Manage" class="btn" style="margin-top:-5px;" type="submit">Profile</a>
-        <form style="margin-top: 8px;" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@(this.Url.Action("Index", "Home", new { area = string.Empty }))">
+        <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@(this.Url.Action("Index", "Home", new { area = string.Empty }))">
             <button class="btn" style="margin-top:-5px;" type="submit">Logout</button>
         </form>
     </ul>
