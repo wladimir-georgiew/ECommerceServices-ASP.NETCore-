@@ -10,7 +10,7 @@
 
         public const string SuccessCommentPostMessage = "Thank you for your feedback!";
 
-        public const string ErrorCommentPostSpamMessage = "You have to wait 24h after posting comment";
+        public const string ErrorCommentPostSpamMessage = "You have to wait 24h before posting another comment";
 
         public const string DeletedCommentPostMessage = "Comment has been deleted";
     }

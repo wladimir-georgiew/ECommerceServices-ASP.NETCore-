@@ -11,17 +11,15 @@
 
     public class ServicesService : IServicesService
     {
-        private readonly ApplicationDbContext db;
         private readonly IDeletableEntityRepository<Service> repository;
 
-        public ServicesService(ApplicationDbContext db, IDeletableEntityRepository<Service> repository)
+        public ServicesService(IDeletableEntityRepository<Service> repository)
         {
-            this.db = db;
             this.repository = repository;
         }
 
-        public IEnumerable<Service> GetAllServices() => this.repository.All();
+        public IQueryable<Service> GetAllServices() => this.repository.All();
 
-        public IEnumerable<Service> GetAllServicesWithDeleted() => this.repository.AllWithDeleted();
+        public IQueryable<Service> GetAllServicesWithDeleted() => this.repository.AllWithDeleted();
     }
 }

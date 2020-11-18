@@ -24,6 +24,11 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 
 <style>
+    .toast-top-center {
+        top: 8%;
+        left: 49%;
+        margin-left: -150px;
+    } 
     nav{
         font-family:Bahnschrift
     }
@@ -214,6 +219,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     });
 </script>
 <!--//tabs-->
+
+<script>
+    toastr.options.positionClass = 'toast-top-center'
+</script>
 
 @await this.RenderSectionAsync("Scripts", required: false)
 

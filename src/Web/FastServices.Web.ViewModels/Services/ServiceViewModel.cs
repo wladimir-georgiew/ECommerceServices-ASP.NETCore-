@@ -1,6 +1,6 @@
 ﻿namespace FastServices.Web.ViewModels.Departments
 {
-    public class ServicesViewModel
+    public class ServiceViewModel
     {
         public int Id { get; set; }
 

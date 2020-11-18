@@ -1,21 +1,22 @@
 ﻿namespace FastServices.Services.Employees
 {
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using FastServices.Data.Models;
 
     public interface IEmployeesService
     {
-        public IEnumerable<Employee> GetAllWithDeleted();
+        public IQueryable<Employee> GetAllWithDeleted();
 
-        public IEnumerable<Employee> GetAll();
+        public IQueryable<Employee> GetAll();
 
-        public IEnumerable<Employee> GetAvailable();
+        public IQueryable<Employee> GetAvailable();
 
-        public IEnumerable<Employee> GetDeleted();
+        public IQueryable<Employee> GetDeleted();
 
-        public Task<Employee> GetByIdAsync(string id);
+        public Task<Employee> GetByIdWithDeletedAsync(string id);
 
         public Task UndeleteByIdAsync(string id);
 

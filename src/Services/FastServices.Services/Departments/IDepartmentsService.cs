@@ -1,15 +1,16 @@
 ﻿namespace FastServices.Services.Departments
 {
     using System.Collections.Generic;
+    using System.Linq;
     using System.Threading.Tasks;
 
     using FastServices.Data.Models;
 
     public interface IDepartmentsService
     {
-        public IEnumerable<Department> GetAllDepartments();
+        public IQueryable<Department> GetAllDepartments();
 
-        public IEnumerable<Department> GetAllDepartmentsWithDeleted();
+        public IQueryable<Department> GetAllDepartmentsWithDeleted();
 
         public Task<Department> GetDepartmentByIdAsync(int departmentId);
 

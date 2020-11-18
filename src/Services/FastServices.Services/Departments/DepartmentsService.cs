@@ -10,21 +10,19 @@
 
     public class DepartmentsService : IDepartmentsService
     {
-        private readonly ApplicationDbContext db;
         private readonly IDeletableEntityRepository<Department> repository;
 
-        public DepartmentsService(IDeletableEntityRepository<Department> repository, ApplicationDbContext db)
+        public DepartmentsService(IDeletableEntityRepository<Department> repository)
         {
-            this.db = db;
             this.repository = repository;
         }
 
-        public IEnumerable<Department> GetAllDepartments() => this.repository.All();
+        public IQueryable<Department> GetAllDepartments() => this.repository.All();
 
-        public IEnumerable<Department> GetAllDepartmentsWithDeleted() => this.repository.AllWithDeleted();
+        public IQueryable<Department> GetAllDepartmentsWithDeleted() => this.repository.AllWithDeleted();
 
         public async Task<Department> GetDepartmentByIdAsync(int departmentId) => await this.repository.GetByIdWithDeletedAsync(departmentId);
 
-        public IEnumerable<Service> GetDepartmentServices(int departmentId) => this.db.Departments.Where(x => x.Id == departmentId).Select(x => x.Services).FirstOrDefault();
+        public IEnumerable<Service> GetDepartmentServices(int departmentId) => this.GetAllDepartments().Where(x => x.Id == departmentId).Select(x => x.Services).FirstOrDefault();
     }
 }

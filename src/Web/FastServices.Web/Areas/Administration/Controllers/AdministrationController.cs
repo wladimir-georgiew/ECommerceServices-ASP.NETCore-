@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
     using FastServices.Common;
     using FastServices.Data.Models;
     using FastServices.Services.Employees;
@@ -40,15 +41,15 @@
                 return this.Redirect($"/Administration/Administration/Employees?selectedOption={selectedOption}");
             }
 
-            var employees = this.employeesService.GetAllWithDeleted();
+            var employees = this.employeesService.GetAllWithDeleted().ToList();
 
             if (selectedOption == 2)
             {
-                employees = this.employeesService.GetAvailable();
+                employees = this.employeesService.GetAvailable().ToList();
             }
             else if (selectedOption == 3)
             {
-                employees = this.employeesService.GetDeleted();
+                employees = this.employeesService.GetDeleted().ToList();
             }
 
             this.TempData["SelectedOption"] = selectedOption;

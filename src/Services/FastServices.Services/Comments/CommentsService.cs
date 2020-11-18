@@ -11,35 +11,27 @@
 
     public class CommentsService : ICommentsService
     {
-        private readonly ApplicationDbContext db;
         private readonly IRepository<Comment> repository;
 
-        public CommentsService(ApplicationDbContext db, IRepository<Comment> repository)
+        public CommentsService(IRepository<Comment> repository)
         {
-            this.db = db;
             this.repository = repository;
         }
 
-        public IEnumerable<Comment> GetAllComments() => this.repository.All();
+        public IQueryable<Comment> GetAll() => this.repository.All();
 
         public async Task AddCommentAsync(Comment comment)
         {
             await this.repository.AddAsync(comment);
-            await this.db.SaveChangesAsync();
+            await this.repository.SaveChangesAsync();
         }
 
-        public void HardDeleteComment(Comment comment)
+        public async Task DeleteCommentAsync(Comment comment)
         {
             this.repository.Delete(comment);
-            this.db.SaveChanges();
+            await this.repository.SaveChangesAsync();
         }
 
-        public void DeleteComment(Comment comment)
-        {
-            this.repository.Delete(comment);
-            this.db.SaveChanges();
-        }
-
-        public Comment GetCommentById(int id) => this.GetAllComments().FirstOrDefault(x => x.Id == id);
+        public Comment GetById(int id) => this.GetAll().FirstOrDefault(x => x.Id == id);
     }
 }

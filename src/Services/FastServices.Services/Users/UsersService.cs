@@ -2,17 +2,22 @@
 {
     using System;
     using System.Linq;
+    using System.Threading.Tasks;
 
     using FastServices.Data;
+    using FastServices.Data.Common.Repositories;
     using FastServices.Data.Models;
+    using FastServices.Services.Comments;
 
     public class UsersService : IUsersService
     {
-        private readonly ApplicationDbContext db;
+        private readonly IDeletableEntityRepository<ApplicationUser> repository;
+        private readonly ICommentsService commentsService;
 
-        public UsersService(ApplicationDbContext db)
+        public UsersService(IDeletableEntityRepository<ApplicationUser> repository, ICommentsService commentsService)
         {
-            this.db = db;
+            this.repository = repository;
+            this.commentsService = commentsService;
         }
 
         public bool IsUserAllowedToComment(string userId)
@@ -32,6 +37,10 @@
             return true;
         }
 
-        public Comment GetUserLatestComment(string userId) => this.db.Comments.Where(x => x.ApplicationUserId == userId).OrderByDescending(x => x.CreatedOn).FirstOrDefault();
+        public Comment GetUserLatestComment(string userId) => this.commentsService.GetAll().Where(x => x.ApplicationUserId == userId).OrderByDescending(x => x.CreatedOn).FirstOrDefault();
+
+        public IQueryable<ApplicationUser> GetAll() => this.repository.All();
+
+        public async Task<ApplicationUser> GetByIdWithDeletedAsync(string id) => await this.repository.GetByIdWithDeletedAsync(id);
     }
 }

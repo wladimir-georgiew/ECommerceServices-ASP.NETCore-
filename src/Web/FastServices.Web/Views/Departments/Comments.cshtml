@@ -3,7 +3,7 @@
 @using Microsoft.AspNetCore.Identity
 @using FastServices.Common
 
-@model IEnumerable<FastServices.Web.ViewModels.Comments.CommentViewModel>
+@model FastServices.Web.ViewModels.Comments.CommentsMasterModel
 
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
@@ -13,6 +13,12 @@
 }
 
 <style>
+    .validation-summary-errors ul {
+        list-style: none;
+        padding-left: 1em;
+        margin-bottom:1em;
+        font-size:14px;
+    }
     .commentSection {
     }
 
@@ -38,9 +44,9 @@
         .rating > label {
             position: relative;
             width: 1em;
-            font-size: 6vw;
+            font-size: 4vw;
             color: #FFD600;
-            cursor: pointer
+            cursor: pointer;
         }
 
             .rating > label::before {
@@ -161,13 +167,13 @@
             <h4 class="card-title">Last 5 comments for @ViewData["depName"].ToString().ToLower() department</h4>
         </div>
 
-        <form asp-controller="Departments" asp-action="AddComment">
+        <form asp-controller="Departments" asp-action="AddComment" method="post">
             <input style="visibility:hidden" name="DepartmentId" value="@Context.Request.Query["id"]" />
 
             @*@if (ViewContext.HttpContext.Request.Query["error"] == "not-allowed")
-            {
-                <partial data="@this.TempData["Message"]" name="/Views/Shared/_ErrorPopup.cshtml"/>
-            }*@
+        {
+            <partial data="@this.TempData["Message"]" name="/Views/Shared/_ErrorPopup.cshtml"/>
+        }*@
 
             @if (this.SignInManager.IsSignedIn(this.User))
             {
@@ -209,10 +215,10 @@
 
 
                 <div style="text-align:center">
-                    <textarea style="width:80%; height:100px" type="text" name="CommentContent"></textarea>
+                    <textarea asp-for="InputModel.CommentContent" style="width:80%; height:100px" type="text" name="CommentContent"></textarea>
                 </div>
 
-                <button style="position:relative; left:45%; top:1em" class="btn btn-cyan" type="submit">Submit</button>
+                <button style="position:relative; width:50%; left:25%; top:1em" class="btn btn-cyan" type="submit">Submit</button>
             }
             else
             {
@@ -228,7 +234,7 @@
 
 
         <div class="comment-widgets">
-            @foreach (var comment in Model)
+            @foreach (var comment in Model.ViewModel)
             {<!-- Comment Row -->
                 <article>
                     <div class="d-flex flex-row comment-row m-t-0 commentSection">
@@ -237,12 +243,12 @@
                             <h6 class="font-medium">@comment.Name</h6>
                             <h6 style="color:#FFD600">@comment.Stars/5</h6>
                             <span class="m-b-15 d-block">@comment.CommentContent</span>
+                            <span style="position:absolute; left:75%" class="text-muted float-right">@comment.CreatedOn</span>
                             <div class="comment-footer">
-                                <span class="text-muted float-right">@comment.CreatedOn</span>
                                 @*<button type="button" class="btn btn-cyan btn-sm">Edit</button>*@
 
                                 @if (user?.Id == comment.UserId ||
-                        this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                      this.User.IsInRole(GlobalConstants.AdministratorRoleName))
                                 {
                                     <form asp-controller="Departments" asp-action="DeleteComment" asp-route-departmentId="@comment.DepartmentId" asp-route-commentId="@comment.CommentId" data-ajax="true" data-ajax-success="deleteItem(this)">
                                         <input style="visibility:hidden; position:absolute" id="departmentId" type="text" name="departmentId" value="@comment.DepartmentId" />
@@ -273,6 +279,3 @@
 
 </script>
 
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}

@@ -31,6 +31,7 @@
 
         public async Task<IActionResult> Department(int id)
         {
+            // Service model
             Department department = await this.departmentsService.GetDepartmentByIdAsync(id);
 
             string bgUrl = department.BackgroundImgSrc;
@@ -40,8 +41,8 @@
             this.ViewData["topImageNavUrl"] = bgUrl;
             this.ViewData["depName"] = depName.ToUpper();
 
-            List<ServicesViewModel> servicesViewModel = this.departmentsService.GetDepartmentServices(id)
-                .Select(x => new ServicesViewModel
+            List<ServiceViewModel> servicesViewModel = this.departmentsService.GetDepartmentServices(id)
+                .Select(x => new ServiceViewModel
                 {
                     Id = x.Id,
                     Name = x.Name,
@@ -50,16 +51,50 @@
                 })
                 .ToList();
 
-            return this.View(servicesViewModel);
+            // Comments model
+            var departmentComments = this.departmentsService.GetAllDepartments()
+                .Where(x => x.Id == id)
+                .SelectMany(x => x.Comments)
+                .ToList()
+                .OrderByDescending(x => x.CreatedOn)
+                .Take(5);
+
+            var commentsViewModel = departmentComments.Select(x => new CommentViewModel()
+            {
+                CommentContent = x.CommentContent,
+                CreatedOn = x.CreatedOn.ToString(format: "d"),
+                Name = this.usersService.GetByIdWithDeletedAsync(x.ApplicationUserId).GetAwaiter().GetResult().Name,
+                AvatarImgSrc = this.usersService.GetByIdWithDeletedAsync(x.ApplicationUserId).GetAwaiter().GetResult().AvatarImgSrc,
+                Stars = x.Stars,
+                DepartmentId = id,
+                UserId = x.ApplicationUserId,
+                CommentId = x.Id,
+            })
+                .ToList();
+
+            // Model
+            var model = new DepartmentViewModel();
+
+            model.ServicesViewModel = servicesViewModel;
+
+            model.CommentsMasterModel = new CommentsMasterModel
+            {
+                ViewModel = commentsViewModel,
+                InputModel = new CommentInputModel(),
+            };
+
+            return this.View(model);
         }
 
         [Authorize]
         [HttpPost]
         public async Task<IActionResult> AddComment(CommentInputModel input)
         {
+            input.CommentContent.Trim();
+
             if (!this.ModelState.IsValid)
             {
-                return this.NoContent();
+                return this.Redirect($"Department?id={input.DepartmentId}");
             }
             else
             {
@@ -73,7 +108,7 @@
 
                 var comment = new Comment
                 {
-                    CommentContent = input.CommentContent,
+                    CommentContent = input.CommentContent.Trim(),
                     Stars = input.Stars,
                     CreatedOn = DateTime.UtcNow,
                     DepartmentId = input.DepartmentId,
@@ -88,13 +123,11 @@
 
         [Authorize]
         [HttpPost]
-        public IActionResult DeleteComment(int departmentId, int commentId)
+        public async Task<IActionResult> DeleteComment(int departmentId, int commentId)
         {
-            var comment = this.commentsService.GetCommentById(commentId);
+            var comment = this.commentsService.GetById(commentId);
 
-            this.commentsService.HardDeleteComment(comment);
-
-            this.TempData["Message"] = "You have deleted your comment successfully!";
+            await this.commentsService.DeleteCommentAsync(comment);
 
             return this.NoContent();
         }

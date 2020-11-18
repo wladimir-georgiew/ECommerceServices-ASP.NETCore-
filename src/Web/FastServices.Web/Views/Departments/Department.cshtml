@@ -1,4 +1,4 @@
-﻿@model ICollection<FastServices.Web.ViewModels.Departments.ServicesViewModel>
+﻿@model FastServices.Web.ViewModels.Departments.DepartmentViewModel
 
 <style>
     footer{
@@ -68,11 +68,9 @@
 </div>
 
 
-
-<a id='linkButton'>Show Message</a>
 <div class="container mt-2 float-child" style="width:70%">
     <div style="margin-bottom: 15.5em" class="row">
-        @foreach (var service in @Model)
+        @foreach (var service in @Model.ServicesViewModel)
         {
             <div style="margin-bottom:1em" class="col-md-3 col-sm-6">
                 <div class="card card-block">
@@ -84,19 +82,34 @@
     </div>
 
 </div>
-<div class="float-child" style="width:30%"><vc:department-comments id="@Model.FirstOrDefault().DepartmentId"></vc:department-comments></div>
+@*<div class="float-child" style="width:30%"><vc:department-comments id="@Model.FirstOrDefault().DepartmentId"></vc:department-comments></div>*@
+
+<div class="float-child" style="width:30%">
+    <partial model="Model.CommentsMasterModel" name="Comments.cshtml" />
+</div>
+
 
 @if (Context.Request.QueryString.ToString()
-   .Split("&")
-   .ToArray()
-   .Contains("submit=true"))
+.Split("&")
+.ToArray()
+.Contains("submit=true"))
 {
     <script>
    $(document).ready(function() {
 
-        // show when page load
         toastr.success('@(this.TempData["messageValue"])');
     });
     </script>
 }
+else if (Context.Request.QueryString.ToString()
+.Split("&")
+.ToArray()
+.Contains("submit=false"))
+{
+<script>
+   $(document).ready(function() {
 
+        toastr.warning('@FastServices.Common.GlobalConstants.ErrorCommentPostSpamMessage');
+    });
+</script>
+}
