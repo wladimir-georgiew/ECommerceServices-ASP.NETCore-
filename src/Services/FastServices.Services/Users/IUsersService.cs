@@ -14,5 +14,7 @@
         public IQueryable<ApplicationUser> GetAll();
 
         public Task<ApplicationUser> GetByIdWithDeletedAsync(string id);
+
+        public Task UploadAvatarImgPathFromLink(string userId, string newImgPath);
     }
 }

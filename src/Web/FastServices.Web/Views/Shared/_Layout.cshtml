@@ -106,18 +106,18 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 @if (this.SignInManager.IsSignedIn(this.User))
                 {
                     // account img
-                    <li>
-                        <vc:account-image></vc:account-image>
-                    </li>
+                <li>
+                    <vc:account-image></vc:account-image>
+                </li>
                 }
                 else
                 {
-                    <li class="w3">
-                        <a class="nav-link" asp-area="Identity" asp-controller="Account" asp-action="Login">Login</a>
-                    </li>
-                    <li class="w3">
-                        <a class="nav-link" asp-area="Identity" asp-controller="Account" asp-action="Register">Register</a>
-                    </li>
+                <li class="w3">
+                    <a class="nav-link" asp-area="Identity" asp-controller="Account" asp-action="Login">Login</a>
+                </li>
+                <li class="w3">
+                    <a class="nav-link" asp-area="Identity" asp-controller="Account" asp-action="Register">Register</a>
+                </li>
                 }
 
             </ul>
@@ -128,11 +128,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
     @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
     {
-        <partial name="/Views/Shared/_AdminPanel.cshtml" />
+    <partial name="/Views/Shared/_AdminPanel.cshtml" />
     }
+
 
     @this.RenderBody()
 
+
+    @*COOKIES*@
+    @*<partial name="_CookieConsentPartial" />*@
 
     <!-- Footer-->
 

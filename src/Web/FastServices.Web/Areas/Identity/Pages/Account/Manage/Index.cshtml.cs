@@ -1,26 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-using FastServices.Data.Models;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-
-namespace FastServices.Web.Areas.Identity.Pages.Account.Manage
+﻿namespace FastServices.Web.Areas.Identity.Pages.Account.Manage
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.Linq;
+    using System.Threading.Tasks;
+
+    using FastServices.Data.Models;
+    using FastServices.Services.Users;
+    using Microsoft.AspNetCore.Identity;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.AspNetCore.Mvc.RazorPages;
+
     public partial class IndexModel : PageModel
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IUsersService userServices;
 
         public IndexModel(
             UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager)
+            SignInManager<ApplicationUser> signInManager,
+            IUsersService userServices)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            this.userServices = userServices;
         }
 
         public string Username { get; set; }
@@ -36,6 +41,9 @@ namespace FastServices.Web.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+
+            [Display(Name = "Profile picture link")]
+            public string PhotoPathSrc { get; set; }
         }
 
         private async Task LoadAsync(ApplicationUser user)
@@ -87,6 +95,9 @@ namespace FastServices.Web.Areas.Identity.Pages.Account.Manage
                     return RedirectToPage();
                 }
             }
+
+            var newImage = Input.PhotoPathSrc;
+            await this.userServices.UploadAvatarImgPathFromLink(user.Id, newImage);
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";

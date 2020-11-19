@@ -42,5 +42,14 @@
         public IQueryable<ApplicationUser> GetAll() => this.repository.All();
 
         public async Task<ApplicationUser> GetByIdWithDeletedAsync(string id) => await this.repository.GetByIdWithDeletedAsync(id);
+
+        public async Task UploadAvatarImgPathFromLink(string userId, string newImgPath)
+        {
+            var user = await this.GetByIdWithDeletedAsync(userId);
+
+            user.AvatarImgSrc = newImgPath;
+
+            await this.repository.SaveChangesAsync();
+        }
     }
 }

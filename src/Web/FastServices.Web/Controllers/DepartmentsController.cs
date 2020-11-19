@@ -19,13 +19,11 @@
     public class DepartmentsController : Controller
     {
         private readonly IDepartmentsService departmentsService;
-        private readonly ICommentsService commentsService;
         private readonly IUsersService usersService;
 
-        public DepartmentsController(IDepartmentsService departmentsService, ICommentsService commentsService, IUsersService usersService)
+        public DepartmentsController(IDepartmentsService departmentsService, IUsersService usersService)
         {
             this.departmentsService = departmentsService;
-            this.commentsService = commentsService;
             this.usersService = usersService;
         }
 
