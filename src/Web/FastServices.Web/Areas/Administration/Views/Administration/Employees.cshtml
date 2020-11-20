@@ -17,6 +17,18 @@
     <div class="topImageNav">
     </div>
 
+    @*GET*@
+    <form asp-area="Administration" asp-controller="Administration" asp-action="Employees" method="get">
+        <div style="padding-top:1.5em; position:absolute" class="form-actions no-color">
+            <p>
+                Find by name: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+                <input type="submit" value="Search" class="btn btn-default" /> |
+                <a asp-action="Employees">Back to Full List</a>
+            </p>
+        </div>
+    </form>
+    @*/GET*@
+
     <div>
         <div style="padding-left:40%" class="custom-select-lg">
             <select id="selectChangeView" onchange="changeView(this,'@Url.Action("Employees")')">
@@ -32,10 +44,9 @@
         <thead class="thead-light">
             <tr>
                 <th scope="col">Id</th>
-                <th scope="col">UserId</th>
-                <th scope="col">DepartmentId</th>
                 <th scope="col">FirstN</th>
                 <th scope="col">LastN</th>
+                <th scope="col">DepartmentN</th>
                 <th scope="col">Salary</th>
                 <th scope="col">Available</th>
                 <th scope="col">Created On</th>
@@ -45,36 +56,57 @@
         </thead>
 
         <tbody>
+            @*POST*@
             @foreach (var employee in Model)
             {
-                <tr class="@employee.HtmlClass">
-                    <th scope="row">@employee.Id</th>
-                    <td>@employee.UserId</td>
-                    <td>@employee.DepartmentId</td>
-                    <td>@employee.FirstName</td>
-                    <td>@employee.LastName</td>
-                    <td>@employee.Salary</td>
-                    <td>@employee.IsAvailable</td>
-                    <td>@employee.CreatedOn</td>
-                    <td>@employee.DeletedOn</td>
-                    @if (employee.IsDeleted == true)
-                    {
-                        <td><a id="returnhref" href="@(this.Context.Request.Path)?selectedOption=@this.TempData["SelectedOption"]&make=restore&id=@employee.Id" class="btn btn-success">Restore</a></td>
-                        @*<td><button type="submit" class="btn btn-success">Restore</button></td>*@
-                    }
-                    else
-                    {
-                        <td><a href="@(this.Context.Request.Path)?selectedOption=@this.TempData["SelectedOption"]&make=delete&id=@employee.Id" class="btn btn-danger">Delete</a></td>
-                        @*<td><button type="submit" class="btn btn-danger">Delete</button></td>*@
-                    }
 
-                </tr>
+                <form asp-area="Administration" asp-controller="Administration" asp-action="Employees" method="post">
+                    <tr class="@employee.HtmlClass">
+                        <th scope="row">@employee.Id</th>
+                        <td>@employee.FirstName</td>
+                        <td>@employee.LastName</td>
+                        <td>@employee.DepartmentName</td>
+                        <td>@employee.Salary</td>
+                        <td>@employee.IsAvailable</td>
+                        <td>@employee.CreatedOn</td>
+                        <td>@employee.DeletedOn</td>
 
+                        <input type="text" style="visibility:hidden;position:absolute" name="selectedOption" value="@this.TempData["SelectedOption"]" />
+
+                        @if (employee.IsDeleted == true)
+                        {
+                            @*<td><a href="@(this.Context.Request.Path)?selectedOption=@this.TempData["SelectedOption"]&make=restore&id=@employee.Id" class="btn btn-success">Restore</a></td>*@
+
+                            <td>
+                                <button type="submit" class="btn btn-success" name="id" value="@employee.Id">
+                                    Restore
+                                    <input type="text" style="visibility:hidden;position:absolute" name="operationToExec" value="Restore" />
+                                </button>
+                            </td>
+                        }
+                        else
+                        {
+                            @*<td><a href="@(this.Context.Request.Path)?selectedOption=@this.TempData["SelectedOption"]&make=delete&id=@employee.Id" class="btn btn-danger">Delete</a></td>*@
+
+                            <td>
+                                <button type="submit" class="btn btn-danger" name="id" value="@employee.Id">
+                                    Delete
+                                    <input type="text" style="visibility:hidden;position:absolute" name="operationToExec" value="Delete" />
+                                </button>
+                            </td>
+                        }
+
+                    </tr>
+
+                </form>
+                @*/POST*@
             }
 
         </tbody>
     </table>
 </body>
+
+
 <script>
     var selectChangeView = document.getElementById('selectChangeView');
     selectChangeView.value = @this.TempData["SelectedOption"];

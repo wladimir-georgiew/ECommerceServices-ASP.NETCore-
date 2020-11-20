@@ -4,17 +4,13 @@
     {
         public string Id { get; set; }
 
-        public string UserId { get; set; }
-
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
 
-        public int DepartmentId { get; set; }
+        public string DepartmentName { get; set; }
 
-        public int Department { get; set; }
-
-        public bool IsAvailable { get; set; }
+        public string IsAvailable { get; set; }
 
         public decimal Salary { get; set; }
 
