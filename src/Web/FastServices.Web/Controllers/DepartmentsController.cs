@@ -37,7 +37,7 @@
 
             this.TempData["messageValue"] = FastServices.Common.GlobalConstants.SuccessCommentPostMessage;
             this.ViewData["topImageNavUrl"] = bgUrl;
-            this.ViewData["depName"] = depName.ToUpper();
+            this.ViewData["title"] = depName.ToUpper();
 
             List<ServiceViewModel> servicesViewModel = this.departmentsService.GetDepartmentServices(id)
                 .Select(x => new ServiceViewModel

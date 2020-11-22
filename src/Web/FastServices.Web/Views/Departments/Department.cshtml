@@ -1,20 +1,7 @@
 ﻿@model FastServices.Web.ViewModels.Departments.DepartmentViewModel
 
 <style>
-    footer{
-        position:absolute;
-        visibility:hidden;
-    }
-    .float-container {
-        border: 3px solid #fff;
-        padding: 20px;
-    }
 
-    .float-child {
-        width: 50%;
-        float: left;
-        padding: 20px;
-    }
     @*.topImageNav {
         background:
         linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ),
@@ -63,35 +50,31 @@
 <!-- NAVIGATION BAR BACKGROUND IMAGE DEPENDING ON THE DEPARTMENT -->
 <div class="topImageNav">
 
-    <h1 style="        text-align: center;
-        padding-top: 10%;
-        color: #ffdd99;
-        font-family: Impact;
-        font-size: 50px">@ViewData["depName"]</h1>
+    <h1 class="titleText"> @ViewData["title"] </h1>
 
 </div>
 
-
-<div class="container mt-2 float-child" style="width:70%">
-    <div style="margin-bottom: 15.5em" class="row">
-        @foreach (var service in @Model.ServicesViewModel)
-        {
-            <div style="margin-bottom:1em" class="col-md-3 col-sm-6">
-                <div class="card card-block">
-                    <h3 class="card-title text-center">@service.Name</h3>
-                    <a href="Service?id=@service.Id"><img class="imgService" src="@service.CardImgSrc"></a>
+<div style="margin-bottom:2em" class="row">
+    <div class="container mt-2 col-8" >
+        <div style="margin-bottom: 15.5em" class="row">
+            @foreach (var service in @Model.ServicesViewModel)
+            {
+                <div style="margin-bottom:1em" class="col-md-3 col-sm-6">
+                    <div class="card card-block">
+                        <h3 class="card-title text-center">@service.Name</h3>
+                        <a href="/Service/Service/?ServiceId=@service.Id"><img class="imgService" src="@service.CardImgSrc"></a>
+                    </div>
                 </div>
-            </div>
-        }
+            }
+        </div>
     </div>
 
-</div>
-@*<div class="float-child" style="width:30%"><vc:department-comments id="@Model.FirstOrDefault().DepartmentId"></vc:department-comments></div>*@
+    @*<div class="float-child" style="width:30%"><vc:department-comments id="@Model.FirstOrDefault().DepartmentId"></vc:department-comments></div>*@
 
-<div class="float-child" style="width:30%">
-    <partial model="Model.CommentsMasterModel" name="Comments.cshtml" />
+    <div class="col-4">
+        <partial model="Model.CommentsMasterModel" name="Comments.cshtml" />
+    </div>
 </div>
-
 
 @if (Context.Request.QueryString.ToString()
 .Split("&")
@@ -110,10 +93,10 @@ else if (Context.Request.QueryString.ToString()
 .ToArray()
 .Contains("submit=false"))
 {
-<script>
+    <script>
    $(document).ready(function() {
 
         toastr.warning('@FastServices.Common.GlobalConstants.ErrorCommentPostSpamMessage');
     });
-</script>
+    </script>
 }

@@ -49,6 +49,16 @@
     <None Include="wwwroot\Template\AdminPanel\vendor\jquery\jquery.slim.js" />
     <None Include="wwwroot\Template\AdminPanel\vendor\jquery\jquery.slim.min.js" />
     <None Include="wwwroot\Template\AdminPanel\vendor\jquery\jquery.slim.min.map" />
+    <None Include="wwwroot\Template\OrderForm\css\style.css.map" />
+    <None Include="wwwroot\Template\OrderForm\css\style.scss" />
+    <None Include="wwwroot\Template\OrderForm\fonts\linearicons\fonts\Linearicons-Free.svg" />
+    <None Include="wwwroot\Template\OrderForm\fonts\linearicons\fonts\Linearicons-Free.woff2" />
+    <None Include="wwwroot\Template\OrderForm\fonts\material-design-iconic-font\fonts\Material-Design-Iconic-Font.svg" />
+    <None Include="wwwroot\Template\OrderForm\fonts\material-design-iconic-font\fonts\Material-Design-Iconic-Font.woff2" />
+    <None Include="wwwroot\Template\OrderForm\js\jquery-3.3.1.min.js" />
+    <None Include="wwwroot\Template\OrderForm\js\main.js" />
+    <None Include="wwwroot\Template\OrderForm\vendor\date-picker\js\datepicker.en.js" />
+    <None Include="wwwroot\Template\OrderForm\vendor\date-picker\js\datepicker.js" />
   </ItemGroup>
 
   <ItemGroup>
@@ -83,6 +93,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Areas\Administration\Views\Administration\" />
     <Folder Include="Views\Services\" />
   </ItemGroup>
 </Project>

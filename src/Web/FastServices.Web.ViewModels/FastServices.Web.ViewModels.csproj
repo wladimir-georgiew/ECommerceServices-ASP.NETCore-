@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\FastServices.Data.Models\FastServices.Data.Models.csproj" />
     <ProjectReference Include="..\..\Services\FastServices.Services.Mapping\FastServices.Services.Mapping.csproj" />
+    <ProjectReference Include="..\FastServices.Web.Infrastructure\FastServices.Web.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

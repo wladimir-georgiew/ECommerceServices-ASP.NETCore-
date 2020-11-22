@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Linq;
     using System.Text;
+    using System.Threading.Tasks;
 
     using FastServices.Data;
     using FastServices.Data.Common.Repositories;
@@ -21,5 +22,7 @@
         public IQueryable<Service> GetAllServices() => this.repository.All();
 
         public IQueryable<Service> GetAllServicesWithDeleted() => this.repository.AllWithDeleted();
+
+        public async Task<Service> GetByIdWtihDeletedAsync(int id) => await this.repository.GetByIdWithDeletedAsync(id);
     }
 }
