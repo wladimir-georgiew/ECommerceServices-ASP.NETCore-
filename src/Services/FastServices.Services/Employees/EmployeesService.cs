@@ -1,5 +1,6 @@
 ﻿namespace FastServices.Services.Employees
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -32,6 +33,19 @@
 
         public async Task<Employee> GetByIdWithDeletedAsync(string id) => await this.repository.GetByIdWithDeletedAsync(id);
 
+        public ICollection<Employee> AvailableEmployeesForDepartment(int departmentId) => this.GetAll().Where(x => x.IsAvailable && x.DepartmentId == departmentId).ToList();
+
+        public List<Employee> GetAllAvailableEmployees(int departmentId, DateTime startDate, DateTime dueDate)
+        {
+            var employees = this.GetAll()
+                .Where(x => x.DepartmentId == departmentId)
+                .Where(x => !x.EmployeeOrders.Any(o => o.Order.StartDate <= dueDate ||
+                                                       o.Order.DueDate >= startDate))
+                .ToList();
+
+            return employees;
+        }
+
         public async Task UndeleteByIdAsync(string id)
         {
             this.repository.Undelete(await this.GetByIdWithDeletedAsync(id));
@@ -43,5 +57,6 @@
             this.repository.Delete(await this.GetByIdWithDeletedAsync(id));
             await this.repository.SaveChangesAsync();
         }
+
     }
 }

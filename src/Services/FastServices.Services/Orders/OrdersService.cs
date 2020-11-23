@@ -1,7 +1,6 @@
 ﻿namespace FastServices.Services.Orders
 {
     using System;
-    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -10,13 +9,10 @@
     using FastServices.Data.Models.Enumerators;
     using FastServices.Services.EmployeeOrders;
     using FastServices.Services.Employees;
-    using FastServices.Services.Services;
     using FastServices.Web.ViewModels.Orders;
 
     public class OrdersService : IOrdersService
     {
-        private const decimal HourlyFeePerWorker = 5;
-
         private readonly IRepository<Order> repository;
         private readonly IEmployeeOrdersService employeeOrdersService;
         private readonly IEmployeesService employeesService;
@@ -28,19 +24,23 @@
             this.employeesService = employeesService;
         }
 
-        public async Task AddOrderAsync(OrderInputModel model, string userId, int departmentId)
+        public Order GetByIdWithDeletedAsync(string id) => this.repository.All().ToList().FirstOrDefault(x => x.Id == id);
+
+        public async Task<bool> AddOrderAsync(OrderInputModel model, ApplicationUser user, int departmentId)
         {
             // available employees of the current department
-            var availableEmployees = this.employeesService.GetAll().Where(x => x.IsAvailable && x.DepartmentId == departmentId).ToList();
+            //var availableEmployees = this.employeesService.GetAll().Where(x => x.IsAvailable && x.DepartmentId == departmentId).ToList();
+
+            var availableEmployees = this.employeesService.GetAllAvailableEmployees(departmentId, model.DateDate, model.DueDate);
 
             var order = new Order
             {
-                ApplicationUserId = userId,
+                ApplicationUserId = user.Id,
                 BookedHours = model.HoursBooked,
                 WorkersCount = model.WorkersCount,
                 SubmitDate = DateTime.UtcNow,
-                StartDate = model.Date,
-                DueDate = model.Date.AddHours(model.HoursBooked),
+                StartDate = model.StartDate,
+                DueDate = model.DueDate,
                 ServiceId = model.ServiceId,
                 Price = model.Price,
                 Status = OrderStatus.Pending,
@@ -53,9 +53,16 @@
             {
                 await this.employeeOrdersService.AssignEmployeesToOrderAsync(order, availableEmployees);
             }
+            else
+            {
+                return false;
+            }
 
+            user.Orders.Add(order);
             await this.repository.AddAsync(order);
             await this.repository.SaveChangesAsync();
+
+            return true;
         }
 
         //public async Task AssignEmployeesToOrderAsync(Order order, List<Employee> availableEmployees)

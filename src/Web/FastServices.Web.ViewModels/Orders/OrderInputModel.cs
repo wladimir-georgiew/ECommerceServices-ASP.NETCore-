@@ -16,7 +16,9 @@
         [Range(9, 16)]
         public double DateHour { get; set; }
 
-        public DateTime Date => this.DateDate.AddHours(this.DateHour);
+        public DateTime StartDate => this.DateDate.AddHours(this.DateHour);
+
+        public DateTime DueDate => this.StartDate.AddHours(this.HoursBooked);
 
         [Range(1, 8)]
         public int HoursBooked { get; set; }

@@ -19,12 +19,14 @@
         private readonly IDepartmentsService departmentsService;
         private readonly IServicesService servicesService;
         private readonly IOrdersService ordersService;
+        private readonly IUsersService usersService;
 
-        public ServiceController(IDepartmentsService departmentsService, IServicesService servicesService, IOrdersService ordersService)
+        public ServiceController(IDepartmentsService departmentsService, IServicesService servicesService, IOrdersService ordersService, IUsersService usersService)
         {
             this.departmentsService = departmentsService;
             this.servicesService = servicesService;
             this.ordersService = ordersService;
+            this.usersService = usersService;
         }
 
         [Authorize]
@@ -44,19 +46,30 @@
         {
             var service = await this.servicesService.GetByIdWtihDeletedAsync(input.ServiceId);
             var department = await this.departmentsService.GetDepartmentByIdAsync(service.DepartmentId);
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var user = await this.usersService.GetByIdWithDeletedAsync(userId);
 
             this.ViewData["topImageNavUrl"] = department.BackgroundImgSrc;
             this.ViewData["title"] = service.Name;
+
+            input.Price = ((Common.GlobalConstants.HourlyFeePerWorker * input.WorkersCount) * input.HoursBooked) + service.Fee;
 
             if (!this.ModelState.IsValid)
             {
                 return this.View(input);
             }
 
-            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            input.Price = ((Common.GlobalConstants.HourlyFeePerWorker * input.WorkersCount) * input.HoursBooked) + service.Fee;
+            if (!this.usersService.IsUserAllowedToSubmitOrder(userId, input))
+            {
+                this.ModelState.AddModelError(string.Empty, "You are allowed to have one active order at a time");
+                return this.View(input);
+            }
 
-            await this.ordersService.AddOrderAsync(input, userId, department.Id);
+            if (!await this.ordersService.AddOrderAsync(input, user, department.Id))
+            {
+                this.ModelState.AddModelError(string.Empty, "There are currently no available employees for this date. Try again with different date.");
+                return this.View(input);
+            }
 
             return this.View();
         }

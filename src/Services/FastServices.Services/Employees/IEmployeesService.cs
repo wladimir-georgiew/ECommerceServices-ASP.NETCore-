@@ -1,5 +1,6 @@
 ﻿namespace FastServices.Services.Employees
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -21,5 +22,9 @@
         public Task UndeleteByIdAsync(string id);
 
         public Task DeleteByIdAsync(string id);
+
+        public ICollection<Employee> AvailableEmployeesForDepartment(int departmentId);
+
+        public List<Employee> GetAllAvailableEmployees(int departmentId, DateTime startDate, DateTime dueDate);
     }
 }

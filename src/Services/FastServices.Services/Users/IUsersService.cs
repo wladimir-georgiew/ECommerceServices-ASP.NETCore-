@@ -4,6 +4,7 @@
     using System.Threading.Tasks;
 
     using FastServices.Data.Models;
+    using FastServices.Web.ViewModels.Orders;
 
     public interface IUsersService
     {
@@ -16,5 +17,7 @@
         public Task<ApplicationUser> GetByIdWithDeletedAsync(string id);
 
         public Task UploadAvatarImgPathFromLink(string userId, string newImgPath);
+
+        public bool IsUserAllowedToSubmitOrder(string userId, OrderInputModel input);
     }
 }
