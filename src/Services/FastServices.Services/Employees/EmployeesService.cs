@@ -25,21 +25,17 @@
 
         public IQueryable<Employee> GetAll() => this.repository.All();
 
-        public IQueryable<Employee> GetAvailable() => this.repository.All().Where(x => x.IsAvailable == true);
-
         public IQueryable<Employee> GetDeleted() => this.repository.AllWithDeleted().Where(x => x.IsDeleted == true);
 
         public IQueryable<Employee> GetAllWithDeleted() => this.repository.AllWithDeleted();
 
         public async Task<Employee> GetByIdWithDeletedAsync(string id) => await this.repository.GetByIdWithDeletedAsync(id);
 
-        public ICollection<Employee> AvailableEmployeesForDepartment(int departmentId) => this.GetAll().Where(x => x.IsAvailable && x.DepartmentId == departmentId).ToList();
-
         public List<Employee> GetAllAvailableEmployees(int departmentId, DateTime startDate, DateTime dueDate)
         {
             var employees = this.GetAll()
                 .Where(x => x.DepartmentId == departmentId)
-                .Where(x => !x.EmployeeOrders.Any(o => o.Order.StartDate <= dueDate ||
+                .Where(x => !x.EmployeeOrders.Any(o => o.Order.StartDate <= dueDate &&
                                                        o.Order.DueDate >= startDate))
                 .ToList();
 

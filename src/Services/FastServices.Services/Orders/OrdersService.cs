@@ -31,7 +31,7 @@
             // available employees of the current department
             //var availableEmployees = this.employeesService.GetAll().Where(x => x.IsAvailable && x.DepartmentId == departmentId).ToList();
 
-            var availableEmployees = this.employeesService.GetAllAvailableEmployees(departmentId, model.DateDate, model.DueDate);
+            var availableEmployees = this.employeesService.GetAllAvailableEmployees(departmentId, model.StartDate, model.DueDate);
 
             var order = new Order
             {
@@ -43,13 +43,12 @@
                 DueDate = model.DueDate,
                 ServiceId = model.ServiceId,
                 Price = model.Price,
-                Status = OrderStatus.Pending,
+                Status = OrderStatus.Undefined,
             };
 
             //await this.AssignEmployeesToOrderAsync(order, availableEmployees);
 
-            if (order.Status.ToString() == "Pending" &&
-               availableEmployees.Count >= order.WorkersCount)
+            if (availableEmployees.Count >= order.WorkersCount)
             {
                 await this.employeeOrdersService.AssignEmployeesToOrderAsync(order, availableEmployees);
             }

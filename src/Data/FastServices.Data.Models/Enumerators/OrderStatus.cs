@@ -3,8 +3,7 @@
     public enum OrderStatus
     {
         Undefined = 0,
-        Pending = 1,
-        Ongoing = 2,
-        Completed = 3,
+        Active = 1,
+        Completed = 2,
     }
 }

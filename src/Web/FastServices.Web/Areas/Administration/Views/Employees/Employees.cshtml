@@ -34,8 +34,7 @@
             <select id="selectChangeView" onchange="changeView(this,'@Url.Action("Employees")')">
                 <option disabled="disabled" value="0">Select Option</option>
                 <option value="1">All</option>
-                <option value="2">Available</option>
-                <option value="3">Deleted</option>
+                <option value="2">Deleted</option>
             </select>
         </div>
     </div>
@@ -48,7 +47,6 @@
                 <th scope="col">LastN</th>
                 <th scope="col">DepartmentN</th>
                 <th scope="col">Salary</th>
-                <th scope="col">Available</th>
                 <th scope="col">Created On</th>
                 <th scope="col">DeletedOn</th>
                 <th scope="col">Action</th>
@@ -67,7 +65,6 @@
                         <td>@employee.LastName</td>
                         <td>@employee.DepartmentName</td>
                         <td>@employee.Salary</td>
-                        <td>@employee.IsAvailable</td>
                         <td>@employee.CreatedOn</td>
                         <td>@employee.DeletedOn</td>
 

@@ -32,10 +32,6 @@
 
             if (selectedOption == 2)
             {
-                employees = this.employeesService.GetAvailable().ToList();
-            }
-            else if (selectedOption == 3)
-            {
                 employees = this.employeesService.GetDeleted().ToList();
             }
 
@@ -54,14 +50,11 @@
                     DepartmentName = this.departmentService.GetDepartmentByIdAsync(x.DepartmentId).GetAwaiter().GetResult().Name,
                     FirstName = x.FirstName,
                     LastName = x.LastName,
-                    IsAvailable = (x.IsAvailable == true && x.IsDeleted == false) ? "Yes" : "No",
                     Salary = x.Salary,
                     IsDeleted = x.IsDeleted,
                     DeletedOn = x.DeletedOn?.ToString(format: "d"),
                     CreatedOn = x.CreatedOn.ToString(format: "d"),
-                    HtmlClass = x.IsDeleted == true ? "table-danger"
-                                : x.IsAvailable == false ? "table-warning"
-                                : "table-success",
+                    HtmlClass = x.IsDeleted == true ? "table-danger" : "table-success",
                 })
                 .ToList();
 

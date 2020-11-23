@@ -34,8 +34,6 @@
 
         public Department Department { get; set; }
 
-        public bool IsAvailable { get; set; }
-
         [Required]
         public decimal Salary { get; set; }
 

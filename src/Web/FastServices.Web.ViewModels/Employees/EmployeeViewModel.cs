@@ -10,8 +10,6 @@
 
         public string DepartmentName { get; set; }
 
-        public string IsAvailable { get; set; }
-
         public decimal Salary { get; set; }
 
         public bool IsDeleted { get; set; }

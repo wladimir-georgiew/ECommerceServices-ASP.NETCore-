@@ -66,12 +66,13 @@
                 DepartmentId = 2,
                 FirstName = "Rabotnika",
                 LastName = "Ivanov",
-                IsAvailable = true,
                 Salary = 640M,
                 CreatedOn = DateTime.UtcNow,
             };
 
-            if (!dbContext.Employees.Any(x => x.ApplicationUserId == employee.ApplicationUserId))
+            employee.ApplicationUser = user;
+
+            if (!dbContext.Employees.Any(x => x.ApplicationUser.Email == email))
             {
                 await dbContext.Employees.AddAsync(employee);
                 await dbContext.SaveChangesAsync();

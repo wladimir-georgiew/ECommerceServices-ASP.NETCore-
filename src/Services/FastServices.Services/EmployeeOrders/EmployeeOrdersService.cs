@@ -34,12 +34,10 @@
                 order.EmployeesOrder.Add(emplOrder);
                 currEmpl.EmployeeOrders.Add(emplOrder);
 
-                currEmpl.IsAvailable = false;
-
                 await this.repository.AddAsync(emplOrder);
             }
 
-            order.Status = OrderStatus.Ongoing;
+            order.Status = OrderStatus.Active;
         }
     }
 }
