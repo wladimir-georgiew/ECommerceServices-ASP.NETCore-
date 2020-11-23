@@ -12,6 +12,7 @@
     using FastServices.Services.Comments;
     using FastServices.Services.Data;
     using FastServices.Services.Departments;
+    using FastServices.Services.EmployeeOrders;
     using FastServices.Services.Employees;
     using FastServices.Services.Mapping;
     using FastServices.Services.Messaging;
@@ -78,6 +79,7 @@
             services.AddTransient<ICommentsService, CommentsService>();
             services.AddTransient<IUsersService, UsersService>();
             services.AddTransient<IEmployeesService, EmployeesService>();
+            services.AddTransient<IEmployeeOrdersService, EmployeeOrdersService>();
 
             // inject current user anywhere
             services.AddTransient<IPrincipal>(provider => provider.GetService<IHttpContextAccessor>().HttpContext.User);

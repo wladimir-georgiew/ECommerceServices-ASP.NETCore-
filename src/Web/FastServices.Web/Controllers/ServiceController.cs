@@ -3,9 +3,11 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Security.Claims;
     using System.Threading.Tasks;
 
     using FastServices.Services.Departments;
+    using FastServices.Services.Orders;
     using FastServices.Services.Services;
     using FastServices.Services.Users;
     using FastServices.Web.ViewModels.Orders;
@@ -15,14 +17,14 @@
     public class ServiceController : Controller
     {
         private readonly IDepartmentsService departmentsService;
-        private readonly IUsersService usersService;
         private readonly IServicesService servicesService;
+        private readonly IOrdersService ordersService;
 
-        public ServiceController(IDepartmentsService departmentsService, IUsersService usersService, IServicesService servicesService)
+        public ServiceController(IDepartmentsService departmentsService, IServicesService servicesService, IOrdersService ordersService)
         {
             this.departmentsService = departmentsService;
-            this.usersService = usersService;
             this.servicesService = servicesService;
+            this.ordersService = ordersService;
         }
 
         [Authorize]
@@ -50,6 +52,11 @@
             {
                 return this.View(input);
             }
+
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            input.Price = ((Common.GlobalConstants.HourlyFeePerWorker * input.WorkersCount) * input.HoursBooked) + service.Fee;
+
+            await this.ordersService.AddOrderAsync(input, userId, department.Id);
 
             return this.View();
         }

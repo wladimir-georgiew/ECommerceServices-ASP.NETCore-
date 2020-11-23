@@ -22,6 +22,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\FastServices.Data.Models\FastServices.Data.Models.csproj" />
     <ProjectReference Include="..\..\Data\FastServices.Data\FastServices.Data.csproj" />
+    <ProjectReference Include="..\..\Web\FastServices.Web.ViewModels\FastServices.Web.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>

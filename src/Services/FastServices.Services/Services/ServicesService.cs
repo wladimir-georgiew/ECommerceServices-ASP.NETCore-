@@ -24,5 +24,6 @@
         public IQueryable<Service> GetAllServicesWithDeleted() => this.repository.AllWithDeleted();
 
         public async Task<Service> GetByIdWtihDeletedAsync(int id) => await this.repository.GetByIdWithDeletedAsync(id);
+
     }
 }
