@@ -6,6 +6,7 @@
     using System.Security.Claims;
     using System.Threading.Tasks;
 
+    using FastServices.Common;
     using FastServices.Services.Departments;
     using FastServices.Services.Orders;
     using FastServices.Services.Services;
@@ -71,7 +72,7 @@
                 return this.View(input);
             }
 
-            this.TempData["msg"] = "Successfully submitted your order!";
+            this.TempData["msg"] = GlobalConstants.SuccessOrderSubmitted;
             return this.View();
         }
     }

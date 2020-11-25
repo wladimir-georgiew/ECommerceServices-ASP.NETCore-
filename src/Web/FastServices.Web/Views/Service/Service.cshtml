@@ -143,15 +143,3 @@
 
 @*<script src="/Template/OrderForm/js/main.js"></script>*@
 
-{
-<script>
-    var msg = "@(TempData["msg"] as string)";
-
-    if (msg !== "") {
-       $(document).ready(function() {
-
-            toastr.success('@(this.TempData["msg"])');
-        });
-    }
-</script>
-}
