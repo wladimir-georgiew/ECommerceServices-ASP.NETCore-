@@ -38,9 +38,6 @@
         [Required]
         public int BookedHours { get; set; }
 
-        [MaxLength(300)]
-        public string Description { get; set; }
-
         [Required]
         public OrderStatus Status { get; set; }
 
@@ -52,6 +49,9 @@
 
         [Required]
         public DateTime DueDate { get; set; }
+
+        [Required]
+        public string Address { get; set; }
 
         [Required]
         public decimal Price { get; set; }

@@ -35,7 +35,6 @@
             string bgUrl = department.BackgroundImgSrc;
             string depName = department.Name;
 
-            this.TempData["messageValue"] = FastServices.Common.GlobalConstants.SuccessCommentPostMessage;
             this.ViewData["topImageNavUrl"] = bgUrl;
             this.ViewData["title"] = depName.ToUpper();
 

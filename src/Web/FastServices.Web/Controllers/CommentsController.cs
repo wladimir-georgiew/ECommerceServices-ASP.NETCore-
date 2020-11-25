@@ -5,6 +5,8 @@
     using System.Linq;
     using System.Security.Claims;
     using System.Threading.Tasks;
+
+    using FastServices.Common;
     using FastServices.Data.Models;
     using FastServices.Services.Comments;
     using FastServices.Services.Departments;
@@ -41,7 +43,8 @@
                 // Don't proceed if 24 hours haven't passed since last comment (spam protection)
                 if (!this.usersService.IsUserAllowedToComment(userId))
                 {
-                    return this.Redirect($"/Departments/Department?id={input.DepartmentId}&submit=false");
+                    this.TempData["msg"] = GlobalConstants.ErrorCommentPostSpamMessage;
+                    return this.Redirect($"/Departments/Department?id={input.DepartmentId}");
                 }
 
                 var comment = new Comment
@@ -56,7 +59,8 @@
                 await this.commentsService.AddCommentAsync(comment);
             }
 
-            return this.Redirect($"/Departments/Department?id={input.DepartmentId}&submit=true");
+            this.TempData["msg"] = GlobalConstants.SuccessCommentPostMessage;
+            return this.Redirect($"/Departments/Department?id={input.DepartmentId}");
         }
 
         [Authorize]

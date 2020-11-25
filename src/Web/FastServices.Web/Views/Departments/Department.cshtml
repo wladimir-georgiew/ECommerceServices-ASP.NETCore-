@@ -55,7 +55,7 @@
 </div>
 
 <div style="margin-bottom:2em" class="row">
-    <div class="container mt-2 col-8" >
+    <div class="container mt-2 col-8">
         <div style="margin-bottom: 15.5em" class="row">
             @foreach (var service in @Model.ServicesViewModel)
             {
@@ -76,27 +76,4 @@
     </div>
 </div>
 
-@if (Context.Request.QueryString.ToString()
-.Split("&")
-.ToArray()
-.Contains("submit=true"))
-{
-    <script>
-   $(document).ready(function() {
 
-        toastr.success('@(this.TempData["messageValue"])');
-    });
-    </script>
-}
-else if (Context.Request.QueryString.ToString()
-.Split("&")
-.ToArray()
-.Contains("submit=false"))
-{
-    <script>
-   $(document).ready(function() {
-
-        toastr.warning('@FastServices.Common.GlobalConstants.ErrorCommentPostSpamMessage');
-    });
-    </script>
-}

@@ -228,5 +228,24 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     toastr.options.positionClass = 'toast-top-center'
 </script>
 
+<script>
+    var msg = "@(TempData["msg"] as string)";
+
+    if (msg.startsWith('Success!'))
+    {
+         $(document).ready(function() {
+
+            toastr.success(msg);
+        });
+    }
+    else if (msg.startsWith('Error!'))
+    {
+          $(document).ready(function() {
+
+            toastr.warning(msg);
+        });
+    }
+</script>
+
 @await this.RenderSectionAsync("Scripts", required: false)
 

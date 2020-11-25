@@ -71,6 +71,7 @@
                 return this.View(input);
             }
 
+            this.TempData["msg"] = "Successfully submitted your order!";
             return this.View();
         }
     }

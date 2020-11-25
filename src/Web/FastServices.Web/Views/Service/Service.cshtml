@@ -31,6 +31,7 @@
         font-size: 14px;
         font-family: Bahnschrift;
     }
+
     h2 {
         font-family: Impact;
         color: #3e91f7;
@@ -55,7 +56,7 @@
 
         <hr />
 
-        <h4>"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."</h4>
+        <h4>Finding the best office cleaning services in your area doesn't have to be a chore when you use Fast Services. Fast Services has been connecting customers with office cleaning professionals for years, ensuring that your professional space shines and impresses your clients and employees alike. Whether you run a small business or are part of a large corporation, ensuring that your offices are kept clean and tidy helps to create positive first impressions and improves employee morale. From ensuring that the coffee cups are washed and dried to cleaning the bathrooms,Fast Services can connect you with office cleaning services to handle all your cleaning tasks, large and small. </h4>
         <hr />
         <h2>FAQ</h2>
     </div>
@@ -72,10 +73,14 @@
                 <label for="">Service</label>
                 <input disabled="disabled" type="text" class="form-control" value="@serviceName">
             </div>
+            <div class="form-wrapper">
+                <label for="">Address</label>
+                <input asp-for="Address" class="form-control" type="text" placeholder="Enter your address">
+            </div>
             @*<div class="form-wrapper">
-                <label for="">Phone *</label>
-                <input type="text" class="form-control" placeholder="Phone">
-            </div>*@
+                    <label for="">Phone *</label>
+                    <input type="text" class="form-control" placeholder="Phone">
+                </div>*@
             <div class="form-wrapper">
                 <label for="">Date</label>
                 <span class="lnr lnr-calendar-full"></span>
@@ -119,12 +124,6 @@
                 </select>
                 <i class="zmdi zmdi-chevron-down"></i>
             </div>
-            <div class="checkbox">
-                <label>
-                    <input type="checkbox"> No one rejects, dislikes, or avoids pleasure itself.
-                    <span class="checkmark"></span>
-                </label>
-            </div>
             <button class="buttonOrder" type="submit" data-text="Now">
                 <span>Order</span>
             </button>
@@ -143,3 +142,16 @@
 <script src="/Template/OrderForm/vendor/date-picker/js/datepicker.en.js"></script>
 
 @*<script src="/Template/OrderForm/js/main.js"></script>*@
+
+{
+<script>
+    var msg = "@(TempData["msg"] as string)";
+
+    if (msg !== "") {
+       $(document).ready(function() {
+
+            toastr.success('@(this.TempData["msg"])');
+        });
+    }
+</script>
+}

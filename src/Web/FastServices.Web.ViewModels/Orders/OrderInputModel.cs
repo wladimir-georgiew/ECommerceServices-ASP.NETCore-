@@ -20,6 +20,11 @@
 
         public DateTime DueDate => this.StartDate.AddHours(this.HoursBooked);
 
+        [Required(ErrorMessage = "Address should be atleast 5 characters long")]
+        [MinLength(5, ErrorMessage = "Address should be atleast 5 characters long")]
+        [MaxLength(50, ErrorMessage = "Address should be no more than 50 characters long")]
+        public string Address { get; set; }
+
         [Range(1, 8)]
         public int HoursBooked { get; set; }
 

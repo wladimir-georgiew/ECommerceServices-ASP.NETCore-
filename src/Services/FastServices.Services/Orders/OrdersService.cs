@@ -28,8 +28,6 @@
 
         public async Task<bool> AddOrderAsync(OrderInputModel model, ApplicationUser user, int departmentId)
         {
-            // available employees of the current department
-            //var availableEmployees = this.employeesService.GetAll().Where(x => x.IsAvailable && x.DepartmentId == departmentId).ToList();
 
             var availableEmployees = this.employeesService.GetAllAvailableEmployees(departmentId, model.StartDate, model.DueDate);
 
@@ -44,9 +42,8 @@
                 ServiceId = model.ServiceId,
                 Price = model.Price,
                 Status = OrderStatus.Undefined,
+                Address = model.Address,
             };
-
-            //await this.AssignEmployeesToOrderAsync(order, availableEmployees);
 
             if (availableEmployees.Count >= order.WorkersCount)
             {
@@ -63,30 +60,5 @@
 
             return true;
         }
-
-        //public async Task AssignEmployeesToOrderAsync(Order order, List<Employee> availableEmployees)
-        //{
-        //    if (order.Status.ToString() == "Pending" &&
-        //        availableEmployees.Count >= order.WorkersCount)
-        //    {
-        //        for (int i = 0; i < order.WorkersCount; i++)
-        //        {
-        //            var currEmpl = await this.employeesService.GetByIdWithDeletedAsync(availableEmployees[i].Id);
-
-        //            EmployeeOrder emplOrder = new EmployeeOrder
-        //            {
-        //                EmployeeId = currEmpl.Id,
-        //                OrderId = order.Id,
-        //            };
-
-        //            order.EmployeesOrder.Add(emplOrder);
-        //            currEmpl.EmployeeOrders.Add(emplOrder);
-
-        //            currEmpl.IsAvailable = false;
-        //        }
-        //    }
-
-        //    order.Status = OrderStatus.Ongoing;
-        //}
     }
 }
