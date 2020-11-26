@@ -32,6 +32,11 @@
             // Services model
             Department department = await this.departmentsService.GetDepartmentByIdAsync(id);
 
+            if (department == null)
+            {
+                return this.NotFound();
+            }
+
             string bgUrl = department.BackgroundImgSrc;
             string depName = department.Name;
 

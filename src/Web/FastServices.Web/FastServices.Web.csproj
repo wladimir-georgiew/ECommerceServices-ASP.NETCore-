@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <Content Remove="Views\Home\contact.cshtml" />
-    <Content Remove="Views\Home\Error.cshtml" />
     <Content Remove="Views\Home\index.cshtml" />
     <Content Remove="Views\Home\typography.cshtml" />
   </ItemGroup>
@@ -21,7 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Views\Home\Contact.cshtml" />
-    <None Include="Views\Shared\Error.cshtml" />
+    <None Include="Views\Home\Error.cshtml" />
     <None Include="Views\Home\Index.cshtml" />
     <None Include="Views\Home\typography.cshtml" />
     <None Include="wwwroot\Template\AdminPanel\.gitignore" />

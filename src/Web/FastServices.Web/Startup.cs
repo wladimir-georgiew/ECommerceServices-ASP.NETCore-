@@ -98,11 +98,12 @@
                 new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
             }
 
+            app.UseStatusCodePagesWithRedirects("/Home/Error?code={0}");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
-                //app.UseStatusCodePagesWithRedirects("/Home/Error?code={0}");
             }
             else
             {

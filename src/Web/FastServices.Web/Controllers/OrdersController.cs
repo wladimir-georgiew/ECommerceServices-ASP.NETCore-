@@ -39,11 +39,12 @@
             {
                     Address = x.Address,
                     WorkersCount = x.WorkersCount,
-                    StartDate = x.StartDate.ToString("D"),
-                    DueDate = x.DueDate.ToString("D"),
+                    StartDate = x.StartDate.ToString("U"),
+                    DueDate = x.DueDate.ToString("U"),
                     HoursBooked = x.BookedHours,
                     ServiceName = x.Service.Name,
                     Status = x.Status.ToString(),
+                    Price = x.Price,
             })
                 .ToList();
 

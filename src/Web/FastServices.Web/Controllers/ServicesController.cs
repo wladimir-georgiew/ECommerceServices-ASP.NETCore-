@@ -34,6 +34,12 @@
         public async Task<IActionResult> Service(int serviceId)
         {
             var service = await this.servicesService.GetByIdWtihDeletedAsync(serviceId);
+
+            if (service == null)
+            {
+                return this.NotFound();
+            }
+
             var department = await this.departmentsService.GetDepartmentByIdAsync(service.DepartmentId);
 
             this.ViewData["topImageNavUrl"] = department.BackgroundImgSrc;
