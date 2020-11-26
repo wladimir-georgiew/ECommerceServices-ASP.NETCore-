@@ -94,6 +94,5 @@
 
   <ItemGroup>
     <Folder Include="Areas\Administration\Views\Administration\" />
-    <Folder Include="Views\Services\" />
   </ItemGroup>
 </Project>

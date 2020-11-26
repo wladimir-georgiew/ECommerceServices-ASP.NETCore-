@@ -90,9 +90,22 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <li class="nav-item">
                     <a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">About</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Services">Services</a>
-                </li>
+                @if (this.User.IsInRole(GlobalConstants.EmployeeRoleName) &&
+                      !this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                {
+
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Orders" asp-action="EmployeeOrders">My Orders</a>
+                    </li>
+                }
+                else if (this.SignInManager.IsSignedIn(this.User) &&
+                        !this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                {
+
+                    <li class="nav-item">
+                        <a class="nav-link" asp-area="" asp-controller="Orders" asp-action="UserOrders">My Orders</a>
+                    </li>
+                }
 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -113,18 +126,18 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 @if (this.SignInManager.IsSignedIn(this.User))
                 {
                     // account img
-                <li>
-                    <vc:account-image></vc:account-image>
-                </li>
+                    <li>
+                        <vc:account-image></vc:account-image>
+                    </li>
                 }
                 else
                 {
-                <li class="w3">
-                    <a class="nav-link" asp-area="Identity" asp-controller="Account" asp-action="Login">Login</a>
-                </li>
-                <li class="w3">
-                    <a class="nav-link" asp-area="Identity" asp-controller="Account" asp-action="Register">Register</a>
-                </li>
+                    <li class="w3">
+                        <a class="nav-link" asp-area="Identity" asp-controller="Account" asp-action="Login">Login</a>
+                    </li>
+                    <li class="w3">
+                        <a class="nav-link" asp-area="Identity" asp-controller="Account" asp-action="Register">Register</a>
+                    </li>
                 }
 
             </ul>
@@ -135,7 +148,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
     @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
     {
-    <partial name="/Views/Shared/_AdminPanel.cshtml" />
+        <partial name="/Views/Shared/_AdminPanel.cshtml" />
     }
 
 
@@ -151,10 +164,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <section class="footer">
             <div class="container">
                 <h3>Fast Service</h3>
-                </div>
-                <div class="copyright">
-                    <p>© 2018 Fast Service. All Rights Reserved</a></p>
-                </div>
+            </div>
+            <div class="copyright">
+                <p>© 2018 Fast Service. All Rights Reserved</a></p>
+            </div>
         </section>
     </footer>
 </body>

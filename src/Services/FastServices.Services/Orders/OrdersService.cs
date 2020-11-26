@@ -24,12 +24,28 @@
             this.employeesService = employeesService;
         }
 
+        public Order GetUserActiveOrder(string userId)
+        {
+            var orders = this.repository.All().Where(x => x.ApplicationUserId == userId);
+
+            return orders
+                        .Where(x => x.Status == OrderStatus.Active)
+                        .FirstOrDefault();
+        }
+
+        public IQueryable<Order> GetUserOrders(string userId)
+        {
+            var orders = this.repository.All().Where(x => x.ApplicationUserId == userId);
+
+            return orders;
+        }
+
         public Order GetByIdWithDeletedAsync(string id) => this.repository.All().ToList().FirstOrDefault(x => x.Id == id);
 
         public async Task<bool> AddOrderAsync(OrderInputModel model, ApplicationUser user, int departmentId)
         {
-
-            var availableEmployees = this.employeesService.GetAllAvailableEmployees(departmentId, model.StartDate, model.DueDate);
+            var availableEmployees = this.employeesService
+                                                        .GetAllAvailableEmployees(departmentId, model.StartDate, model.DueDate);
 
             var order = new Order
             {

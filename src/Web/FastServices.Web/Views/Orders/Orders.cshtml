@@ -1,0 +1,64 @@
+﻿@model IEnumerable<FastServices.Web.ViewModels.Orders.OrderViewModel>
+@{ 
+    var btn1 = Context.Request.Query["searchOption"] != "2" ? "active" : "";
+    var btn2 = Context.Request.Query["searchOption"] == "2" ? "active" : "";
+
+    if (btn1 == "active")
+    {
+        btn2 = "";
+    }
+    if (btn2 == "active")
+    {
+        btn1 = "";
+    }
+}
+<div class="topImageNav">
+    <div class="slider_banner_info">
+    </div>
+</div>
+
+<div class="card text-center">
+    <div class="card-header">
+        <ul class="nav nav-tabs card-header-tabs">
+            <li class="nav-item">
+                <a id="searchBtn1" class="nav-link @btn1" href="/Orders/UserOrders?searchOption=1" >Active</a>
+            </li>
+            <li class="nav-item">
+                <a id="searchBtn2" class="nav-link @btn2" href="/Orders/UserOrders?searchOption=2" >Completed</a>
+            </li>
+        </ul>
+    </div>
+
+    @*<BODY*@
+<form>
+    @foreach (var order in Model
+       .Where(x => Context.Request.Query["searchOption"] == "2"
+                   ? x.Status == "Completed"
+                   : x.Status == "Active"))
+    {
+        <div class="card-body">
+            <div class="card" style="width: 18rem;">
+
+                <div class="card-body">
+                    <h5 class="card-title">@order.ServiceName</h5>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">@order.Address</li>
+                    <li class="list-group-item">@order.StartDate</li>
+                    <li class="list-group-item">@order.DueDate</li>
+                    <li class="list-group-item">@order.HoursBooked</li>
+                    <li class="list-group-item">@order.WorkersCount</li>
+                    <li class="list-group-item">@order.Status</li>
+                    @if (order.Status == "Active")
+                    {
+                        <button class="btn btn-danger">Delete</button>
+                    }
+                </ul>
+            </div>
+        </div>
+    }
+
+
+</form>
+    @*</BODY*@
+</div>

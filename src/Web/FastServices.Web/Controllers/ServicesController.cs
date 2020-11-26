@@ -15,14 +15,14 @@
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
-    public class ServiceController : Controller
+    public class ServicesController : Controller
     {
         private readonly IDepartmentsService departmentsService;
         private readonly IServicesService servicesService;
         private readonly IOrdersService ordersService;
         private readonly IUsersService usersService;
 
-        public ServiceController(IDepartmentsService departmentsService, IServicesService servicesService, IOrdersService ordersService, IUsersService usersService)
+        public ServicesController(IDepartmentsService departmentsService, IServicesService servicesService, IOrdersService ordersService, IUsersService usersService)
         {
             this.departmentsService = departmentsService;
             this.servicesService = servicesService;
@@ -41,6 +41,7 @@
             return this.View();
         }
 
+        // Add Order
         [HttpPost]
         [Authorize]
         public async Task<IActionResult> Service(OrderInputModel input)
@@ -53,7 +54,7 @@
             this.ViewData["topImageNavUrl"] = department.BackgroundImgSrc;
             this.ViewData["title"] = service.Name;
 
-            input.Price = ((Common.GlobalConstants.HourlyFeePerWorker * input.WorkersCount) * input.HoursBooked) + service.Fee;
+            input.Price = ((GlobalConstants.HourlyFeePerWorker * input.WorkersCount) * input.HoursBooked) + service.Fee;
 
             if (!this.ModelState.IsValid)
             {
@@ -62,13 +63,13 @@
 
             if (!this.usersService.IsUserAllowedToSubmitOrder(userId, input))
             {
-                this.ModelState.AddModelError(string.Empty, "You are allowed to have one active order at a time");
+                this.ModelState.AddModelError(string.Empty, GlobalConstants.ErrorOrderSubmitOneOrderAtATime);
                 return this.View(input);
             }
 
             if (!await this.ordersService.AddOrderAsync(input, user, department.Id))
             {
-                this.ModelState.AddModelError(string.Empty, "There are currently no available employees for this date. Try again with different date.");
+                this.ModelState.AddModelError(string.Empty, GlobalConstants.ErrorOrderNotEnoughAvailableEmployees);
                 return this.View(input);
             }
 
