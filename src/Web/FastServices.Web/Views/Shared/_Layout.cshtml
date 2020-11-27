@@ -90,25 +90,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <li class="nav-item">
                     <a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">About</a>
                 </li>
-                @if (@*this.User.IsInRole(GlobalConstants.EmployeeRoleName) &&*@
-                      !this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                @if (!this.User.IsInRole(GlobalConstants.AdministratorRoleName) &&
+                    this.SignInManager.IsSignedIn(this.User))
                 {
-
-                    @*<li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Orders" asp-action="EmployeeOrders">My Orders</a>
-                    </li>*@
                     <li class="nav-item">
                         <a class="nav-link" asp-area="" asp-controller="Orders" asp-action="All">My Orders</a>
                     </li>
                 }
-                @*else if (this.SignInManager.IsSignedIn(this.User) &&
-                        !this.User.IsInRole(GlobalConstants.AdministratorRoleName))
-                {
-
-                    <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Orders" asp-action="UserOrders">My Orders</a>
-                    </li>
-                }*@
 
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

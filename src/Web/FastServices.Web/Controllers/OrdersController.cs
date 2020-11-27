@@ -8,7 +8,9 @@
     using FastServices.Common;
     using FastServices.Data.Models;
     using FastServices.Services.Orders;
+    using FastServices.Services.Services;
     using FastServices.Services.Users;
+    using FastServices.Web.ViewModels.Complaint;
     using FastServices.Web.ViewModels.Orders;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Identity;
@@ -18,17 +20,18 @@
     {
         private readonly IOrdersService ordersService;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly IServicesService servicesService;
 
-        public OrdersController(IOrdersService ordersService, UserManager<ApplicationUser> userManager)
+        public OrdersController(IOrdersService ordersService, IServicesService servicesService, UserManager<ApplicationUser> userManager)
         {
             this.ordersService = ordersService;
             this.userManager = userManager;
+            this.servicesService = servicesService;
         }
 
-        public async Task<IActionResult> All(string role)
+        public async Task<IActionResult> All()
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-            this.ViewData["topImageNavUrl"] = "/Template/images/indexBg-1.jpg";
 
             var user = await this.userManager.FindByIdAsync(userId);
             var roles = await this.userManager.GetRolesAsync(user);
@@ -41,6 +44,7 @@
                         .OrderBy(x => x.StartDate)
                         .Select(x => new OrderViewModel
                         {
+                            Id = x.Id,
                             Address = x.Address,
                             WorkersCount = x.WorkersCount,
                             StartDate = x.StartDate.ToString("f"),
@@ -49,10 +53,21 @@
                             ServiceName = x.Service.Name,
                             Status = x.Status.ToString(),
                             Price = x.Price,
+                            CardImgSrc = this.servicesService.GetByIdWtihDeletedAsync(x.Service.Id).GetAwaiter().GetResult().CardImgSrc,
                         })
                         .ToList();
 
             return this.View("Orders", model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddComplaint(ComplaintInputModel input)
+        {
+            this.TempData["msg"] = GlobalConstants.SuccessComplaintSubmitted;
+
+            // TODO: add complaint
+
+            return this.Redirect($"/Orders/All?searchOption=2");
         }
     }
 }
