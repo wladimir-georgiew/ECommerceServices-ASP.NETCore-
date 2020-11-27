@@ -17,10 +17,14 @@
     using FastServices.Services.Mapping;
     using FastServices.Services.Messaging;
     using FastServices.Services.Orders;
+    using FastServices.Services.Quartz;
     using FastServices.Services.Services;
     using FastServices.Services.Users;
+    using FastServices.Web.Quartz.Jobs.Orders;
     using FastServices.Web.ViewModels;
-
+    using global::Quartz;
+    using global::Quartz.Impl;
+    using global::Quartz.Spi;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
@@ -43,6 +47,18 @@
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Add Quartz services
+            services.AddSingleton<IJobFactory, SingletonJobFactory>();
+            services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
+
+            // Add our job
+            services.AddSingleton<ChangeOrderStatus>();
+            services.AddSingleton(new JobSchedule(
+                jobType: typeof(ChangeOrderStatus),
+                cronExpression: "0 0/30 * * * ?")); // run every 5 seconds
+
+            services.AddHostedService<QuartzHostedService>();
+
             services.AddDbContext<ApplicationDbContext>(
                 options => options.UseSqlServer(this.configuration.GetConnectionString("DefaultConnection")));
 
