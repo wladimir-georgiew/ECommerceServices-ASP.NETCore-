@@ -22,5 +22,7 @@
         public Task DeleteByIdAsync(string id);
 
         public List<Employee> GetAllAvailableEmployees(int departmentId, DateTime startDate, DateTime dueDate);
+
+        public Employee GetByUserId(string id);
     }
 }

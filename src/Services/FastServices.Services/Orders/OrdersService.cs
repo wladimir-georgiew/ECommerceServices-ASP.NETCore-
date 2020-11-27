@@ -1,6 +1,7 @@
 ﻿namespace FastServices.Services.Orders
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -24,6 +25,10 @@
             this.employeesService = employeesService;
         }
 
+        public async Task SaveChangesAsync() => await this.repository.SaveChangesAsync();
+
+        public IQueryable<Order> GetAll() => this.repository.All();
+
         public Order GetUserActiveOrder(string userId)
         {
             var orders = this.repository.All().Where(x => x.ApplicationUserId == userId);
@@ -36,6 +41,14 @@
         public IQueryable<Order> GetUserOrders(string userId)
         {
             var orders = this.repository.All().Where(x => x.ApplicationUserId == userId);
+
+            return orders;
+        }
+
+        public IQueryable<Order> GetEmployeeOrders(string userId)
+        {
+            var employee = this.employeesService.GetByUserId(userId);
+            var orders = this.repository.All().Where(x => x.EmployeesOrder.Any(e => e.EmployeeId == employee.Id));
 
             return orders;
         }
@@ -53,8 +66,8 @@
                 BookedHours = model.HoursBooked,
                 WorkersCount = model.WorkersCount,
                 SubmitDate = DateTime.UtcNow,
-                StartDate = model.StartDate,
-                DueDate = model.DueDate,
+                StartDate = model.StartDate.ToUniversalTime(),
+                DueDate = model.DueDate.ToUniversalTime(),
                 ServiceId = model.ServiceId,
                 Price = model.Price,
                 Status = OrderStatus.Undefined,

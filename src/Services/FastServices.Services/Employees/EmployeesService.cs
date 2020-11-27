@@ -29,6 +29,8 @@
 
         public IQueryable<Employee> GetAllWithDeleted() => this.repository.AllWithDeleted();
 
+        public Employee GetByUserId(string id) => this.repository.All().Where(x => x.ApplicationUserId == id).FirstOrDefault();
+
         public async Task<Employee> GetByIdWithDeletedAsync(string id) => await this.repository.GetByIdWithDeletedAsync(id);
 
         public List<Employee> GetAllAvailableEmployees(int departmentId, DateTime startDate, DateTime dueDate)
@@ -53,6 +55,5 @@
             this.repository.Delete(await this.GetByIdWithDeletedAsync(id));
             await this.repository.SaveChangesAsync();
         }
-
     }
 }

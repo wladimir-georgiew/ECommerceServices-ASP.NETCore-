@@ -15,5 +15,11 @@
         public Order GetUserActiveOrder(string userId);
 
         public IQueryable<Order> GetUserOrders(string userId);
+
+        public Task SaveChangesAsync();
+
+        public IQueryable<Order> GetAll();
+
+        public IQueryable<Order> GetEmployeeOrders(string userId);
     }
 }
