@@ -53,7 +53,7 @@
             return orders;
         }
 
-        public Order GetByIdWithDeletedAsync(string id) => this.repository.All().ToList().FirstOrDefault(x => x.Id == id);
+        public Order GetByIdWithDeleted(string id) => this.repository.All().ToList().FirstOrDefault(x => x.Id == id);
 
         public async Task<bool> AddOrderAsync(OrderInputModel model, ApplicationUser user, int departmentId)
         {
@@ -89,5 +89,8 @@
 
             return true;
         }
+
+        public IEnumerable<Complaint> GetComplaints(string orderId)
+            => this.repository.All().Where(x => x.Id == orderId).Select(x => x.Complaints).FirstOrDefault();
     }
 }

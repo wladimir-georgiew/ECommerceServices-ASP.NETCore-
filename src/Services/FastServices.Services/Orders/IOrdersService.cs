@@ -1,5 +1,6 @@
 ﻿namespace FastServices.Services.Orders
 {
+    using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -10,7 +11,7 @@
     {
         public Task<bool> AddOrderAsync(OrderInputModel model, ApplicationUser user, int departmentId);
 
-        public Order GetByIdWithDeletedAsync(string id);
+        public Order GetByIdWithDeleted(string id);
 
         public Order GetUserActiveOrder(string userId);
 
@@ -21,5 +22,7 @@
         public IQueryable<Order> GetAll();
 
         public IQueryable<Order> GetEmployeeOrders(string userId);
+
+        public IEnumerable<Complaint> GetComplaints(string orderId);
     }
 }

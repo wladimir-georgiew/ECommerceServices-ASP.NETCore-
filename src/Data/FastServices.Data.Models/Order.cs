@@ -12,6 +12,7 @@
         {
             this.Id = Guid.NewGuid().ToString();
             this.EmployeesOrder = new HashSet<EmployeeOrder>();
+            this.Complaints = new HashSet<Complaint>();
 
             // TODO Add to order services
             //SubmitDate = DateTime.UtcNow;
@@ -55,6 +56,8 @@
 
         [Required]
         public decimal Price { get; set; }
+
+        public virtual ICollection<Complaint> Complaints { get; set; }
 
         public virtual ICollection<EmployeeOrder> EmployeesOrder { get; set; }
     }

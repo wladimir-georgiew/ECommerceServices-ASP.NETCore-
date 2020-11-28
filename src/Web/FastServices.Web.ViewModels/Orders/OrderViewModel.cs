@@ -23,5 +23,7 @@
         public decimal Price { get; set; }
 
         public string CardImgSrc { get; set; }
+
+        public bool HasComplaint { get; set; }
     }
 }

@@ -18,7 +18,11 @@
         private readonly IOrdersService ordersService;
         private readonly ApplicationDbContext db;
 
-        public UsersService(IDeletableEntityRepository<ApplicationUser> repository, ICommentsService commentsService, IOrdersService ordersService, ApplicationDbContext db)
+        public UsersService(
+            IDeletableEntityRepository<ApplicationUser> repository,
+            ICommentsService commentsService,
+            IOrdersService ordersService,
+            ApplicationDbContext db)
         {
             this.repository = repository;
             this.commentsService = commentsService;

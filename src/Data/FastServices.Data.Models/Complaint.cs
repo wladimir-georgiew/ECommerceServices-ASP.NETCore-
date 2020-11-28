@@ -3,7 +3,9 @@
     using System;
     using System.ComponentModel.DataAnnotations;
 
-    public class Complaint
+    using FastServices.Data.Common.Models;
+
+    public class Complaint : IAuditInfo, IDeletableEntity
     {
         public Complaint()
         {
@@ -22,5 +24,11 @@
         public string Description { get; set; }
 
         public DateTime CreatedOn { get; set; }
+
+        public DateTime? ModifiedOn { get; set; }
+
+        public bool IsDeleted { get; set; }
+
+        public DateTime? DeletedOn { get; set; }
     }
 }

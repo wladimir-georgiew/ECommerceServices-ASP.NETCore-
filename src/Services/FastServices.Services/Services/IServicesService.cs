@@ -12,6 +12,6 @@
 
         public IQueryable<Service> GetAllServicesWithDeleted();
 
-        public Task<Service> GetByIdWtihDeletedAsync(int id);
+        public Task<Service> GetByIdWithDeletedAsync(int id);
     }
 }

@@ -15,6 +15,10 @@
 
         public const string SuccessComplaintSubmitted = "Success! You have submitted your complaint";
 
+        public const string ComplaintSubmittedViewMessage = "Your complaint has been submitted.Expect answer on your email soon!";
+
+        public const string ErrorComplaintSubmitted = "Error! Sorry, something went wrong";
+
         public const string DeletedCommentPostMessage = "Your comment has been deleted";
 
         public const string ErrorCommentPostSpamMessage = "Error! You have to wait 24h before posting another comment";

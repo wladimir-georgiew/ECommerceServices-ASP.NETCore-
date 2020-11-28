@@ -98,9 +98,9 @@
     @*<BODY*@
     <div class="row">
         @foreach (var order in Model
-.Where(x => Context.Request.Query["searchOption"] == "2"
-  ? x.Status == "Completed"
-  : x.Status == "Active"))
+        .Where(x => Context.Request.Query["searchOption"] == "2"
+        ? x.Status == "Completed"
+        : x.Status == "Active"))
         {
             <div class="card" style="width: 18rem; margin-left:1em; margin-bottom: 1em; margin-top: 1em">
 
@@ -113,17 +113,24 @@
 
 
                 @if (order.Status == "Completed" &&
-                   !this.User.IsInRole(GlobalConstants.EmployeeRoleName))
+                !this.User.IsInRole(GlobalConstants.EmployeeRoleName))
                 {
-                    <form method="post" asp-controller="Orders" asp-action="AddComplaint">
-                        <button style="margin-bottom:7px;" type="button" class="collapsible btn btn-danger">Add Complaint</button>
-                        <div class="content">
-                            <div class="form-group shadow-textarea">
-                                <textarea style="margin-top:5px" name="Description" class="form-control z-depth-1" rows="3" placeholder="Describe your problem..."></textarea>
+                    @if (order.HasComplaint)
+                    {
+                        <h6 style="font-family:Impact; color:darkgreen"> @GlobalConstants.ComplaintSubmittedViewMessage</h6>
+                    }
+                    else
+                    {
+                        <form method="post" asp-controller="Orders" asp-action="AddComplaint">
+                            <button style="margin-bottom:7px;" type="button" class="collapsible btn btn-danger">Add Complaint</button>
+                            <div class="content">
+                                <div class="form-group shadow-textarea">
+                                    <textarea minlength="15" maxlength="300" style="margin-top:5px" name="Description" class="form-control z-depth-1" rows="3" placeholder="Describe your problem..."></textarea>
+                                </div>
+                                <button class="btn btn-info" name="OrderId" type="submit" value="@order.Id">Submit complaint</button>
                             </div>
-                            <button class="btn btn-info" name="OrderId" type="submit" value="@order.Id">Submit complaint</button>
-                        </div>
-                    </form>
+                        </form>
+                    }
 
                 }
                 <ul class="list-group list-group-flush">

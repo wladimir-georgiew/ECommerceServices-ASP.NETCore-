@@ -10,6 +10,7 @@
     using FastServices.Data.Repositories;
     using FastServices.Data.Seeding;
     using FastServices.Services.Comments;
+    using FastServices.Services.Complaints;
     using FastServices.Services.Data;
     using FastServices.Services.Departments;
     using FastServices.Services.EmployeeOrders;
@@ -96,6 +97,7 @@
             services.AddTransient<IUsersService, UsersService>();
             services.AddTransient<IEmployeesService, EmployeesService>();
             services.AddTransient<IEmployeeOrdersService, EmployeeOrdersService>();
+            services.AddTransient<IComplaintsService, ComplaintsService>();
 
             // inject current user anywhere
             services.AddTransient<IPrincipal>(provider => provider.GetService<IHttpContextAccessor>().HttpContext.User);

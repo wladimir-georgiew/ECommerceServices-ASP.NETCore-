@@ -42,7 +42,7 @@
         [Authorize]
         public async Task<IActionResult> Service(int serviceId)
         {
-            var service = await this.servicesService.GetByIdWtihDeletedAsync(serviceId);
+            var service = await this.servicesService.GetByIdWithDeletedAsync(serviceId);
 
             if (service == null)
             {
@@ -61,7 +61,7 @@
         [Authorize]
         public async Task<IActionResult> Service(OrderInputModel input)
         {
-            var service = await this.servicesService.GetByIdWtihDeletedAsync(input.ServiceId);
+            var service = await this.servicesService.GetByIdWithDeletedAsync(input.ServiceId);
             var department = await this.departmentsService.GetDepartmentByIdAsync(service.DepartmentId);
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await this.usersService.GetByIdWithDeletedAsync(userId);
