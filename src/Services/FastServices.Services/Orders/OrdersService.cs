@@ -45,10 +45,17 @@
             return orders;
         }
 
-        public IQueryable<Order> GetEmployeeOrders(string userId)
+        public IQueryable<Order> GetEmployeeOrdersByUserId(string userId)
         {
             var employee = this.employeesService.GetByUserId(userId);
             var orders = this.repository.All().Where(x => x.EmployeesOrder.Any(e => e.EmployeeId == employee.Id));
+
+            return orders;
+        }
+
+        public IQueryable<Order> GetEmployeeOrders(string employeeId)
+        {
+            var orders = this.repository.All().Where(x => x.EmployeesOrder.Any(e => e.EmployeeId == employeeId));
 
             return orders;
         }

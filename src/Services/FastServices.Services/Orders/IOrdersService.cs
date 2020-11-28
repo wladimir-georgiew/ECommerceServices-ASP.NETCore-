@@ -21,7 +21,9 @@
 
         public IQueryable<Order> GetAll();
 
-        public IQueryable<Order> GetEmployeeOrders(string userId);
+        public IQueryable<Order> GetEmployeeOrders(string employeeId);
+
+        public IQueryable<Order> GetEmployeeOrdersByUserId(string userId);
 
         public IEnumerable<Complaint> GetComplaints(string orderId);
     }

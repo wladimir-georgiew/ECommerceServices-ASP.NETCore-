@@ -25,7 +25,11 @@
                 // Resolve the Scoped service
                 var ordersService = scope.ServiceProvider.GetService<IOrdersService>();
 
-                var ordersToComplete = ordersService.GetAll().Where(x => x.DueDate <= DateTime.UtcNow);
+                // Change order status to completed for all orders which DueDate is smaller or equal to current date
+                var ordersToComplete = ordersService
+                    .GetAll()
+                    .Where(x => x.DueDate <= DateTime.UtcNow)
+                    .Where(x => x.Status == Data.Models.Enumerators.OrderStatus.Active);
 
                 foreach (var order in ordersToComplete)
                 {

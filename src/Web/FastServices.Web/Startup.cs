@@ -52,11 +52,16 @@
             services.AddSingleton<IJobFactory, SingletonJobFactory>();
             services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
 
-            // Add our job
+            // Quartz jobs
             services.AddSingleton<ChangeOrderStatus>();
             services.AddSingleton(new JobSchedule(
                 jobType: typeof(ChangeOrderStatus),
-                cronExpression: "0 0/30 * * * ?")); // run every 5 seconds
+                cronExpression: "0 0/30 * * * ?")); // runs every 30 minutes
+
+            services.AddSingleton<IncreaseEmployeeSalary>();
+            services.AddSingleton(new JobSchedule(
+                jobType: typeof(IncreaseEmployeeSalary),
+                cronExpression: "0 30 10 1 * ?")); // runs on the first day of every month at 10:30 AM
 
             services.AddHostedService<QuartzHostedService>();
 

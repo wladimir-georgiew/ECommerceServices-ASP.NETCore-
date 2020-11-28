@@ -44,8 +44,13 @@
             var user = await this.userManager.FindByIdAsync(userId);
             var roles = await this.userManager.GetRolesAsync(user);
 
+            if (await this.userManager.IsInRoleAsync(user, GlobalConstants.AdministratorRoleName))
+            {
+                return this.Forbid();
+            }
+
             var orders = roles.Contains(GlobalConstants.EmployeeRoleName)
-                ? this.ordersService.GetEmployeeOrders(userId)
+                ? this.ordersService.GetEmployeeOrdersByUserId(userId)
                 : this.ordersService.GetUserOrders(userId);
 
             var model = orders
