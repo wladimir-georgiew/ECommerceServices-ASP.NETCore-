@@ -1,4 +1,6 @@
-﻿@model ICollection<FastServices.Web.ViewModels.Employees.EmployeeViewModel>
+﻿@using FastServices.Web.ViewModels.PaginationList; 
+
+@model PaginationList<FastServices.Web.ViewModels.Employees.EmployeeViewModel>
 
 
 
@@ -103,6 +105,21 @@
     </table>
 </body>
 
+@{ 
+    var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.HasNextPage ? "disabled" : "";
+}
+
+<a asp-area="Administration" asp-controller="Employees" asp-action="Employees"
+   asp-route-pageNumber="@(Model.PageIndex - 1)"
+   class="btn btn-default @prevDisabled">
+    Previous
+</a>
+<a asp-area="Administration" asp-controller="Employees" asp-action="Employees"
+   asp-route-pageNumber="@(Model.PageIndex + 1)"
+   class="btn btn-default @nextDisabled">
+    Next
+</a>
 
 <script>
     var selectChangeView = document.getElementById('selectChangeView');

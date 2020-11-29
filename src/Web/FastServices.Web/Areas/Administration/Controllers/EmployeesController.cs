@@ -9,6 +9,7 @@
     using FastServices.Services.Departments;
     using FastServices.Services.Employees;
     using FastServices.Web.ViewModels.Employees;
+    using FastServices.Web.ViewModels.PaginationList;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
@@ -16,6 +17,8 @@
     [Area("Administration")]
     public class EmployeesController : AdministrationController
     {
+        private const int employeesPerPage = 10;
+
         private readonly IEmployeesService employeesService;
         private readonly IDepartmentsService departmentService;
 
@@ -26,7 +29,7 @@
         }
 
         [HttpGet]
-        public IActionResult Employees(int selectedOption, string id, string searchString)
+        public IActionResult Employees(int selectedOption, string id, string searchString, int pageNumber = 1)
         {
             var employees = this.employeesService.GetAllWithDeleted().ToList();
 
@@ -56,9 +59,13 @@
                     CreatedOn = x.CreatedOn.ToString(format: "d"),
                     HtmlClass = x.IsDeleted == true ? "table-danger" : "table-success",
                 })
-                .ToList();
+                .ToList()
+                .OrderByDescending(x => x.CreatedOn)
+                .ThenBy(x => x.FirstName);
 
-            return this.View(model);
+            var paginatedModel = PaginationList<EmployeeViewModel>.Create(model, pageNumber, employeesPerPage);
+
+            return this.View(paginatedModel);
         }
 
         [HttpPost]
