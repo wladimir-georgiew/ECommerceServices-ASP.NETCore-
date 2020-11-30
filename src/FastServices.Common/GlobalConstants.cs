@@ -27,7 +27,7 @@
 
         public const string ErrorOrderNotEnoughAvailableEmployees = "There are currently no available employees for this date. Try again with different date";
 
-        public const string ErrorEmployeeSubmitOrder = "Employees cannot submit orders!";
+        public const string ErrorRoleSubmitOrder = "Only users can submit orders!";
 
         // Order Constants
         public const int HourlyFeePerWorker = 5;

@@ -1,5 +1,6 @@
 ﻿namespace FastServices.Web.Controllers
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Security.Claims;
@@ -37,7 +38,7 @@
         }
 
         [Authorize]
-        public async Task<IActionResult> All()
+        public async Task<IActionResult> All(string searchOption)
         {
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -70,6 +71,16 @@
                             HasComplaint = this.ordersService.GetComplaints(x.Id).Any(),
                         })
                         .ToList();
+
+            if (searchOption == "2" && !string.IsNullOrEmpty(searchOption))
+            {
+                model = model.Where(x => x.Status == "Completed").ToList();
+                model.Reverse();
+            }
+            else
+            {
+                model = model.Where(x => x.Status == "Active").ToList();
+            }
 
             return this.View("Orders", model);
         }

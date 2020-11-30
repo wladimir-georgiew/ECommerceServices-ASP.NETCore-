@@ -97,10 +97,7 @@
 
     @*<BODY*@
     <div class="row">
-        @foreach (var order in Model
-        .Where(x => Context.Request.Query["searchOption"] == "2"
-        ? x.Status == "Completed"
-        : x.Status == "Active"))
+        @foreach (var order in Model)
         {
             <div class="card" style="width: 18rem; margin-left:1em; margin-bottom: 1em; margin-top: 1em">
 

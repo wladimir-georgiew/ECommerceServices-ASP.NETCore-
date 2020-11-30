@@ -73,7 +73,7 @@
 
             if (this.userManager.GetRolesAsync(user).GetAwaiter().GetResult().Contains(GlobalConstants.EmployeeRoleName))
             {
-                this.ModelState.AddModelError(string.Empty, GlobalConstants.ErrorEmployeeSubmitOrder);
+                this.ModelState.AddModelError(string.Empty, GlobalConstants.ErrorRoleSubmitOrder);
                 return this.View(input);
             }
 
