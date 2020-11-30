@@ -34,7 +34,7 @@
         {
             if (!this.ModelState.IsValid)
             {
-                return this.Redirect($"/Departments/Department?id={input.DepartmentId}");
+                return this.Redirect($"/Departments/Department?depId={input.DepartmentId}");
             }
             else
             {
@@ -44,7 +44,7 @@
                 if (!this.usersService.IsUserAllowedToComment(userId))
                 {
                     this.TempData["msg"] = GlobalConstants.ErrorCommentPostSpamMessage;
-                    return this.Redirect($"/Departments/Department?id={input.DepartmentId}");
+                    return this.Redirect($"/Departments/Department?depId={input.DepartmentId}");
                 }
 
                 var comment = new Comment
@@ -60,7 +60,7 @@
             }
 
             this.TempData["msg"] = GlobalConstants.SuccessCommentPostMessage;
-            return this.Redirect($"/Departments/Department?id={input.DepartmentId}");
+            return this.Redirect($"/Departments/Department?depId={input.DepartmentId}");
         }
 
         [Authorize]

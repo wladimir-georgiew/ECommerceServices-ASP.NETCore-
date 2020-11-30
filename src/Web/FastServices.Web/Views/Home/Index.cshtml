@@ -79,7 +79,8 @@ else
     <div class="row">
         @foreach (var department in @Model)
         {
-        <a href="/Departments/Department?id=@department.Id">
+        @*<a href="/Departments/Department?id=@department.Id">*@
+            <a asp-controller="Departments" asp-action="Department" asp-route-depId="@department.Id">
             <div class="col-md-4 col-sm-12 w3_ban1">
                 <div style="border:double 3px"  class="card">
                     <img class="card-img-top" style="height: 225px; " src="@department.CardImgSrc" alt="Card image cap">

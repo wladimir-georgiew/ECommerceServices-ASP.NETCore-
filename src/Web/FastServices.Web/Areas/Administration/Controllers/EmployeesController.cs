@@ -17,7 +17,7 @@
     [Area("Administration")]
     public class EmployeesController : AdministrationController
     {
-        private const int employeesPerPage = 10;
+        private const int EmployeesPerPage = 10;
 
         private readonly IEmployeesService employeesService;
         private readonly IDepartmentsService departmentService;
@@ -61,9 +61,10 @@
                 })
                 .ToList()
                 .OrderByDescending(x => x.CreatedOn)
-                .ThenBy(x => x.FirstName);
+                .ThenBy(x => x.FirstName)
+                .ToList();
 
-            var paginatedModel = PaginationList<EmployeeViewModel>.Create(model, pageNumber, employeesPerPage);
+            var paginatedModel = PaginationList<EmployeeViewModel>.Create(model, pageNumber, EmployeesPerPage);
 
             return this.View(paginatedModel);
         }

@@ -13,11 +13,14 @@
     using FastServices.Services.Users;
     using FastServices.Web.ViewModels.Comments;
     using FastServices.Web.ViewModels.Departments;
+    using FastServices.Web.ViewModels.PaginationList;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 
     public class DepartmentsController : Controller
     {
+        private const int CommentsPerPage = 3;
+
         private readonly IDepartmentsService departmentsService;
         private readonly IUsersService usersService;
 
@@ -27,10 +30,10 @@
             this.usersService = usersService;
         }
 
-        public async Task<IActionResult> Department(int id)
+        public async Task<IActionResult> Department(int depId, int pageNumber = 1)
         {
             // Services model
-            Department department = await this.departmentsService.GetDepartmentByIdAsync(id);
+            Department department = await this.departmentsService.GetDepartmentByIdAsync(depId);
 
             if (department == null)
             {
@@ -43,7 +46,7 @@
             this.ViewData["topImageNavUrl"] = bgUrl;
             this.ViewData["title"] = depName.ToUpper();
 
-            List<ServiceViewModel> servicesViewModel = this.departmentsService.GetDepartmentServices(id)
+            List<ServiceViewModel> servicesViewModel = this.departmentsService.GetDepartmentServices(depId)
                 .Select(x => new ServiceViewModel
                 {
                     Id = x.Id,
@@ -55,7 +58,7 @@
 
             // Comments model
             var departmentComments = this.departmentsService.GetAllDepartments()
-                .Where(x => x.Id == id)
+                .Where(x => x.Id == depId)
                 .SelectMany(x => x.Comments)
                 .ToList()
                 .OrderByDescending(x => x.CreatedOn)
@@ -68,7 +71,7 @@
                 Name = this.usersService.GetByIdWithDeletedAsync(x.ApplicationUserId).GetAwaiter().GetResult().Name,
                 AvatarImgSrc = this.usersService.GetByIdWithDeletedAsync(x.ApplicationUserId).GetAwaiter().GetResult().AvatarImgSrc,
                 Stars = x.Stars,
-                DepartmentId = id,
+                DepartmentId = depId,
                 UserId = x.ApplicationUserId,
                 CommentId = x.Id,
             })
@@ -77,11 +80,13 @@
             // Model
             var model = new DepartmentViewModel();
 
+            // Department services
             model.ServicesViewModel = servicesViewModel;
 
+            // Department comments
             model.CommentsMasterModel = new CommentsMasterModel
             {
-                ViewModel = commentsViewModel,
+                ViewModel = PaginationList<CommentViewModel>.Create(commentsViewModel, pageNumber, CommentsPerPage),
                 InputModel = new CommentInputModel(),
             };
 

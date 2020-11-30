@@ -40,7 +40,8 @@
         display: inline-block;
         font-size: 40px;
         margin-bottom: 10px;
-        margin-left: 16.6%;
+        margin-top: -30px;
+        margin-left: 100px;
     }
 
         .star-rating__wrap:after {
@@ -104,7 +105,6 @@
     .card .card-title {
         position: relative;
         font-weight: 600;
-        margin-bottom: 10px;
         cursor: text;
         font-family: Bahnschrift;
     }
@@ -172,7 +172,7 @@
         </div>
 
         <form asp-controller="Comments" asp-action="AddComment" method="post">
-            <input style="visibility:hidden" name="DepartmentId" value="@Context.Request.Query["id"]" />
+            <input style="visibility:hidden" name="DepartmentId" value="@Context.Request.Query["depId"]" />
 
             @*@if (ViewContext.HttpContext.Request.Query["error"] == "not-allowed")
                 {
@@ -268,7 +268,7 @@
                                 @*<button type="button" class="btn btn-cyan btn-sm">Edit</button>*@
 
                                 @if (user?.Id == comment.UserId ||
-this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                               this.User.IsInRole(GlobalConstants.AdministratorRoleName))
                                 {
                                     <form asp-controller="Comments" asp-action="DeleteComment" asp-route-departmentId="@comment.DepartmentId" asp-route-commentId="@comment.CommentId" data-ajax="true" data-ajax-success="deleteItem(this)">
                                         <input style="visibility:hidden; position:absolute" id="departmentId" type="text" name="departmentId" value="@comment.DepartmentId" />
@@ -285,6 +285,24 @@ this.User.IsInRole(GlobalConstants.AdministratorRoleName))
 
     </div>
 </div>
+
+@{
+    var prevDisabled = !Model.ViewModel.HasPreviousPage ? "disabled" : "";
+    var nextDisabled = !Model.ViewModel.HasNextPage ? "disabled" : "";
+}
+
+<a asp-controller="Departments" asp-action="Department"
+   asp-route-depId="@int.Parse(Model.ViewModel.Select(x => x.DepartmentId).FirstOrDefault().ToString())"
+   asp-route-pageNumber="@(Model.ViewModel.PageIndex - 1)"
+   class="btn btn-default @prevDisabled">
+    Previous
+</a>
+<a asp-controller="Departments" asp-action="Department"
+   asp-route-depId="@int.Parse(Model.ViewModel.Select(x => x.DepartmentId).FirstOrDefault().ToString())"
+   asp-route-pageNumber="@(Model.ViewModel.PageIndex + 1)"
+   class="btn btn-default @nextDisabled">
+    Next
+</a>
 
 <script>
     function deleteItem(form) {
