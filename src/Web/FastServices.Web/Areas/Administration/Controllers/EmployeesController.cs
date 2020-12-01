@@ -60,7 +60,8 @@
                     HtmlClass = x.IsDeleted == true ? "table-danger" : "table-success",
                 })
                 .ToList()
-                .OrderByDescending(x => x.CreatedOn)
+                .OrderBy(x => x.DepartmentName)
+                .ThenByDescending(x => x.CreatedOn)
                 .ThenBy(x => x.FirstName)
                 .ToList();
 

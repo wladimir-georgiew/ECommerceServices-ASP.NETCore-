@@ -61,8 +61,7 @@
                 .Where(x => x.Id == depId)
                 .SelectMany(x => x.Comments)
                 .ToList()
-                .OrderByDescending(x => x.CreatedOn)
-                .Take(5);
+                .OrderByDescending(x => x.CreatedOn);
 
             var commentsViewModel = departmentComments.Select(x => new CommentViewModel()
             {
@@ -78,16 +77,17 @@
                 .ToList();
 
             // Model
-            var model = new DepartmentViewModel();
-
-            // Department services
-            model.ServicesViewModel = servicesViewModel;
-
-            // Department comments
-            model.CommentsMasterModel = new CommentsMasterModel
+            var model = new DepartmentViewModel
             {
-                ViewModel = PaginationList<CommentViewModel>.Create(commentsViewModel, pageNumber, CommentsPerPage),
-                InputModel = new CommentInputModel(),
+                // Department services
+                ServicesViewModel = servicesViewModel,
+
+                // Department comments
+                CommentsMasterModel = new CommentsMasterModel
+                {
+                    ViewModel = PaginationList<CommentViewModel>.Create(commentsViewModel, pageNumber, CommentsPerPage),
+                    InputModel = new CommentInputModel(),
+                },
             };
 
             return this.View(model);

@@ -88,6 +88,19 @@
                 return Page();
             }
 
+            if (!Input.PhotoPathSrc.EndsWith(".jpg") &&
+                !Input.PhotoPathSrc.EndsWith(".png") &&
+                !Input.PhotoPathSrc.EndsWith(".jpeg"))
+            {
+                this.ModelState.AddModelError("", StatusMessage = "The provided link is not an image.Available formats - jpg, jpeg, png");
+                return RedirectToPage();
+            }
+            else
+            {
+                var newImage = Input.PhotoPathSrc;
+                await this.userServices.UploadAvatarImgPathFromLink(user.Id, newImage);
+            }
+
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
             if (Input.PhoneNumber != phoneNumber)
             {
@@ -98,9 +111,6 @@
                     return RedirectToPage();
                 }
             }
-
-            var newImage = Input.PhotoPathSrc;
-            await this.userServices.UploadAvatarImgPathFromLink(user.Id, newImage);
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Your profile has been updated";
