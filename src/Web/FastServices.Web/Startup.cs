@@ -1,4 +1,7 @@
-﻿namespace FastServices.Web
+﻿using FastServices.Services;
+using FastServices.Services.Images;
+
+namespace FastServices.Web
 {
     using System.Reflection;
     using System.Security.Principal;
@@ -103,6 +106,7 @@
             services.AddTransient<IEmployeesService, EmployeesService>();
             services.AddTransient<IEmployeeOrdersService, EmployeeOrdersService>();
             services.AddTransient<IComplaintsService, ComplaintsService>();
+            services.AddTransient<IImageServices, ImageServices>();
 
             // inject current user anywhere
             services.AddTransient<IPrincipal>(provider => provider.GetService<IHttpContextAccessor>().HttpContext.User);

@@ -1,4 +1,6 @@
-﻿namespace FastServices.Services.Users
+﻿using FastServices.Web.ViewModels.Employees;
+
+namespace FastServices.Services.Users
 {
     using System.Linq;
     using System.Threading.Tasks;
@@ -19,5 +21,9 @@
         public Task UploadAvatarImgPathFromLink(string userId, string newImgPath);
 
         public bool IsUserAllowedToSubmitOrder(string userId, OrderInputModel input);
+
+        public Task AssignUserToRoleAsync(string roleName, ApplicationUser user);
+
+        public Task<ApplicationUser> CreateUserAsync(EmployeeInputModel model, string uniqueFileName);
     }
 }

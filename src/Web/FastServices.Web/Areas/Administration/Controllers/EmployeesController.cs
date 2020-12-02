@@ -1,16 +1,22 @@
-﻿namespace FastServices.Web.Areas.Administration.Controllers
+﻿using FastServices.Services.Images;
+
+namespace FastServices.Web.Areas.Administration.Controllers
 {
     using System;
-    using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
+    using System.Security.Claims;
     using System.Threading.Tasks;
 
     using FastServices.Common;
+    using FastServices.Data.Models;
     using FastServices.Services.Departments;
     using FastServices.Services.Employees;
+    using FastServices.Services.Users;
     using FastServices.Web.ViewModels.Employees;
     using FastServices.Web.ViewModels.PaginationList;
     using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Mvc;
 
     [Authorize(Roles = GlobalConstants.AdministratorRoleName)]
@@ -21,15 +27,27 @@
 
         private readonly IEmployeesService employeesService;
         private readonly IDepartmentsService departmentService;
+        private readonly IImageServices imageServices;
+        private readonly IUsersService usersService;
 
-        public EmployeesController(IEmployeesService employeesService, IDepartmentsService departmentService)
+        public EmployeesController(
+            IEmployeesService employeesService,
+            IDepartmentsService departmentService,
+            IImageServices imageServices,
+            IUsersService usersService)
         {
             this.employeesService = employeesService;
             this.departmentService = departmentService;
+            this.imageServices = imageServices;
+            this.usersService = usersService;
         }
 
         [HttpGet]
-        public IActionResult Employees(int selectedOption, string id, string searchString, int pageNumber = 1)
+        public async Task<IActionResult> Employees(
+            int selectedOption,
+            string id,
+            string searchString,
+            int pageNumber = 1)
         {
             var employees = this.employeesService.GetAllWithDeleted().ToList();
 
@@ -58,6 +76,7 @@
                     DeletedOn = x.DeletedOn?.ToString(format: "d"),
                     CreatedOn = x.CreatedOn.ToString(format: "d"),
                     HtmlClass = x.IsDeleted == true ? "table-danger" : "table-success",
+                    AvatarImgSrc = this.usersService.GetByIdWithDeletedAsync(x.ApplicationUserId).GetAwaiter().GetResult().AvatarImgSrc,
                 })
                 .ToList()
                 .OrderBy(x => x.DepartmentName)
@@ -70,20 +89,76 @@
             return this.View(paginatedModel);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Employees(string operationToExec, int selectedOption, string id, string searchString)
+        [HttpGet]
+        public IActionResult New()
         {
-            if (operationToExec == "Restore")
+            var model = new NewEmployeeMasterModel
             {
-                await this.employeesService.UndeleteByIdAsync(id);
-            }
-            else if (operationToExec == "Delete")
+                Departments = this.employeesService.GetDepartmentViewModel(),
+                InputModel = new EmployeeInputModel(),
+            };
+
+            return this.View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> New(NewEmployeeMasterModel model)
+        {
+            var departmentsModel = this.employeesService.GetDepartmentViewModel();
+
+            var masterModel = new NewEmployeeMasterModel
             {
-                await this.employeesService.DeleteByIdAsync(id);
+                Departments = departmentsModel,
+                InputModel = model.InputModel,
+            };
+
+            if (model.InputModel.Password != model.InputModel.ConfirmPassword)
+            {
+                #pragma warning disable SA1122
+                this.ModelState.AddModelError("", "Passwords don't match!");
             }
+
+            if (this.usersService.GetAll().Any(x => x.Email == model.InputModel.Email))
+            {
+                this.ModelState.AddModelError("Email", "Email already taken");
+            }
+
+            if (this.usersService.GetAll().Any(x => x.PhoneNumber == model.InputModel.PhoneNumber))
+            {
+                this.ModelState.AddModelError("PhoneNumber", "Phone number already taken");
+            }
+
+            if (!this.ModelState.IsValid)
+            {
+                return this.View(masterModel);
+            }
+
+            string uniqueFileName = this.imageServices.GetUploadedFileName(model.InputModel);
+
+            var user = await this.usersService.CreateUserAsync(model.InputModel, uniqueFileName);
+
+            await this.employeesService.AddEmployeeAsync(model.InputModel, user);
+
+            await this.usersService.AssignUserToRoleAsync(GlobalConstants.EmployeeRoleName, user);
+
+            return this.RedirectToAction(nameof(this.Employees));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteEmployees(int selectedOption, string id)
+        {
+            await this.employeesService.DeleteByIdAsync(id);
 
             return this.Redirect($"/Administration/Employees/Employees?selectedOption={selectedOption}");
+        }
 
+        [HttpPost]
+        public async Task<IActionResult> UndeleteEmployees(int selectedOption, string id)
+        {
+            await this.employeesService.UndeleteByIdAsync(id);
+
+            return this.Redirect($"/Administration/Employees/Employees?selectedOption={selectedOption}");
         }
     }
 }

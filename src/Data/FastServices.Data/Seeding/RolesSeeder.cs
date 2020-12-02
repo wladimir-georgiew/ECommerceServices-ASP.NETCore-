@@ -24,10 +24,10 @@
             // Assign user by email address to admin role
             await AssignUserToRolesAsync(roleManager, userManager, GlobalConstants.AdministratorRoleName, "admin@abv.bg");
 
-            // Adds employee and assings employee role to his roles
-            await AddEmployee(roleManager, userManager, dbContext, "employee@abv.bg");
-            await AddEmployee(roleManager, userManager, dbContext, "testuser@abv.bg");
-            await AddEmployee(roleManager, userManager, dbContext, "noviqtest@abv.bg");
+            //// Adds employee and assings employee role to his roles
+            //await AddEmployee(roleManager, userManager, dbContext, "employee@abv.bg");
+            //await AddEmployee(roleManager, userManager, dbContext, "testuser@abv.bg");
+            //await AddEmployee(roleManager, userManager, dbContext, "noviqtest@abv.bg");
         }
 
         private static async Task SeedRoleAsync(RoleManager<ApplicationRole> roleManager, string roleName)
@@ -62,6 +62,7 @@
 
             var employee = new Employee
             {
+                ApplicationUser = user,
                 ApplicationUserId = user.Id,
                 DepartmentId = 2,
                 FirstName = "Rabotnika",

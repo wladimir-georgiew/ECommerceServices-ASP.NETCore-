@@ -27,6 +27,7 @@
                 <input type="submit" value="Search" class="btn btn-default" /> |
                 <a asp-action="Employees">Back to Full List</a>
             </p>
+
         </div>
     </form>
     @*/GET*@
@@ -44,14 +45,14 @@
     <table class="table table-light table-bordered">
         <thead class="thead-light">
             <tr>
-                <th scope="col">Id</th>
-                <th scope="col">FirstN</th>
-                <th scope="col">LastN</th>
+                <th scope="col">Name</th>
                 <th scope="col">DepartmentN</th>
                 <th scope="col">Salary</th>
                 <th scope="col">Created On</th>
                 <th scope="col">DeletedOn</th>
                 <th scope="col">Action</th>
+
+                <a style="position: relative" asp-action="New" class="btn btn-sm btn-primary rounded-0 text-uppercase"> Add New</a>
             </tr>
         </thead>
 
@@ -62,9 +63,13 @@
 
                 <form asp-area="Administration" asp-controller="Employees" asp-action="Employees" method="post">
                     <tr class="@employee.HtmlClass">
-                        <th scope="row">@employee.Id</th>
-                        <td>@employee.FirstName</td>
-                        <td>@employee.LastName</td>
+                        <td>
+                            <img src="@employee.AvatarImgSrc"   
+                                 class="rounded-circle"   
+                                 height="40" width="40"   
+                                 asp-append-version="true" />  
+                            @employee.FirstName @employee.LastName
+                        </td>
                         <td>@employee.DepartmentName</td>
                         <td>@employee.Salary</td>
                         <td>@employee.CreatedOn</td>
@@ -77,9 +82,9 @@
                             @*<td><a href="@(this.Context.Request.Path)?selectedOption=@this.TempData["SelectedOption"]&make=restore&id=@employee.Id" class="btn btn-success">Restore</a></td>*@
 
                             <td>
-                                <button type="submit" class="btn btn-success" name="id" value="@employee.Id">
+                                <button asp-action="UndeleteEmployees" type="submit" class="btn btn-success" name="id" value="@employee.Id">
                                     Restore
-                                    <input type="text" style="visibility:hidden;position:absolute" name="operationToExec" value="Restore" />
+                                    @*<input type="text" style="visibility:hidden;position:absolute" name="operationToExec" value="Restore" />*@
                                 </button>
                             </td>
                         }
@@ -88,9 +93,9 @@
                             @*<td><a href="@(this.Context.Request.Path)?selectedOption=@this.TempData["SelectedOption"]&make=delete&id=@employee.Id" class="btn btn-danger">Delete</a></td>*@
 
                             <td>
-                                <button type="submit" class="btn btn-danger" name="id" value="@employee.Id">
+                                <button asp-action="DeleteEmployees" type="submit" class="btn btn-danger" name="id" value="@employee.Id">
                                     Delete
-                                    <input type="text" style="visibility:hidden;position:absolute" name="operationToExec" value="Delete" />
+                                    @*<input type="text" style="visibility:hidden;position:absolute" name="operationToExec" value="Delete" />*@
                                 </button>
                             </td>
                         }

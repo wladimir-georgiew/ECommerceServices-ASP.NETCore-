@@ -71,6 +71,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         color: white;
         height:30%;
         }
+    .topImageNavBlack {
+        height: 3.5em;
+        background-color: black;
+    }
 </style>
 
 
@@ -91,7 +95,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">About</a>
                 </li>
                 @if (!this.User.IsInRole(GlobalConstants.AdministratorRoleName) &&
-                    this.SignInManager.IsSignedIn(this.User))
+                   this.SignInManager.IsSignedIn(this.User))
                 {
                     <li class="nav-item">
                         <a class="nav-link" asp-area="" asp-controller="Orders" asp-action="All">My Orders</a>

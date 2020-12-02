@@ -6,6 +6,7 @@
     using System.Threading.Tasks;
 
     using FastServices.Data.Models;
+    using FastServices.Web.ViewModels.Employees;
 
     public interface IEmployeesService
     {
@@ -24,5 +25,11 @@
         public List<Employee> GetAllAvailableEmployees(int departmentId, DateTime startDate, DateTime dueDate);
 
         public Employee GetByUserId(string id);
+
+        public Task AddEmployeeAsync(EmployeeInputModel model, ApplicationUser user);
+
+        public ICollection<EmployeeDepartmentViewModel> GetDepartmentViewModel();
+
+        //public ApplicationUser CreateUser(EmployeeInputModel model, string uniqueFileName);
     }
 }
