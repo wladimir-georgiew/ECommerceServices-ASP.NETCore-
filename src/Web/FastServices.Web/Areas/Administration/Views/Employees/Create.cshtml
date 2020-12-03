@@ -1,14 +1,12 @@
 ﻿@using FastServices.Web.ViewModels.Employees
-@model NewEmployeeMasterModel
+@model CreateEmployeeMasterModel
 
 @{
-    ViewData["Title"] = "New";
+    ViewData["Title"] = "Create";
 }
 
 <style>
     footer {
-        visibility: hidden;
-        position: absolute
     }
 </style>
 
@@ -18,45 +16,40 @@
 <div class="col-md-10 mx-auto py-4">
     <div class="card">
         <div class="card-header bg-primary text-uppercase text-white">
-            <h4>Add New Employee Account</h4>
+            <h4>Add Create Employee Account</h4>
         </div>
         <div class="card-body">
-            <form enctype="multipart/form-data" asp-action="New" method="post">
+            <form enctype="multipart/form-data" asp-action="Create" method="post">
                 <div style="text-align:left;" asp-validation-summary="All" class="text-danger"></div>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="form-group">
                             <label asp-for="@Model.InputModel.FirstName" class="control-label"></label>
                             <input asp-for="@Model.InputModel.FirstName" class="form-control" />
-                            <span asp-validation-for="@Model.InputModel.FirstName" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label asp-for="@Model.InputModel.LastName" class="control-label"></label>
                             <input asp-for="@Model.InputModel.LastName" class="form-control" />
-                            <span asp-validation-for="@Model.InputModel.LastName" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label asp-for="@Model.InputModel.Email" class="control-label"></label>
                             <input asp-for="@Model.InputModel.Email" class="form-control" />
-                            <span asp-validation-for="@Model.InputModel.Email" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label asp-for="@Model.InputModel.PhoneNumber" class="control-label"></label>
                             <input asp-for="@Model.InputModel.PhoneNumber" class="form-control" />
-                            <span asp-validation-for="@Model.InputModel.PhoneNumber" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label asp-for="@Model.InputModel.Password" class="control-label"></label>
                             <input type="password" asp-for="@Model.InputModel.Password" class="form-control" />
-                            <span asp-validation-for="@Model.InputModel.Password" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-md-6">
@@ -85,7 +78,6 @@
                         <div class="form-group">
                             <label asp-for="@Model.InputModel.Salary" class="control-label"></label>
                             <input asp-for="@Model.InputModel.Salary" class="form-control" />
-                            <span asp-validation-for="@Model.InputModel.Salary" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-md-6">

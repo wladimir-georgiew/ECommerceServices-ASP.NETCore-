@@ -1,4 +1,6 @@
-﻿namespace FastServices.Services
+﻿using Microsoft.AspNetCore.Http;
+
+namespace FastServices.Services
 {
     using System;
     using System.IO;
@@ -16,18 +18,18 @@
             this.hostEnvironment = hostEnvironment;
         }
 
-        public string GetUploadedFileName(EmployeeInputModel model)
+        public string GetUploadedFileName(IFormFile file)
         {
-            if (model.ProfileImage == null)
+            if (file == null)
             {
                 return string.Empty;
             }
 
             string uploadsFolder = Path.Combine(this.hostEnvironment.WebRootPath, "images");
-            string uniqueFileName = Guid.NewGuid().ToString() + "_" + model.ProfileImage.FileName;
+            string uniqueFileName = Guid.NewGuid().ToString() + "_" + file.FileName;
             string filePath = Path.Combine(uploadsFolder, uniqueFileName);
             using var fileStream = new FileStream(filePath, FileMode.Create);
-            model.ProfileImage.CopyTo(fileStream);
+            file.CopyTo(fileStream);
 
             return uniqueFileName;
         }

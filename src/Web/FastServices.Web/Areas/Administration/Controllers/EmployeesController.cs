@@ -26,18 +26,18 @@ namespace FastServices.Web.Areas.Administration.Controllers
         private const int EmployeesPerPage = 10;
 
         private readonly IEmployeesService employeesService;
-        private readonly IDepartmentsService departmentService;
+        private readonly IDepartmentsService departmentsService;
         private readonly IImageServices imageServices;
         private readonly IUsersService usersService;
 
         public EmployeesController(
             IEmployeesService employeesService,
-            IDepartmentsService departmentService,
+            IDepartmentsService departmentsService,
             IImageServices imageServices,
             IUsersService usersService)
         {
             this.employeesService = employeesService;
-            this.departmentService = departmentService;
+            this.departmentsService = departmentsService;
             this.imageServices = imageServices;
             this.usersService = usersService;
         }
@@ -68,7 +68,7 @@ namespace FastServices.Web.Areas.Administration.Controllers
                 .Select(x => new EmployeeViewModel
                 {
                     Id = x.Id,
-                    DepartmentName = this.departmentService.GetDepartmentByIdAsync(x.DepartmentId).GetAwaiter().GetResult().Name,
+                    DepartmentName = this.departmentsService.GetDepartmentByIdAsync(x.DepartmentId).GetAwaiter().GetResult().Name,
                     FirstName = x.FirstName,
                     LastName = x.LastName,
                     Salary = x.Salary,
@@ -90,11 +90,11 @@ namespace FastServices.Web.Areas.Administration.Controllers
         }
 
         [HttpGet]
-        public IActionResult New()
+        public IActionResult Create()
         {
-            var model = new NewEmployeeMasterModel
+            var model = new CreateEmployeeMasterModel
             {
-                Departments = this.employeesService.GetDepartmentViewModel(),
+                Departments = this.departmentsService.GetDepartmentViewModel(),
                 InputModel = new EmployeeInputModel(),
             };
 
@@ -103,11 +103,11 @@ namespace FastServices.Web.Areas.Administration.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> New(NewEmployeeMasterModel model)
+        public async Task<IActionResult> Create(CreateEmployeeMasterModel model)
         {
-            var departmentsModel = this.employeesService.GetDepartmentViewModel();
+            var departmentsModel = this.departmentsService.GetDepartmentViewModel();
 
-            var masterModel = new NewEmployeeMasterModel
+            var masterModel = new CreateEmployeeMasterModel
             {
                 Departments = departmentsModel,
                 InputModel = model.InputModel,
@@ -134,7 +134,7 @@ namespace FastServices.Web.Areas.Administration.Controllers
                 return this.View(masterModel);
             }
 
-            string uniqueFileName = this.imageServices.GetUploadedFileName(model.InputModel);
+            string uniqueFileName = this.imageServices.GetUploadedFileName(model.InputModel.ProfileImage);
 
             var user = await this.usersService.CreateUserAsync(model.InputModel, uniqueFileName);
 

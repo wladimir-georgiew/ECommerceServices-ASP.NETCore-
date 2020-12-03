@@ -4,6 +4,7 @@ using System.Text;
 using FastServices.Common;
 using FastServices.Services.Departments;
 using FastServices.Services.Users;
+using FastServices.Web.ViewModels.Departments;
 
 namespace FastServices.Services.Employees
 {
@@ -82,19 +83,6 @@ namespace FastServices.Services.Employees
 
             await this.repository.AddAsync(employee);
             await this.repository.SaveChangesAsync();
-        }
-
-        public ICollection<EmployeeDepartmentViewModel> GetDepartmentViewModel()
-        {
-            var departmentsModel = this.departmentsService.GetAllDepartments()
-                .Select(x => new EmployeeDepartmentViewModel
-                {
-                    Id = x.Id,
-                    Name = x.Name,
-                })
-                .ToList();
-
-            return departmentsModel;
         }
     }
 }

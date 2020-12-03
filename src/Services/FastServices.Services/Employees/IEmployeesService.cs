@@ -1,4 +1,6 @@
-﻿namespace FastServices.Services.Employees
+﻿using FastServices.Web.ViewModels.Departments;
+
+namespace FastServices.Services.Employees
 {
     using System;
     using System.Collections.Generic;
@@ -28,8 +30,8 @@
 
         public Task AddEmployeeAsync(EmployeeInputModel model, ApplicationUser user);
 
-        public ICollection<EmployeeDepartmentViewModel> GetDepartmentViewModel();
+        // public ICollection<SharedDepartmentViewModel> GetDepartmentViewModel();
 
-        //public ApplicationUser CreateUser(EmployeeInputModel model, string uniqueFileName);
+        // public ApplicationUser CreateUser(EmployeeInputModel model, string uniqueFileName);
     }
 }

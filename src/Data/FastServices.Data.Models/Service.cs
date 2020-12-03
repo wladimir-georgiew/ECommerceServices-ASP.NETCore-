@@ -23,6 +23,11 @@
         public decimal Fee { get; set; }
 
         [Required]
+        [MaxLength(300)]
+        [MinLength(20)]
+        public string Description { get; set; }
+
+        [Required]
         public string CardImgSrc { get; set; }
 
         // Audit info
