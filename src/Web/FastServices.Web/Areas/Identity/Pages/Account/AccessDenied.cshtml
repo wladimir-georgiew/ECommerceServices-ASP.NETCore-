@@ -1,0 +1,20 @@
+﻿@page
+@model AccessDeniedModel
+@{
+    ViewData["Title"] = "Access denied";
+}
+
+<style>
+    footer{
+        visibility: hidden;
+        position: absolute;
+        }
+</style>
+
+<div class="topImageNavBlack">
+</div>
+
+<header>
+    <h1 class="text-danger">@ViewData["Title"]</h1>
+    <p class="text-danger">You do not have access to this resource.</p>
+</header>

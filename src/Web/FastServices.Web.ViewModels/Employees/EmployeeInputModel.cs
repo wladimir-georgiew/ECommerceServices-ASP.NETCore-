@@ -52,6 +52,7 @@ namespace FastServices.Web.ViewModels.Employees
         [Display(Name = "Profile Picture")]
         [DataType(DataType.Upload)]
         [AllowedExtensions(new[] { ".jpg", ".png" })]
+        [MaxFileSize(3 * 1024 * 1024)] // 3mb
         public IFormFile ProfileImage { get; set; }
     }
 }

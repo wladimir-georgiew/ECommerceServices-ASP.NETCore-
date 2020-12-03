@@ -77,7 +77,6 @@
                                     <option value="@department.Id">@department.Name</option>
                                 }
                             </select>
-                            <span asp-validation-for="@Model.InputModel.DepartmentId" class="text-danger"></span>
                         </div>
                     </div>
                 </div>
@@ -96,7 +95,6 @@
                                 <input asp-for="@Model.InputModel.ProfileImage" class="custom-file-input" id="customFile">
                                 <label class="custom-file-label" for="customFile">Choose file</label>
                             </div>
-                            <span asp-validation-for="@Model.InputModel.ProfileImage" class="text-danger"></span>
                         </div>
                     </div>
                 </div>
