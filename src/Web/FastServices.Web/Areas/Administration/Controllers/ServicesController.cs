@@ -56,7 +56,7 @@
                 .Any(x => x.Name == model.InputModel.Name))
             {
                 #pragma warning disable SA1122
-                this.ModelState.AddModelError("", "Department with such name already exists");
+                this.ModelState.AddModelError("", "Service with such name already exists");
             }
 
             if (!this.ModelState.IsValid)
@@ -65,9 +65,9 @@
             }
 
             string uniqueFileName = this.imageServices.GetUploadedFileName(model.InputModel.BackgroundImage);
-
             await this.servicesService.AddServiceAsync(model.InputModel, uniqueFileName);
 
+            this.TempData["msg"] = GlobalConstants.SuccessAddService;
             return this.RedirectToAction("Department", "Departments", new { area = "", depId = model.InputModel.DepartmentId });
         }
     }

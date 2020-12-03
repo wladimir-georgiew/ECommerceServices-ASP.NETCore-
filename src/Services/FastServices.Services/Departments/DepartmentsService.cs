@@ -9,14 +9,18 @@ namespace FastServices.Services.Departments
     using FastServices.Data;
     using FastServices.Data.Common.Repositories;
     using FastServices.Data.Models;
+    using FastServices.Services.Images;
+    using Microsoft.AspNetCore.Http;
 
     public class DepartmentsService : IDepartmentsService
     {
         private readonly IDeletableEntityRepository<Department> repository;
+        private readonly IImageServices imagesService;
 
-        public DepartmentsService(IDeletableEntityRepository<Department> repository)
+        public DepartmentsService(IDeletableEntityRepository<Department> repository, IImageServices imagesService)
         {
             this.repository = repository;
+            this.imagesService = imagesService;
         }
 
         public async Task AddAsync(Department department) => await this.repository.AddAsync(department);
@@ -40,6 +44,22 @@ namespace FastServices.Services.Departments
                 .ToList();
 
             return departmentsModel;
+        }
+
+        public async Task AddDepartmentAsync(DepartmentInputModel model, string backgroundImgName, string cardImgName)
+        {
+            var department = new Department
+            {
+                Name = model.Name,
+                Description = model.Description,
+                BackgroundImgSrc = "/images/" + backgroundImgName,
+                CardImgSrc = !string.IsNullOrEmpty(cardImgName)
+                    ? ("/images/" + cardImgName)
+                    : "/defaultImages/defBackgroundImg.png",
+            };
+
+            await this.repository.AddAsync(department);
+            await this.repository.SaveChangesAsync();
         }
     }
 }

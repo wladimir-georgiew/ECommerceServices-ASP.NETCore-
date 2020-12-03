@@ -1,12 +1,12 @@
 ﻿@{
-    var serviceName = @ViewData["title"];
+    var serviceName = @ViewData["serviceName"];
+    var description = @ViewData["description"];
 }
 
 @model FastServices.Web.ViewModels.Orders.OrderInputModel
 
 <head>
     <meta charset="utf-8">
-    <title>RegistrationForm_v9 by Colorlib</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
@@ -56,7 +56,7 @@
 
         <hr />
 
-        <h4>Finding the best office cleaning services in your area doesn't have to be a chore when you use Fast Services. Fast Services has been connecting customers with office cleaning professionals for years, ensuring that your professional space shines and impresses your clients and employees alike. Whether you run a small business or are part of a large corporation, ensuring that your offices are kept clean and tidy helps to create positive first impressions and improves employee morale. From ensuring that the coffee cups are washed and dried to cleaning the bathrooms,Fast Services can connect you with office cleaning services to handle all your cleaning tasks, large and small. </h4>
+        <h4>@description.ToString()</h4>
         <hr />
         <h2>FAQ</h2>
     </div>

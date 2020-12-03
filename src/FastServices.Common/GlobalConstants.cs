@@ -15,6 +15,12 @@
 
         public const string SuccessComplaintSubmitted = "Success! You have submitted your complaint";
 
+        public const string SuccessAddService = "Success! You added new service";
+
+        public const string SuccessAddDepartment = "Success! You added new department";
+
+        public const string SuccessAddEmployee = "Success! You added new employee";
+
         public const string ComplaintSubmittedViewMessage = "Your complaint has been submitted.Expect answer on your email soon!";
 
         public const string ErrorComplaintSubmitted = "Error! Sorry, something went wrong";

@@ -19,7 +19,7 @@
             Dictionary<string, string[]> servicesDictionary = new Dictionary<string, string[]>();
 
             string[] cleaning = { "Home Cleaning", "Office Cleaning", };
-            string[] assembly = { "Small-Medium Furniture Assembly", "Big Furniture Assembly" };
+            string[] assembly = { "S-M Furniture Assembly", "Big Furniture Assembly" };
             string[] plumbing = { "Toilet Plumbing", "Drain Repair" };
             string[] electrical = { "Outlet Installation", "Light Fixtures", "Smart Thermostat", "Security Cam Installation" };
             string[] painting = { "Interior Painting", "Exterior Painting" };
@@ -51,6 +51,7 @@
 
                         newService.Name = sname;
                         newService.DepartmentId = department.Id;
+                        newService.Description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent rhoncus elit ut magna volutpat, tempus iaculis orci rutrum. Sed venenatis massa luctus, porttitor magna at, dictum lacus. Phasellus lorem urna, scelerisque et sem ut, tempor ultricies nisi.";
 
                         // Cleaning Services
                         if (kvp.Key == "Cleaning")
@@ -70,7 +71,7 @@
                         // Assembly Services
                         else if (kvp.Key == "Assembly")
                         {
-                            if (sname == "Small-Medium Furniture Assembly")
+                            if (sname == "S-M Furniture Assembly")
                             {
                                 newService.Fee = 8;
                                 newService.CardImgSrc = "https://www.godownsize.com/wp-content/uploads/2013/09/furniture-to-small-spaces.jpg";

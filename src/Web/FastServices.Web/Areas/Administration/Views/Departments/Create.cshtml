@@ -1,0 +1,65 @@
+﻿@using FastServices.Web.ViewModels.Departments
+@model DepartmentInputModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+<div class="topImageNavBlack">
+</div>
+
+<div class="col-md-10 mx-auto py-4">
+    <div class="card">
+        <div class="card-header bg-primary text-uppercase text-white">
+            <h4>Create Service</h4>
+        </div>
+        <div class="card-body">
+            <form enctype="multipart/form-data" asp-action="Create" method="post">
+                <div style="text-align:left;" asp-validation-summary="All" class="text-danger"></div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="@Model.Name" class="control-label"></label>
+                            <input asp-for="@Model.Name" class="form-control" />
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="@Model.Description" class="control-label"></label>
+                            <input asp-for="@Model.Description" class="form-control" />
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label asp-for="@Model.BackgroundImage" class="control-label"></label>
+                            <div class="custom-file">
+                                <input asp-for="@Model.BackgroundImage" class="custom-file-input" id="customFile">
+                                <label class="custom-file-label" for="customFile">Choose file</label>
+                            </div>
+
+                            <label asp-for="@Model.CardImage" class="control-label"></label>
+                            <div class="custom-file">
+                                <input asp-for="@Model.CardImage" class="custom-file-input" id="customFile">
+                                <label class="custom-file-label" for="customFile">Choose file</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <a style="color: white" type="button" asp-area="" asp-controller="Home" asp-action="Index" class="btn btn-lg btn-danger rounded-0 text-uppercase">cancel</a>
+                    <input type="submit" value="submit" class="btn btn-lg btn-primary rounded-0 text-uppercase" />
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script type="text/javascript">
+        // Add the following code if you want the name of the file appear on select
+        $(".custom-file-input").on("change", function () {
+            var fileName = $(this).val().split("\\").pop();
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+    </script>
+}  

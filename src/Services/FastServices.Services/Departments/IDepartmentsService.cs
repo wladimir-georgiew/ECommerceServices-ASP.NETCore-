@@ -20,5 +20,7 @@
         public IEnumerable<Service> GetDepartmentServices(int departmentId);
 
         public ICollection<SharedDepartmentViewModel> GetDepartmentViewModel();
+
+        public Task AddDepartmentAsync(DepartmentInputModel model, string backgroundImgName, string cardImgName);
     }
 }

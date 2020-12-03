@@ -52,7 +52,8 @@
             var department = await this.departmentsService.GetDepartmentByIdAsync(service.DepartmentId);
 
             this.ViewData["topImageNavUrl"] = department.BackgroundImgSrc;
-            this.ViewData["title"] = service.Name;
+            this.ViewData["serviceName"] = service.Name;
+            this.ViewData["description"] = service.Description.ToString();
             return this.View();
         }
 
@@ -67,11 +68,13 @@
             var user = await this.usersService.GetByIdWithDeletedAsync(userId);
 
             this.ViewData["topImageNavUrl"] = department.BackgroundImgSrc;
-            this.ViewData["title"] = service.Name;
+            this.ViewData["serviceName"] = service.Name;
+            this.ViewData["description"] = service.Description.ToString();
 
             input.Price = ((GlobalConstants.HourlyFeePerWorker * input.WorkersCount) * input.HoursBooked) + service.Fee;
+            var roles = this.userManager.GetRolesAsync(user).GetAwaiter().GetResult();
 
-            if (this.userManager.GetRolesAsync(user).GetAwaiter().GetResult().Contains(GlobalConstants.EmployeeRoleName))
+            if (roles.Contains(GlobalConstants.EmployeeRoleName) || roles.Contains(GlobalConstants.AdministratorRoleName))
             {
                 this.ModelState.AddModelError(string.Empty, GlobalConstants.ErrorRoleSubmitOrder);
                 return this.View(input);

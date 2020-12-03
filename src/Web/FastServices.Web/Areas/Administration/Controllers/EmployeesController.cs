@@ -142,6 +142,7 @@ namespace FastServices.Web.Areas.Administration.Controllers
 
             await this.usersService.AssignUserToRoleAsync(GlobalConstants.EmployeeRoleName, user);
 
+            this.TempData["msg"] = GlobalConstants.SuccessAddEmployee;
             return this.RedirectToAction(nameof(this.Employees));
         }
 
