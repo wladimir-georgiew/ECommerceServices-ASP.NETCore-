@@ -18,7 +18,7 @@ namespace FastServices.Services.Users
 
         public Task<ApplicationUser> GetByIdWithDeletedAsync(string id);
 
-        public Task UploadAvatarImgPathFromLink(string userId, string newImgPath);
+        public Task UpdateUserAvatarImg(string userId, string uniqueFileName);
 
         public bool IsUserAllowedToSubmitOrder(string userId, OrderInputModel input);
 

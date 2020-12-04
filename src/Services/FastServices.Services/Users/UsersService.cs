@@ -62,11 +62,11 @@ namespace FastServices.Services.Users
 
         public async Task<ApplicationUser> GetByIdWithDeletedAsync(string id) => await this.repository.GetByIdWithDeletedAsync(id);
 
-        public async Task UploadAvatarImgPathFromLink(string userId, string newImgPath)
+        public async Task UpdateUserAvatarImg(string userId, string uniqueFileName)
         {
             var user = await this.GetByIdWithDeletedAsync(userId);
 
-            user.AvatarImgSrc = newImgPath;
+            user.AvatarImgSrc = "/images/" + uniqueFileName;
 
             await this.repository.SaveChangesAsync();
         }
