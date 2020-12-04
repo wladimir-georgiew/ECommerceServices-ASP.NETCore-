@@ -1,4 +1,4 @@
-﻿using FastServices.Web.ViewModels.Services;
+﻿using FastServices.Web.ViewModels.Administration;
 
 namespace FastServices.Services.Services
 {

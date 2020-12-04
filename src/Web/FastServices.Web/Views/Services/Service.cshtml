@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-    <!-- LINEARICONS -->
+    <!-- LINEAR ICONS -->
     <link rel="stylesheet" href="/Template/OrderForm/fonts/linearicons/style.css">
 
     <!-- MATERIAL DESIGN ICONIC FONT -->
@@ -40,7 +40,7 @@
 
 <div class="topImageNav">
 
-    <h1 class="titleText"> @serviceName.ToString().ToUpperInvariant() </h1>
+    <h1 class="titleText"> @serviceName.ToString()?.ToUpperInvariant() </h1>
 
 </div>
 
@@ -77,10 +77,7 @@
                 <label for="">Address</label>
                 <input asp-for="Address" class="form-control" type="text" placeholder="Enter your address">
             </div>
-            @*<div class="form-wrapper">
-                    <label for="">Phone *</label>
-                    <input type="text" class="form-control" placeholder="Phone">
-                </div>*@
+            
             <div class="form-wrapper">
                 <label for="">Date</label>
                 <span class="lnr lnr-calendar-full"></span>

@@ -89,10 +89,10 @@
     <div class="card-header">
         <ul class="nav nav-tabs card-header-tabs">
             <li class="nav-item">
-                <a id="searchBtn1" class="nav-link @btn1" href="/Orders/All?searchOption=1">Active</a>
+                <a id="searchBtn1" class="nav-link @btn1" asp-action="All" asp-route-searchOption="1">Active</a>
             </li>
             <li class="nav-item">
-                <a id="searchBtn2" class="nav-link @btn2" href="/Orders/All?searchOption=2">Completed</a>
+                <a id="searchBtn2" class="nav-link @btn2" asp-action="All" asp-route-searchOption="2">Completed</a>
             </li>
         </ul>
     </div>

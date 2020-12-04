@@ -1,4 +1,5 @@
-﻿using FastServices.Web.ViewModels.Employees;
+﻿using FastServices.Web.ViewModels.Administration;
+using FastServices.Web.ViewModels.Employees;
 
 namespace FastServices.Services.Users
 {

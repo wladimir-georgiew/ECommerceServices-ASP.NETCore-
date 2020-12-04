@@ -1,4 +1,5 @@
-﻿using FastServices.Web.ViewModels.Departments;
+﻿using FastServices.Web.ViewModels.Administration;
+using FastServices.Web.ViewModels.Departments;
 
 namespace FastServices.Services.Employees
 {

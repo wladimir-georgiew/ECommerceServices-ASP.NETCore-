@@ -1,9 +1,8 @@
-﻿namespace FastServices.Web.ViewModels.Services
+﻿namespace FastServices.Web.ViewModels.Administration
 {
     using System.Collections.Generic;
 
     using FastServices.Web.ViewModels.Departments;
-    using FastServices.Web.ViewModels.Employees;
 
     public class CreateServiceMasterModel
     {

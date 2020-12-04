@@ -1,9 +1,8 @@
-﻿using FastServices.Web.Infrastructure.Attributes;
-
-namespace FastServices.Web.ViewModels.Employees
+﻿namespace FastServices.Web.ViewModels.Administration
 {
     using System.ComponentModel.DataAnnotations;
 
+    using FastServices.Web.Infrastructure.Attributes;
     using Microsoft.AspNetCore.Http;
 
     public class EmployeeInputModel

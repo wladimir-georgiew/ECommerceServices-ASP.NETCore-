@@ -11,15 +11,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 @model ICollection<FastServices.Web.ViewModels.Home.DepartmentViewModel>
 
 <style>
-        @*.topImageNav {
-        background:
-        linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ),
-        url('@ViewData["topImageNavUrl"]');
-        background-size: 100%;
-        background-attachment: fixed;
-        color: white;
-        height:30%;
-        }*@
     h3 {text-indent: 4px;}
 </style>
 
@@ -80,7 +71,6 @@ else
     <div class="row">
         @foreach (var department in @Model)
         {
-        @*<a href="/Departments/Department?id=@department.Id">*@
             <a asp-controller="Departments" asp-action="Department" asp-route-depId="@department.Id">
             <div class="col-md-4 col-sm-12 w3_ban1">
                 <div style="border:double 3px"  class="card">

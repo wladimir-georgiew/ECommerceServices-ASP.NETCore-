@@ -1,4 +1,6 @@
-﻿namespace FastServices.Services.Departments
+﻿using FastServices.Web.ViewModels.Administration;
+
+namespace FastServices.Services.Departments
 {
     using System.Collections.Generic;
     using System.Linq;

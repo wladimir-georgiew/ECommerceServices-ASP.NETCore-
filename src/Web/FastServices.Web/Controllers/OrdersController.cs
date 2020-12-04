@@ -72,7 +72,7 @@
                         })
                         .ToList();
 
-            if (searchOption == "2" && !string.IsNullOrEmpty(searchOption))
+            if (searchOption == "2")
             {
                 model = model.Where(x => x.Status == "Completed").ToList();
                 model.Reverse();
@@ -92,7 +92,8 @@
             if (!this.ModelState.IsValid)
             {
                 this.TempData["msg"] = GlobalConstants.ErrorComplaintSubmitted;
-                return this.Redirect($"/Orders/All?searchOption=2");
+
+                return this.RedirectToAction("All", new { searchOption = 2 });
             }
 
             var order = this.ordersService.GetByIdWithDeleted(input.OrderId);
@@ -101,7 +102,7 @@
 
             this.TempData["msg"] = GlobalConstants.SuccessComplaintSubmitted;
 
-            return this.Redirect($"/Orders/All?searchOption=2");
+            return this.RedirectToAction("All", new { searchOption = 2 });
         }
     }
 }

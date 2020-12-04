@@ -1,4 +1,5 @@
 ﻿using FastServices.Services.Images;
+using FastServices.Web.ViewModels.Administration;
 
 namespace FastServices.Web.Areas.Administration.Controllers
 {

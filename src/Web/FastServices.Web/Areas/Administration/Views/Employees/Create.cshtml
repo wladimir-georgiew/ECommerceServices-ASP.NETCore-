@@ -1,22 +1,16 @@
 ﻿@using FastServices.Web.ViewModels.Employees
-@model CreateEmployeeMasterModel
+@model FastServices.Web.ViewModels.Administration.CreateEmployeeMasterModel
 
 @{
     ViewData["Title"] = "Create";
 }
-
-<style>
-    footer {
-    }
-</style>
-
 <div class="topImageNavBlack">
 </div>
 
 <div class="col-md-10 mx-auto py-4">
     <div class="card">
         <div class="card-header bg-primary text-uppercase text-white">
-            <h4>Add Create Employee Account</h4>
+            <h4>Add Employee Account</h4>
         </div>
         <div class="card-body">
             <form enctype="multipart/form-data" asp-action="Create" method="post">

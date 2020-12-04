@@ -1,4 +1,6 @@
-﻿namespace FastServices.Web.Areas.Administration.Controllers
+﻿using FastServices.Web.ViewModels.Administration;
+
+namespace FastServices.Web.Areas.Administration.Controllers
 {
     using System.Linq;
     using System.Threading.Tasks;
@@ -7,7 +9,6 @@
     using FastServices.Services.Departments;
     using FastServices.Services.Images;
     using FastServices.Services.Services;
-    using FastServices.Web.ViewModels.Services;
     using Microsoft.AspNetCore.Authorization;
     using Microsoft.AspNetCore.Mvc;
 

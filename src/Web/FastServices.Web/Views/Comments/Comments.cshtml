@@ -102,7 +102,7 @@
         padding: 1.25rem;
     }
 
-    .card .card-title {
+    .card-title {
         position: relative;
         font-weight: 600;
         cursor: text;
@@ -165,10 +165,10 @@
     }
 </style>
 
-<div class="col-lg-8">
+<div class="col-lg-8"> 
     <div style="width:160%" class="card">
         <div class="card-body text-center">
-            <h4 class="card-title">Latest comments for @ViewData["title"].ToString().ToLower() department</h4>
+            <h4 class="card-title">Rate and comment</h4>
         </div>
 
         <form asp-controller="Comments" asp-action="AddComment" method="post">

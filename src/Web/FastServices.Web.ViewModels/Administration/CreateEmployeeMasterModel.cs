@@ -1,4 +1,4 @@
-﻿namespace FastServices.Web.ViewModels.Employees
+﻿namespace FastServices.Web.ViewModels.Administration
 {
     using System.Collections.Generic;
 

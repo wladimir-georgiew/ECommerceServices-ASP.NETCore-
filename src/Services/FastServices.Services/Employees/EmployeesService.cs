@@ -4,6 +4,7 @@ using System.Text;
 using FastServices.Common;
 using FastServices.Services.Departments;
 using FastServices.Services.Users;
+using FastServices.Web.ViewModels.Administration;
 using FastServices.Web.ViewModels.Departments;
 
 namespace FastServices.Services.Employees

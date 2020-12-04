@@ -2,20 +2,8 @@
 
 @model PaginationList<FastServices.Web.ViewModels.Employees.EmployeeViewModel>
 
-
-
-<style>
-    .topImageNav {
-        height: 3.5em;
-        background-color: black;
-    }
-
-    footer {
-    }
-</style>
-
 <body>
-    <div class="topImageNav">
+    <div class="topImageNavBlack">
     </div>
 
     @*GET*@
@@ -51,12 +39,11 @@
                 <th scope="col">DeletedOn</th>
                 <th scope="col">Action</th>
 
-                <a style="position: relative" asp-action="Create" class="btn btn-sm btn-primary rounded-0 text-uppercase"> Add Create</a>
+                <a style="position: relative" asp-action="Create" class="btn btn-sm btn-primary rounded-0 text-uppercase"> Create new</a>
             </tr>
         </thead>
 
         <tbody>
-            @*POST*@
             @foreach (var employee in Model)
             {
 
@@ -78,23 +65,17 @@
 
                         @if (employee.IsDeleted == true)
                         {
-                            @*<td><a href="@(this.Context.Request.Path)?selectedOption=@this.TempData["SelectedOption"]&make=restore&id=@employee.Id" class="btn btn-success">Restore</a></td>*@
-
                             <td>
                                 <button asp-action="UndeleteEmployees" type="submit" class="btn btn-success" name="id" value="@employee.Id">
                                     Restore
-                                    @*<input type="text" style="visibility:hidden;position:absolute" name="operationToExec" value="Restore" />*@
                                 </button>
                             </td>
                         }
                         else
                         {
-                            @*<td><a href="@(this.Context.Request.Path)?selectedOption=@this.TempData["SelectedOption"]&make=delete&id=@employee.Id" class="btn btn-danger">Delete</a></td>*@
-
                             <td>
                                 <button asp-action="DeleteEmployees" type="submit" class="btn btn-danger" name="id" value="@employee.Id">
                                     Delete
-                                    @*<input type="text" style="visibility:hidden;position:absolute" name="operationToExec" value="Delete" />*@
                                 </button>
                             </td>
                         }
@@ -102,7 +83,6 @@
                     </tr>
 
                 </form>
-                @*/POST*@
             }
 
         </tbody>

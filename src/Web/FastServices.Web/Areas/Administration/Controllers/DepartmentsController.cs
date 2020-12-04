@@ -1,4 +1,6 @@
-﻿namespace FastServices.Web.Areas.Administration.Controllers
+﻿using FastServices.Web.ViewModels.Administration;
+
+namespace FastServices.Web.Areas.Administration.Controllers
 {
     using System;
     using System.Collections.Generic;
