@@ -96,7 +96,9 @@ namespace FastServices.Web
             services.AddScoped<IDbQueryRunner, DbQueryRunner>();
 
             // Application services
-            services.AddTransient<IEmailSender, NullMessageSender>();
+            services.AddTransient<IEmailSender>(
+                x => new SendGridEmailSender(
+                        this.configuration.GetSection("SendGrid")["ApiKey"]));
             services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<IDepartmentsService, DepartmentsService>();
             services.AddTransient<IServicesService, ServicesService>();

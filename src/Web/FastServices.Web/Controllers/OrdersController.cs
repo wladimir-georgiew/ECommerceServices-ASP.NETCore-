@@ -1,4 +1,6 @@
-﻿namespace FastServices.Web.Controllers
+﻿using FastServices.Services.Messaging;
+
+namespace FastServices.Web.Controllers
 {
     using System;
     using System.Collections.Generic;
@@ -24,17 +26,20 @@
         private readonly UserManager<ApplicationUser> userManager;
         private readonly IServicesService servicesService;
         private readonly IComplaintsService complaintsService;
+        private readonly IEmailSender emailSender;
 
         public OrdersController(
             IOrdersService ordersService,
             IServicesService servicesService,
             UserManager<ApplicationUser> userManager,
-            IComplaintsService complaintsService)
+            IComplaintsService complaintsService,
+            IEmailSender emailSender)
         {
             this.ordersService = ordersService;
             this.userManager = userManager;
             this.servicesService = servicesService;
             this.complaintsService = complaintsService;
+            this.emailSender = emailSender;
         }
 
         [Authorize]
@@ -99,6 +104,12 @@
             var order = this.ordersService.GetByIdWithDeleted(input.OrderId);
 
             await this.complaintsService.AddComplaint(order, input);
+
+            // Send Mail To Support
+            var user = await this.userManager.GetUserAsync(this.User);
+            var content = input.Description;
+
+            await this.emailSender.SendEmailAsync($"{user.Email}", $"{user.Name}", "support@fastservices.com", $"OrderID-{order.Id}", content);
 
             this.TempData["msg"] = GlobalConstants.SuccessComplaintSubmitted;
 
