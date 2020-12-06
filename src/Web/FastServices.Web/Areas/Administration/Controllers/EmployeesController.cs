@@ -56,6 +56,10 @@ namespace FastServices.Web.Areas.Administration.Controllers
             {
                 employees = this.employeesService.GetDeleted().ToList();
             }
+            else if (selectedOption == 3)
+            {
+                employees = this.employeesService.GetAll().ToList();
+            }
 
             if (!string.IsNullOrEmpty(searchString))
             {

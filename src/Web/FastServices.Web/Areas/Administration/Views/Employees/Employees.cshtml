@@ -25,6 +25,7 @@
                 <option disabled="disabled" value="0">Select Option</option>
                 <option value="1">All</option>
                 <option value="2">Deleted</option>
+                <option value="3">Without deleted</option>
             </select>
         </div>
     </div>
@@ -96,11 +97,13 @@
 
 <a asp-area="Administration" asp-controller="Employees" asp-action="Employees"
    asp-route-pageNumber="@(Model.PageIndex - 1)"
+   asp-route-selectedOption="@this.TempData["SelectedOption"]"
    class="btn btn-default @prevDisabled">
     Previous
 </a>
 <a asp-area="Administration" asp-controller="Employees" asp-action="Employees"
    asp-route-pageNumber="@(Model.PageIndex + 1)"
+    asp-route-selectedOption="@this.TempData["SelectedOption"]"
    class="btn btn-default @nextDisabled">
     Next
 </a>

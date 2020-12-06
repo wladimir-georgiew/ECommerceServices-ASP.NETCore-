@@ -22,8 +22,6 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     p {
         font-family: 'Myanmar Text'
     }
-
-
 </style>
 
 @if (!this.SignInManager.IsSignedIn(this.User))
@@ -77,30 +75,33 @@ else
         <h1 class="titleText"> @("Departments".ToUpperInvariant()) </h1>
     </div>
 }
-
-<div style="margin-top:1em;" class="container">
-    <div class="row">
-        @foreach (var department in @Model)
-        {
-            <a asp-controller="Departments" asp-action="Department" asp-route-depId="@department.Id">
-                <div class="col-md-4 col-sm-12 w3_ban1">
-                    <div style="border:double 3px" class="card">
-                        <img class="card-img-top" style="height: 225px; " src="@department.CardImgSrc" alt="Card image cap">
-                        <div class="card-body" style="height: 150px">
-                            <h5 class="card-title">@department.Name</h5>
-                            @for (int i = 0; i < department.Rating; i++)
-                            {
-                                <i style="color:#FFB300;" class="fa fa-star" aria-hidden="true"></i>
-                            }
-                            <p class="card-text">@department.Description.</p>
-                            <a style="visibility:hidden"></a>
+<section class="bannerbottom py-lg-5 py-md-4 py-md-3 py-2">
+    <div class="bannerbottom py-lg-5 py-md-4 py-md-3 py-2">
+        <div style="margin-top:1em;" class="container">
+            <div class="row">
+                @foreach (var department in @Model)
+                {
+                    <a asp-controller="Departments" asp-action="Department" asp-route-depId="@department.Id">
+                        <div class="col-md-4 col-sm-12 w3_ban1">
+                            <div class="card">
+                                <img class="card-img-top" style="height: 225px; " src="@department.CardImgSrc" alt="Card image cap">
+                                <div class="card-body" style="height: 150px">
+                                    <h5 class="card-title">@department.Name</h5>
+                                    @for (int i = 0; i < department.Rating; i++)
+                                    {
+                                        <i style="color:#FFB300;" class="fa fa-star" aria-hidden="true"></i>
+                                    }
+                                    <p class="card-text">@department.Description.</p>
+                                    <a style="visibility:hidden"></a>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </a>
-        }
+                    </a>
+                }
+            </div>
+        </div>
     </div>
-</div>
+</section>
 
 
 <script type="text/javascript">

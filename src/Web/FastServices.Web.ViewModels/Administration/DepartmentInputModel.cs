@@ -11,6 +11,7 @@
         public string Name { get; set; }
 
         [Required(ErrorMessage = "Description is required")]
+        [MaxLength(140, ErrorMessage = "Description max length is 140 characters")]
         public string Description { get; set; }
 
         [Required(ErrorMessage = "Background image is required")]
