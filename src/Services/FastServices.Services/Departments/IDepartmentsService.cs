@@ -24,5 +24,7 @@ namespace FastServices.Services.Departments
         public ICollection<SharedDepartmentViewModel> GetDepartmentViewModel();
 
         public Task AddDepartmentAsync(DepartmentInputModel model, string backgroundImgName, string cardImgName);
+
+        public int GetDepartmentRatingById(int id);
     }
 }

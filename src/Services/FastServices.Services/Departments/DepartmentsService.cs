@@ -3,6 +3,7 @@ using FastServices.Web.ViewModels.Departments;
 
 namespace FastServices.Services.Departments
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
@@ -18,7 +19,9 @@ namespace FastServices.Services.Departments
         private readonly IDeletableEntityRepository<Department> repository;
         private readonly IImageServices imagesService;
 
-        public DepartmentsService(IDeletableEntityRepository<Department> repository, IImageServices imagesService)
+        public DepartmentsService(
+            IDeletableEntityRepository<Department> repository,
+            IImageServices imagesService)
         {
             this.repository = repository;
             this.imagesService = imagesService;
@@ -61,6 +64,15 @@ namespace FastServices.Services.Departments
 
             await this.repository.AddAsync(department);
             await this.repository.SaveChangesAsync();
+        }
+
+        public int GetDepartmentRatingById(int id)
+        {
+            var departmentStars = this.GetAllDepartments().Where(x => x.Id == id).SelectMany(x => x.Comments).Select(x => x.Stars);
+
+            var result = (int)Math.Ceiling((double)departmentStars.Sum() / departmentStars.Count());
+
+            return result;
         }
     }
 }

@@ -174,11 +174,6 @@
         <form asp-controller="Comments" asp-action="AddComment" method="post">
             <input style="visibility:hidden" name="DepartmentId" value="@Context.Request.Query["depId"]" />
 
-            @*@if (ViewContext.HttpContext.Request.Query["error"] == "not-allowed")
-                {
-                    <partial data="@this.TempData["Message"]" name="/Views/Shared/_ErrorPopup.cshtml"/>
-                }*@
-
             @if (this.SignInManager.IsSignedIn(this.User))
             {
                 <div class="star-rating">

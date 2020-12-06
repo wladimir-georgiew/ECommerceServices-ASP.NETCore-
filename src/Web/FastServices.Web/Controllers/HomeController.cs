@@ -20,20 +20,21 @@
 
         public IActionResult Index()
         {
-            List<DepartmentViewModel> departmentsViewModel = this.departmentServices
+            List<IndexViewModel> model = this.departmentServices
                 .GetAllDepartments()
-                .Select(x => new DepartmentViewModel
+                .Select(x => new IndexViewModel
             {
                     Id = x.Id,
                     Name = x.Name,
                     Description = x.Description,
                     CardImgSrc = x.CardImgSrc,
+                    Rating = this.departmentServices.GetDepartmentRatingById(x.Id),
             })
                 .ToList();
 
             this.ViewData["topImageNavUrl"] = "/Template/images/indexBg-1.jpg";
 
-            return this.View(departmentsViewModel);
+            return this.View(model);
         }
 
         public IActionResult Privacy()

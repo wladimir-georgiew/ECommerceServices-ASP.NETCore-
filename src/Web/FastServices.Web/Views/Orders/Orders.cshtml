@@ -78,6 +78,13 @@
         overflow: hidden;
         transition: max-height 0.2s ease-out;
     }
+
+    label{
+        font-family:'Copperplate Gothic'
+    }
+    li{
+        font-family:Tahoma;
+    }
 </style>
 
 <div class="topImageNav">
@@ -107,7 +114,7 @@
                 <div class="card-body">
                     <div class="containercard">
                         <img src="@order.CardImgSrc" style="width:240px;height:150px">
-                        <h5 style="font-family:Impact; color:#ffdd99; opacity:0.6" class="box_textshadow card-title centeredtext">@order.ServiceName</h5>
+                        <h5 style="font-family:'Copperplate Gothic';  opacity:0.6" class="box_textshadow card-title centeredtext">@order.ServiceName</h5>
                     </div>
                 </div>
 
@@ -117,7 +124,7 @@
                 {
                     @if (order.HasComplaint)
                     {
-                        <h6 style="font-family:Impact; color:darkgreen"> @GlobalConstants.ComplaintSubmittedViewMessage</h6>
+                        <h6 style="font-family:Tahoma; color:darkseagreen;"> @GlobalConstants.ComplaintSubmittedViewMessage</h6>
                     }
                     else
                     {
