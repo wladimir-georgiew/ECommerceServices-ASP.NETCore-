@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
-
+    using System.Threading.Tasks;
     using FastServices.Data.Common.Models;
 
     public class Department : IDeletableEntity, IAuditInfo
@@ -42,5 +42,10 @@
         public virtual ICollection<Service> Services { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }
+
+        public static explicit operator Task<object>(Department v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

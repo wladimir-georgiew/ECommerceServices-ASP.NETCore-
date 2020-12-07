@@ -50,7 +50,8 @@ namespace FastServices.Web.Areas.Administration.Controllers
             string backgroundImgName = this.imageServices.GetUploadedFileName(model.BackgroundImage);
             string cardImgName = this.imageServices.GetUploadedFileName(model.CardImage);
 
-            await this.departmentsService.AddDepartmentAsync(model, backgroundImgName, cardImgName);
+            var department = this.departmentsService.GetDepartmentFromModel(model, backgroundImgName, cardImgName);
+            await this.departmentsService.AddAsync(department);
 
             this.TempData["msg"] = GlobalConstants.SuccessAddDepartment;
             return this.RedirectToAction("Index", "Home", new { area = "" });

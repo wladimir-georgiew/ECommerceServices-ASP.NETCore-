@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Text;
     using System.Threading.Tasks;
+
     using FastServices.Data.Common.Repositories;
     using FastServices.Data.Models;
     using FastServices.Data.Repositories;
@@ -28,9 +29,10 @@
         }
 
         [Fact]
-        public async Task AddDepartmentAsyncShouldAddCorrectly()
+        public async Task AddAsyncShouldAddCorrectly()
         {
-            this.repository.Setup(r => r.All()).Returns(this.list.AsQueryable());
+            this.repository.Setup(r => r.All())
+                .Returns(this.list.AsQueryable().Where(x => x.IsDeleted == false));
 
             this.repository.Setup(r => r.AddAsync(It.IsAny<Department>()))
                 .Callback((Department department) => this.list.Add(department));
@@ -39,15 +41,161 @@
                 this.repository.Object,
                 new ImageServices(this.dep1));
 
-            await service.AddCommentAsync(new Comment
+            await service.AddAsync(new Department
             {
-                Id = 25,
-                CommentContent = "testc",
+                Id = 1,
             });
 
-            var comment = this.list.FirstOrDefault(x => x.Id == 25);
+            var department = this.list.FirstOrDefault(x => x.Id == 1);
 
-            Assert.NotNull(comment);
+            Assert.NotNull(department);
         }
+
+        [Fact]
+        public async Task RepositoryCountShouldReturnCorrectValue()
+        {
+            this.repository.Setup(r => r.All())
+                .Returns(this.list.AsQueryable().Where(x => x.IsDeleted == false));
+
+            this.repository.Setup(r => r.AddAsync(It.IsAny<Department>()))
+                .Callback((Department department) => this.list.Add(department));
+
+            var service = new DepartmentsService(
+                this.repository.Object,
+                new ImageServices(this.dep1));
+
+            await service.AddAsync(new Department());
+            await service.AddAsync(new Department());
+            await service.AddAsync(new Department());
+
+            Assert.Equal(3, this.list.Count());
+        }
+
+        [Fact]
+        public async Task GetAllDepartmentsShouldReturnAllDepartmentsWithoutDeleted()
+        {
+            this.repository.Setup(r => r.All())
+                .Returns(this.list.AsQueryable().Where(x => x.IsDeleted == false));
+
+            this.repository.Setup(r => r.AddAsync(It.IsAny<Department>()))
+                .Callback((Department department) => this.list.Add(department));
+
+            var service = new DepartmentsService(
+                this.repository.Object,
+                new ImageServices(this.dep1));
+
+            await service.AddAsync(new Department());
+            await service.AddAsync(new Department());
+            await service.AddAsync(new Department());
+            await service.AddAsync(new Department { IsDeleted = true });
+            await service.AddAsync(new Department { IsDeleted = true });
+
+            var allDepartments = service.GetAllDepartments();
+
+            Assert.Equal(3, allDepartments.Count());
+        }
+
+        [Fact]
+        public async Task GetAllDepartmentsWithDeletedShouldReturnAllDepartmentsWithDeleted()
+        {
+            this.repository.Setup(r => r.AllWithDeleted())
+                .Returns(this.list.AsQueryable());
+
+            this.repository.Setup(r => r.AddAsync(It.IsAny<Department>()))
+                .Callback((Department department) => this.list.Add(department));
+
+            var service = new DepartmentsService(
+                this.repository.Object,
+                new ImageServices(this.dep1));
+
+            await service.AddAsync(new Department());
+            await service.AddAsync(new Department());
+            await service.AddAsync(new Department());
+            await service.AddAsync(new Department { IsDeleted = true });
+            await service.AddAsync(new Department { IsDeleted = true });
+
+            var allDepartments = service.GetAllDepartmentsWithDeleted();
+
+            Assert.Equal(5, allDepartments.Count());
+        }
+
+        [Fact]
+        public async Task GetDepartmentRatingByIdShouldWorkProperly()
+        {
+            this.repository.Setup(r => r.All())
+                .Returns(this.list.AsQueryable().Where(x => x.IsDeleted == false));
+
+            this.repository.Setup(r => r.AddAsync(It.IsAny<Department>()))
+                .Callback((Department department) => this.list.Add(department));
+
+            var service = new DepartmentsService(
+                this.repository.Object,
+                new ImageServices(this.dep1));
+
+            await service.AddAsync(new Department
+            {
+                Id = 5,
+                Comments = new List<Comment>
+                {
+                    new Comment
+                    {
+                        Stars = 5,
+                    },
+                    new Comment
+                    {
+                        Stars = 3,
+                    },
+                },
+            });
+
+            var departmentStars = service.GetAllDepartments().Where(x => x.Id == 5).SelectMany(x => x.Comments).Select(x => x.Stars);
+
+            var result = (int)Math.Ceiling((double)departmentStars.Sum() / departmentStars.Count());
+
+            Assert.Equal(4, result);
+        }
+
+        //[Fact]
+        //public async Task GetDepartmentByIdAsyncShouldReturnDepartmentIfItExists()
+        //{
+        //    this.repository.Setup(r => r.All())
+        //        .Returns(this.list.AsQueryable().Where(x => x.IsDeleted == false));
+
+        //    this.repository.Setup(r => r.GetByIdWithDeletedAsync())
+        //        .Returns(async (int id) => (Department)this.list.AsQueryable().FirstOrDefault(x => x.Id == id));
+
+        //    this.repository.Setup(r => r.AddAsync(It.IsAny<Department>()))
+        //        .Callback((Department department) => this.list.Add(department));
+
+        //    var service = new DepartmentsService(
+        //        this.repository.Object,
+        //        new ImageServices(this.dep1));
+
+        //    await service.AddAsync(new Department { Id = 5, IsDeleted = true, });
+
+        //    var department = await service.GetDepartmentByIdAsync(5);
+
+        //    Assert.NotNull(department);
+        //}
+
+        //[Fact]
+        //public async Task GetDepartmentByIdAsyncShouldReturnNullIfTheGivenIdDoesNotExist()
+        //{
+        //    this.repository.Setup(r => r.All())
+        //        .Returns(this.list.AsQueryable().Where(x => x.IsDeleted == false));
+
+        //    this.repository.Setup(r => r.AddAsync(It.IsAny<Department>()))
+        //        .Callback((Department department) => this.list.Add(department));
+
+        //    var service = new DepartmentsService(
+        //        this.repository.Object,
+        //        new ImageServices(this.dep1));
+
+        //    await service.AddAsync(new Department { Id = 5 });
+
+        //    var department = await service.GetDepartmentByIdAsync(185657);
+
+        //    Assert.Null(department);
+        //}
     }
 }

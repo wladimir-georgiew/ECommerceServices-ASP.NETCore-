@@ -27,7 +27,11 @@ namespace FastServices.Services.Departments
             this.imagesService = imagesService;
         }
 
-        public async Task AddAsync(Department department) => await this.repository.AddAsync(department);
+        public async Task AddAsync(Department department)
+        {
+            await this.repository.AddAsync(department);
+            await this.repository.SaveChangesAsync();
+        }
 
         public IQueryable<Department> GetAllDepartments() => this.repository.All();
 
@@ -50,7 +54,7 @@ namespace FastServices.Services.Departments
             return departmentsModel;
         }
 
-        public async Task AddDepartmentAsync(DepartmentInputModel model, string backgroundImgName, string cardImgName)
+        public Department GetDepartmentFromModel(DepartmentInputModel model, string backgroundImgName, string cardImgName)
         {
             var department = new Department
             {
@@ -62,8 +66,7 @@ namespace FastServices.Services.Departments
                     : "/defaultImages/defBackgroundImg.png",
             };
 
-            await this.repository.AddAsync(department);
-            await this.repository.SaveChangesAsync();
+            return department;
         }
 
         public int GetDepartmentRatingById(int id)

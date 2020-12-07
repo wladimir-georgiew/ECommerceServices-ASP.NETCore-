@@ -10,6 +10,8 @@
 
     public interface IDepartmentsService
     {
+        public Task AddAsync(Department department);
+
         public IQueryable<Department> GetAllDepartments();
 
         public IQueryable<Department> GetAllDepartmentsWithDeleted();
@@ -20,7 +22,10 @@
 
         public ICollection<SharedDepartmentViewModel> GetDepartmentViewModel();
 
-        public Task AddDepartmentAsync(DepartmentInputModel model, string backgroundImgName, string cardImgName);
+        public Department GetDepartmentFromModel(
+            DepartmentInputModel model,
+            string backgroundImgName,
+            string cardImgName);
 
         public int GetDepartmentRatingById(int id);
     }
