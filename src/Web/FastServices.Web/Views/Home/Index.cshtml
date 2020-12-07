@@ -16,7 +16,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
     }
 
     h5 {
-        font-family: 'Copperplate Gothic'
+        font-family: sans-serif;
+        font-size:13px;
     }
 
     p {
@@ -85,7 +86,7 @@ else
                         <div class="col-md-4 col-sm-12 w3_ban1">
                             <div class="card">
                                 <img class="card-img-top" style="height: 225px; " src="@department.CardImgSrc" alt="Card image cap">
-                                <div class="card-body" style="height: 150px">
+                                <div class="card-body" style="min-height: 150px">
                                     <h5 class="card-title">@department.Name</h5>
                                     @for (int i = 0; i < department.Rating; i++)
                                     {

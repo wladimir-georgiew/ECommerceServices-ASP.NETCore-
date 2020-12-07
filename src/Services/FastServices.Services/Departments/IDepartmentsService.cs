@@ -1,12 +1,11 @@
-﻿using FastServices.Web.ViewModels.Administration;
-
-namespace FastServices.Services.Departments
+﻿namespace FastServices.Services.Departments
 {
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
     using FastServices.Data.Models;
+    using FastServices.Web.ViewModels.Administration;
     using FastServices.Web.ViewModels.Departments;
 
     public interface IDepartmentsService
@@ -14,8 +13,6 @@ namespace FastServices.Services.Departments
         public IQueryable<Department> GetAllDepartments();
 
         public IQueryable<Department> GetAllDepartmentsWithDeleted();
-
-        public Task AddAsync(Department department);
 
         public Task<Department> GetDepartmentByIdAsync(int departmentId);
 

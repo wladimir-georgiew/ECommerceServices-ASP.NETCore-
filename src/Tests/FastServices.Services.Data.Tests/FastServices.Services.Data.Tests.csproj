@@ -29,6 +29,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Data\FastServices.Data\FastServices.Data.csproj" />
     <ProjectReference Include="..\..\Services\FastServices.Services.Data\FastServices.Services.Data.csproj" />
+    <ProjectReference Include="..\..\Services\FastServices.Services\FastServices.Services.csproj" />
   </ItemGroup>
 
 </Project>
