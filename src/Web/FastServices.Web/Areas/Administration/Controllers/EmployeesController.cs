@@ -44,22 +44,17 @@ namespace FastServices.Web.Areas.Administration.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Employees(
+        public IActionResult Employees(
             int selectedOption,
-            string id,
             string searchString,
             int pageNumber = 1)
         {
-            var employees = this.employeesService.GetAllWithDeleted().ToList();
-
-            if (selectedOption == 2)
+            var employees = selectedOption switch
             {
-                employees = this.employeesService.GetDeleted().ToList();
-            }
-            else if (selectedOption == 3)
-            {
-                employees = this.employeesService.GetAll().ToList();
-            }
+                2 => this.employeesService.GetDeleted().ToList(),
+                3 => this.employeesService.GetAll().ToList(),
+                _ => this.employeesService.GetAllWithDeleted().ToList(),
+            };
 
             if (!string.IsNullOrEmpty(searchString))
             {
@@ -152,19 +147,19 @@ namespace FastServices.Web.Areas.Administration.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> DeleteEmployees(int selectedOption, string id)
+        public async Task<IActionResult> DeleteEmployees(int selectedOption, string id, int pageNumber)
         {
             await this.employeesService.DeleteByIdAsync(id);
 
-            return this.Redirect($"/Administration/Employees/Employees?selectedOption={selectedOption}");
+            return this.Redirect($"/Administration/Employees/Employees?selectedOption={selectedOption}&pageNumber={pageNumber}");
         }
 
         [HttpPost]
-        public async Task<IActionResult> UndeleteEmployees(int selectedOption, string id)
+        public async Task<IActionResult> UndeleteEmployees(int selectedOption, string id, int pageNumber)
         {
             await this.employeesService.UndeleteByIdAsync(id);
 
-            return this.Redirect($"/Administration/Employees/Employees?selectedOption={selectedOption}");
+            return this.Redirect($"/Administration/Employees/Employees?selectedOption={selectedOption}&pageNumber={pageNumber}");
         }
     }
 }

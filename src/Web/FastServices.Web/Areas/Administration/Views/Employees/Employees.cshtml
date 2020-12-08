@@ -51,10 +51,10 @@
                 <form asp-area="Administration" asp-controller="Employees" asp-action="Employees" method="post">
                     <tr class="@employee.HtmlClass">
                         <td>
-                            <img src="@employee.AvatarImgSrc"   
-                                 class="rounded-circle"   
-                                 height="40" width="40"   
-                                 asp-append-version="true" />  
+                            <img src="@employee.AvatarImgSrc"
+                                 class="rounded-circle"
+                                 height="40" width="40"
+                                 asp-append-version="true" />
                             @employee.FirstName @employee.LastName
                         </td>
                         <td>@employee.DepartmentName</td>
@@ -63,7 +63,7 @@
                         <td>@employee.DeletedOn</td>
 
                         <input type="text" style="visibility:hidden;position:absolute" name="selectedOption" value="@this.TempData["SelectedOption"]" />
-
+                        <input type="text" style="visibility: hidden;position:absolute" name="pageNumber" value="@Context.Request.Query["pageNumber"]" />
                         @if (employee.IsDeleted == true)
                         {
                             <td>
@@ -100,6 +100,9 @@
    asp-route-selectedOption="@this.TempData["SelectedOption"]"
    class="btn btn-default @prevDisabled">
     Previous
+</a>
+<a>
+    @Model.PageIndex
 </a>
 <a asp-area="Administration" asp-controller="Employees" asp-action="Employees"
    asp-route-pageNumber="@(Model.PageIndex + 1)"
