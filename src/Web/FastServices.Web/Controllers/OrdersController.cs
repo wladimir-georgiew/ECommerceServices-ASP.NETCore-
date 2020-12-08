@@ -109,7 +109,10 @@ namespace FastServices.Web.Controllers
             var user = await this.userManager.GetUserAsync(this.User);
             var content = input.Description;
 
-            await this.emailSender.SendEmailAsync($"{user.Email}", $"{user.Name}", "support@fastservices.com", $"OrderID-{order.Id}", content);
+            // working - from "sneakypeekymustard@gmail.com"
+            // working - to "vladimir1.dev@gmail.com"
+
+            await this.emailSender.SendEmailAsync($"fastservices.forwarder@gmail.com", $"{user.Email}", "fastservices.support@gmail.com", $"OrderID-{order.Id}", content);
 
             this.TempData["msg"] = GlobalConstants.SuccessComplaintSubmitted;
 

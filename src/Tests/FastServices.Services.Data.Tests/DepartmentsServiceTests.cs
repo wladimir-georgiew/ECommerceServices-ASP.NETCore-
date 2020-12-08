@@ -161,8 +161,8 @@
         //    this.repository.Setup(r => r.All())
         //        .Returns(this.list.AsQueryable().Where(x => x.IsDeleted == false));
 
-        //    this.repository.Setup(r => r.GetByIdWithDeletedAsync())
-        //        .Returns(async (int id) => (Department)this.list.AsQueryable().FirstOrDefault(x => x.Id == id));
+        //    this.repository.Setup(r => r.GetByIdWithDeletedAsync(It.IsAny<long>()))
+        //        .Returns(async (int id) => this.list.Single(x => x.Id == id));
 
         //    this.repository.Setup(r => r.AddAsync(It.IsAny<Department>()))
         //        .Callback((Department department) => this.list.Add(department));
