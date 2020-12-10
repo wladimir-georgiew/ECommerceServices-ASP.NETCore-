@@ -76,12 +76,12 @@ namespace FastServices.Web.Controllers
                 .GetAllAvailableEmployees(department.Id, input.StartDate, input.DueDate);
 
             var order = this.ordersService.GetOrderFromInputModel(input);
+            order.Price = ((GlobalConstants.HourlyFeePerWorker * input.WorkersCount) * input.HoursBooked) + service.Fee;
+            input.Price = order.Price;
 
             this.ViewData["topImageNavUrl"] = department.BackgroundImgSrc;
             this.ViewData["serviceName"] = service.Name;
             this.ViewData["description"] = service.Description.ToString();
-
-            input.Price = ((GlobalConstants.HourlyFeePerWorker * input.WorkersCount) * input.HoursBooked) + service.Fee;
             var roles = this.userManager.GetRolesAsync(user).GetAwaiter().GetResult();
 
             if (roles.Contains(GlobalConstants.EmployeeRoleName) || roles.Contains(GlobalConstants.AdministratorRoleName))

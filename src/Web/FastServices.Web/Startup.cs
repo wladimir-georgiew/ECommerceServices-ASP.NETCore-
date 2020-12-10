@@ -1,5 +1,6 @@
 ﻿using FastServices.Services;
 using FastServices.Services.Images;
+using Stripe;
 
 namespace FastServices.Web
 {
@@ -117,6 +118,8 @@ namespace FastServices.Web
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            StripeConfiguration.ApiKey = this.configuration.GetSection("Stripe")["PrivateKey"];
+
             AutoMapperConfig.RegisterMappings(typeof(ErrorViewModel).GetTypeInfo().Assembly);
 
             // Seed data on application startup

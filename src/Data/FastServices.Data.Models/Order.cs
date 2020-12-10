@@ -57,6 +57,8 @@
         [Required]
         public decimal Price { get; set; }
 
+        public string PaymentMethod { get; set; }
+
         public virtual ICollection<Complaint> Complaints { get; set; }
 
         public virtual ICollection<EmployeeOrder> EmployeesOrder { get; set; }

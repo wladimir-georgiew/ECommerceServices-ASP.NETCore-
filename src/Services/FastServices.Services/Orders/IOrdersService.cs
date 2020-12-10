@@ -32,5 +32,7 @@
         public Order GetOrderFromInputModel(OrderInputModel model);
 
         public bool HasAvailableEmployeesForTheOrderAsync(List<Employee> availableEmployees, Order order);
+
+        public Task ChangeOrderPayment(string orderId, string paymentStatus);
     }
 }

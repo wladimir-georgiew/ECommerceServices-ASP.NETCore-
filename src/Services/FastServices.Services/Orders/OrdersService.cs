@@ -84,6 +84,7 @@
                 ServiceId = model.ServiceId,
                 Price = model.Price,
                 Status = OrderStatus.Undefined,
+                PaymentMethod = "Cash",
                 Address = model.Address,
             };
 
@@ -102,5 +103,12 @@
 
         public IEnumerable<Complaint> GetComplaints(string orderId)
             => this.repository.All().Where(x => x.Id == orderId).Select(x => x.Complaints).FirstOrDefault();
+
+        public async Task ChangeOrderPayment(string orderId, string paymentStatus)
+        {
+            var order = this.GetByIdWithDeleted(orderId);
+            order.PaymentMethod = paymentStatus;
+            await this.SaveChangesAsync();
+        }
     }
 }

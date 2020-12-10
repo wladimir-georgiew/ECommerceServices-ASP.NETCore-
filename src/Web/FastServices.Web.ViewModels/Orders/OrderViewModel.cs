@@ -25,5 +25,7 @@
         public string CardImgSrc { get; set; }
 
         public bool HasComplaint { get; set; }
+
+        public string PaymentMethod { get; set; }
     }
 }

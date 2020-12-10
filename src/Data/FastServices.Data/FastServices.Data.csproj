@@ -13,6 +13,12 @@
   <ItemGroup>
     <Compile Remove="Migrations\20201109013813_AddingMoreInfoToAspnetUsers4.cs" />
     <Compile Remove="Migrations\20201109013813_AddingMoreInfoToAspnetUsers4.Designer.cs" />
+    <Compile Remove="Migrations\20201210204726_AddPaymentMethodToOrderEntity.cs" />
+    <Compile Remove="Migrations\20201210204726_AddPaymentMethodToOrderEntity.Designer.cs" />
+    <Compile Remove="Migrations\20201210205017_RemovePaymentStatusFromOrderentity.cs" />
+    <Compile Remove="Migrations\20201210205017_RemovePaymentStatusFromOrderentity.Designer.cs" />
+    <Compile Remove="Migrations\20201210205408_test.cs" />
+    <Compile Remove="Migrations\20201210205408_test.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

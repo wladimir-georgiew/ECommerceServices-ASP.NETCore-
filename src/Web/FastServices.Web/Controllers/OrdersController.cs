@@ -74,6 +74,7 @@ namespace FastServices.Web.Controllers
                             Price = x.Price,
                             CardImgSrc = this.servicesService.GetByIdWithDeletedAsync(x.Service.Id).GetAwaiter().GetResult().CardImgSrc,
                             HasComplaint = this.ordersService.GetComplaints(x.Id).Any(),
+                            PaymentMethod = x.PaymentMethod,
                         })
                         .ToList();
 
