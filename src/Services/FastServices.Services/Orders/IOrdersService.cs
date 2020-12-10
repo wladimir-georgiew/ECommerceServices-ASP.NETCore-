@@ -9,7 +9,7 @@
 
     public interface IOrdersService
     {
-        public Task<bool> AddOrderAsync(OrderInputModel model, ApplicationUser user, int departmentId);
+        //public Task<bool> AddOrderAsync(OrderInputModel model, ApplicationUser user, int departmentId);
 
         public Order GetByIdWithDeleted(string id);
 
@@ -26,5 +26,11 @@
         public IQueryable<Order> GetEmployeeOrdersByUserId(string userId);
 
         public IEnumerable<Complaint> GetComplaints(string orderId);
+
+        public Task AddAsync(Order order, List<Employee> availableEmployees, ApplicationUser user);
+
+        public Order GetOrderFromInputModel(OrderInputModel model);
+
+        public bool HasAvailableEmployeesForTheOrderAsync(List<Employee> availableEmployees, Order order);
     }
 }

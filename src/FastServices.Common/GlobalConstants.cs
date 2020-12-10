@@ -31,7 +31,7 @@
 
         public const string ErrorOrderSubmitOneOrderAtATime = " You can have only 1 active order at a time";
 
-        public const string ErrorOrderNotEnoughAvailableEmployees = "There are currently no available employees for this date. Try again with different date";
+        public const string ErrorOrderNotEnoughAvailableEmployees = "There are currently no available/not enough workers for this date. Try again with different date or with fewer workers";
 
         public const string ErrorRoleSubmitOrder = "Only users can submit orders!";
 

@@ -62,14 +62,20 @@
 
         public Order GetByIdWithDeleted(string id) => this.repository.All().ToList().FirstOrDefault(x => x.Id == id);
 
-        public async Task<bool> AddOrderAsync(OrderInputModel model, ApplicationUser user, int departmentId)
+        public async Task AddAsync(Order order, List<Employee> availableEmployees, ApplicationUser user)
         {
-            var availableEmployees = this.employeesService
-                                                        .GetAllAvailableEmployees(departmentId, model.StartDate, model.DueDate);
+            order.ApplicationUserId = user.Id;
+            user.Orders.Add(order);
+            await this.employeeOrdersService.AssignEmployeesToOrderAsync(order, availableEmployees);
 
+            await this.repository.AddAsync(order);
+            await this.repository.SaveChangesAsync();
+        }
+
+        public Order GetOrderFromInputModel(OrderInputModel model)
+        {
             var order = new Order
             {
-                ApplicationUserId = user.Id,
                 BookedHours = model.HoursBooked,
                 WorkersCount = model.WorkersCount,
                 SubmitDate = DateTime.UtcNow,
@@ -81,18 +87,15 @@
                 Address = model.Address,
             };
 
-            if (availableEmployees.Count >= order.WorkersCount)
-            {
-                await this.employeeOrdersService.AssignEmployeesToOrderAsync(order, availableEmployees);
-            }
-            else
+            return order;
+        }
+
+        public bool HasAvailableEmployeesForTheOrderAsync(List<Employee> availableEmployees, Order order)
+        {
+            if (availableEmployees.Count < order.WorkersCount)
             {
                 return false;
             }
-
-            user.Orders.Add(order);
-            await this.repository.AddAsync(order);
-            await this.repository.SaveChangesAsync();
 
             return true;
         }

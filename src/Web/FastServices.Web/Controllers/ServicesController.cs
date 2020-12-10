@@ -1,4 +1,6 @@
-﻿namespace FastServices.Web.Controllers
+﻿using FastServices.Services.Employees;
+
+namespace FastServices.Web.Controllers
 {
     using System;
     using System.Collections.Generic;
@@ -24,12 +26,14 @@
         private readonly IOrdersService ordersService;
         private readonly IUsersService usersService;
         private readonly UserManager<ApplicationUser> userManager;
+        private readonly IEmployeesService employeesService;
 
         public ServicesController(
             IDepartmentsService departmentsService,
             IServicesService servicesService,
             IOrdersService ordersService,
             IUsersService usersService,
+            IEmployeesService employeesService,
             UserManager<ApplicationUser> userManager)
         {
             this.departmentsService = departmentsService;
@@ -37,6 +41,7 @@
             this.ordersService = ordersService;
             this.usersService = usersService;
             this.userManager = userManager;
+            this.employeesService = employeesService;
         }
 
         [Authorize]
@@ -67,6 +72,11 @@
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await this.usersService.GetByIdWithDeletedAsync(userId);
 
+            var availableEmployees = this.employeesService
+                .GetAllAvailableEmployees(department.Id, input.StartDate, input.DueDate);
+
+            var order = this.ordersService.GetOrderFromInputModel(input);
+
             this.ViewData["topImageNavUrl"] = department.BackgroundImgSrc;
             this.ViewData["serviceName"] = service.Name;
             this.ViewData["description"] = service.Description.ToString();
@@ -91,11 +101,13 @@
                 return this.View(input);
             }
 
-            if (!await this.ordersService.AddOrderAsync(input, user, department.Id))
+            if (!this.ordersService.HasAvailableEmployeesForTheOrderAsync(availableEmployees, order))
             {
                 this.ModelState.AddModelError(string.Empty, GlobalConstants.ErrorOrderNotEnoughAvailableEmployees);
                 return this.View(input);
             }
+
+            await this.ordersService.AddAsync(order, availableEmployees, user);
 
             this.TempData["msg"] = GlobalConstants.SuccessOrderSubmitted;
             return this.View();
