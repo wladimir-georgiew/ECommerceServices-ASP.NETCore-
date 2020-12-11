@@ -128,8 +128,6 @@ namespace FastServices.Web
                 new ApplicationDbContextSeeder().SeedAsync(dbContext, serviceScope.ServiceProvider).GetAwaiter().GetResult();
             }
 
-            //app.UseStatusCodePagesWithRedirects("/Home/Error?code={0}");
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -137,7 +135,7 @@ namespace FastServices.Web
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseStatusCodePagesWithRedirects("/Home/Error?code={0}");
                 app.UseHsts();
             }
 
