@@ -1,6 +1,4 @@
-﻿using FastServices.Services.Orders;
-
-namespace FastServices.Web.Controllers
+﻿namespace FastServices.Web.Controllers
 {
     using System;
     using System.Collections.Generic;
@@ -8,6 +6,7 @@ namespace FastServices.Web.Controllers
     using System.Threading.Tasks;
 
     using FastServices.Common;
+    using FastServices.Services.Orders;
     using Microsoft.AspNetCore.Mvc;
     using Stripe;
 

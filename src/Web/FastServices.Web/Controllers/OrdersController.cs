@@ -1,6 +1,4 @@
-﻿using FastServices.Services.Messaging;
-
-namespace FastServices.Web.Controllers
+﻿namespace FastServices.Web.Controllers
 {
     using System;
     using System.Collections.Generic;
@@ -11,6 +9,7 @@ namespace FastServices.Web.Controllers
     using FastServices.Common;
     using FastServices.Data.Models;
     using FastServices.Services.Complaints;
+    using FastServices.Services.Messaging;
     using FastServices.Services.Orders;
     using FastServices.Services.Services;
     using FastServices.Services.Users;
@@ -113,7 +112,7 @@ namespace FastServices.Web.Controllers
             // working - from "sneakypeekymustard@gmail.com"
             // working - to "vladimir1.dev@gmail.com"
 
-            await this.emailSender.SendEmailAsync($"fastservices.forwarder@gmail.com", $"{user.Email}", "fastservices.support@gmail.com", $"OrderID-{order.Id}", content);
+            await this.emailSender.SendEmailAsync($"sneakypeekymustard@gmail.com", $"{user.Email}", "vladimir1.dev@gmail.com", $"OrderID-{order.Id}", content);
 
             this.TempData["msg"] = GlobalConstants.SuccessComplaintSubmitted;
 

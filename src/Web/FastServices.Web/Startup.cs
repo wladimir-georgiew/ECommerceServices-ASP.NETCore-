@@ -15,7 +15,6 @@ namespace FastServices.Web
     using FastServices.Data.Seeding;
     using FastServices.Services.Comments;
     using FastServices.Services.Complaints;
-    using FastServices.Services.Data;
     using FastServices.Services.Departments;
     using FastServices.Services.EmployeeOrders;
     using FastServices.Services.Employees;
@@ -100,7 +99,6 @@ namespace FastServices.Web
             services.AddTransient<IEmailSender>(
                 x => new SendGridEmailSender(
                         this.configuration.GetSection("SendGrid")["ApiKey"]));
-            services.AddTransient<ISettingsService, SettingsService>();
             services.AddTransient<IDepartmentsService, DepartmentsService>();
             services.AddTransient<IServicesService, ServicesService>();
             services.AddTransient<IOrdersService, OrdersService>();

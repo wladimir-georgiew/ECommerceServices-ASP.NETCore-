@@ -143,51 +143,53 @@
                     }
 
                 }
-                <ul class="list-group list-group-flush">
+            <ul class="list-group list-group-flush">
 
-                    <label>Address</label>
-                    <li class="list-group-item">@order.Address</li>
-                    <label>Start date</label>
-                    <li class="list-group-item">@order.StartDate</li>
-                    <label>End date</label>
-                    <li class="list-group-item">@order.DueDate</li>
-                    <label>Booked hours</label>
-                    <li class="list-group-item">@order.HoursBooked</li>
-                    <label>Booked workers</label>
-                    <li class="list-group-item">@order.WorkersCount</li>
-                    <label>Status</label>
-                    <li class="list-group-item">@order.Status</li>
-                    <label>Price</label>
-                    <li class="list-group-item">@order.Price<text>$</text></li>
-                    @if (order.PaymentMethod != "CreditCard" && order.Status == "Active")
-                    {
-                        <li class="list-group-item">
-                            <div>
-                                <form asp-controller="Payments" asp-action="Processing" method="POST">
-                                    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-                                            data-key="pk_test_51Hwc0FIndBA45SbbXC1AHQ3kLKZ47QaaG4hkw0bmToDGQDBxmwCZE2SdNdGCTd5mckmkd32h4KcQ40gVLQaoOVYO006ykmoxwm"
-                                            data-amount="@(order.Price * 100)"
-                                            data-name="Pay your order now"
-                                            data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
-                                            data-locale="en"
-                                            data-zip-code="true"
-                                            data-label="Pay Now">
-                                    </script>
+                <label>Address</label>
+                <li class="list-group-item">@order.Address</li>
+                <label>Start date</label>
+                <li class="list-group-item">@order.StartDate</li>
+                <label>End date</label>
+                <li class="list-group-item">@order.DueDate</li>
+                <label>Booked hours</label>
+                <li class="list-group-item">@order.HoursBooked</li>
+                <label>Booked workers</label>
+                <li class="list-group-item">@order.WorkersCount</li>
+                <label>Status</label>
+                <li class="list-group-item">@order.Status</li>
+                <label>Price</label>
+                <li class="list-group-item">@order.Price<text>$</text></li>
+                <label>Payment Method</label>
+                <li class="list-group-item">@order.PaymentMethod</li>
+                @if (order.PaymentMethod != "CreditCard" && order.Status == "Active")
+                {
+                    <li class="list-group-item">
+                        <div>
+                            <form asp-controller="Payments" asp-action="Processing" method="POST">
+                                <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                                        data-key="pk_test_51Hwc0FIndBA45SbbXC1AHQ3kLKZ47QaaG4hkw0bmToDGQDBxmwCZE2SdNdGCTd5mckmkd32h4KcQ40gVLQaoOVYO006ykmoxwm"
+                                        data-amount="@(order.Price * 100)"
+                                        data-name="Pay your order now"
+                                        data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                                        data-locale="en"
+                                        data-zip-code="true"
+                                        data-label="Pay Now">
+                                </script>
 
-                                    <input name="orderId" value="@order.Id" type="text" style="visibility: hidden; position: absolute;" />
-                                    <input name="orderPrice" value="@order.Price" type="text" style="visibility: hidden; position: absolute;" />
-                                </form>
-                            </div>
-                        </li>
-                    }
-                    else if(order.Status == "Active")
-                    {
-                        <li class="list-group-item">
-                            <p style="font-family:Tahoma; color:darkseagreen;"> @GlobalConstants.SuccessPayment</p>
-                        </li>
-                    }
+                                <input name="orderId" value="@order.Id" type="text" style="visibility: hidden; position: absolute;" />
+                                <input name="orderPrice" value="@order.Price" type="text" style="visibility: hidden; position: absolute;" />
+                            </form>
+                        </div>
+                    </li>
+                }
+                else if (order.Status == "Active")
+                {
+                    <li class="list-group-item">
+                        <p style="font-family:Tahoma; color:darkseagreen;"> @GlobalConstants.SuccessPayment</p>
+                    </li>
+                }
 
-                </ul>
+            </ul>
             </div>
         }
     </div>

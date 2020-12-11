@@ -35,7 +35,7 @@
 
                 foreach (var employee in employees)
                 {
-                    // Only employee completed orders
+                    // Only EmployeeOrders which are completed
                     var employeeOrders = ordersService
                         .GetEmployeeOrders(employee.Id)
                         .Where(x => x.Status == Data.Models.Enumerators.OrderStatus.Completed)
