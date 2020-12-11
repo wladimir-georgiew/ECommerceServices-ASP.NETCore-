@@ -8,6 +8,7 @@
  - AJAX
  - Vanilla JS
  - Toastr Notifications
+ - Embed Google Maps
  - Microsoft SQL Server Management Studio
  - Visual Studio 2019
  
@@ -72,6 +73,8 @@
   -Upload image for profile picture. If no image is provided there will be automatically set default for workers.<br>
   -Specify the department the employee is going to work in.<br>
   -Specify the initial salary for the employee.<br>
+ - ### Stripe Dashboard<br>
+  -Stripe.NET Account with dashboard for all the transactions made on the website with various information about them and an option for performing refunds.
   
   
 # Database Diagram :chart:
