@@ -3,8 +3,10 @@
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
-
+    using System.Threading.Tasks;
+    using FastServices.Common;
     using FastServices.Services.Departments;
+    using FastServices.Services.Messaging;
     using FastServices.Web.ViewModels;
     using FastServices.Web.ViewModels.Home;
     using Microsoft.AspNetCore.Mvc;
@@ -12,10 +14,12 @@
     public class HomeController : BaseController
     {
         private readonly IDepartmentsService departmentServices;
+        private readonly IEmailSender emailSender;
 
-        public HomeController(IDepartmentsService departmentServices)
+        public HomeController(IDepartmentsService departmentServices, IEmailSender emailSender)
         {
             this.departmentServices = departmentServices;
+            this.emailSender = emailSender;
         }
 
         public IActionResult Index()
@@ -37,33 +41,18 @@
             return this.View(model);
         }
 
-        public IActionResult Privacy()
-        {
-            return this.View();
-        }
-
-        public IActionResult About()
-        {
-            return this.View();
-        }
-
         public IActionResult Contact()
         {
             return this.View();
         }
 
-        public IActionResult Gallery()
+        [HttpPost]
+        public async Task<IActionResult> Contact(ContactInputModel input)
         {
-            return this.View();
-        }
+            await this.emailSender.SendEmailAsync($"sneakypeekymustard@gmail.com", $"{input.Email}", "vladimir1.dev@gmail.com", $"ContactForm by {input.Name}", $"{input.Message}");
 
-        public IActionResult Services()
-        {
-            return this.RedirectToAction("Error");
-        }
+            this.TempData["msg"] = GlobalConstants.SuccessContactEmailMessage;
 
-        public IActionResult Typography()
-        {
             return this.View();
         }
 

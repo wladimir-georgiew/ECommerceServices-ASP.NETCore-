@@ -23,6 +23,8 @@
 
         public const string SuccessPayment = "Success! Your payment was successfull";
 
+        public const string SuccessContactEmailMessage = "Success! Your email was sent succesfully!";
+
         public const string ErrorPayment = "Error! Something went wrong with your payment";
 
         public const string ComplaintSubmittedViewMessage = "Your complaint has been submitted.Expect answer on your email soon!";
