@@ -1,7 +1,6 @@
-# Technologies and Packages :computer:
+# Technologies, Packages and Software :computer:
  - ASP.Net Core
  - Entity Framework Core
- - MSSMS
  - Bootstrap
  - Stripe.NET
  - Quartz.NET
@@ -9,6 +8,8 @@
  - AJAX
  - Vanilla JS
  - Toastr Notifications
+ - Microsoft SQL Server Management Studio
+ - Visual Studio 2019
  
 # Description :memo:
 **A web application system used for creating orders for specific home services.**
