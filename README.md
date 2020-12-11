@@ -1,6 +1,7 @@
 # Technologies and Packages :computer:
  - ASP.Net Core
  - Entity Framework Core
+ - MSSMS
  - Bootstrap
  - Stripe.NET
  - Quartz.NET
