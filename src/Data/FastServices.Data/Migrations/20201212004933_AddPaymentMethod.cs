@@ -2,13 +2,14 @@
 
 namespace FastServices.Data.Migrations
 {
-    public partial class RemovePaymentStatusFromOrderEntity : Migration
+    public partial class AddPaymentMethod : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "PaymentStatus",
-                table: "Orders");
+            migrationBuilder.AddColumn<string>(
+                name: "PaymentMethod",
+                table: "Orders",
+                nullable: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

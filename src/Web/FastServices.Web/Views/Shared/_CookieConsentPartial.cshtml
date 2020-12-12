@@ -8,21 +8,25 @@
 
 <style>
     .sticky {
-        position: absolute;
-        padding: 8px 8px 8px 32px;
-        display: block;
-        top: 1em;
+        position: fixed;
+        display:block;
+        bottom: 1em;
         text-align: center;
-        margin-bottom: 2em;
+        z-index:9;
+        width:100%;
+    }
+    .btnConsent{
+    }
+    .wrapperConsent {
     }
 </style>
 
 @if (showBanner)
 {
-    <div id="cookieConsent" class="alert alert-info alert-dismissible fade show sticky" role="alert">
-        We use cookies to understand how you use our site and to improve your experience. <a asp-area="" asp-controller="Home" asp-action="Privacy">Learn More</a>.
+    <div id="cookieConsent" class="alert alert-info alert-dismissible fade show sticky wrapperConsent" role="alert">
+        We use cookies to understand how you use our site and to improve your experience.
         <button type="button" class="accept-policy close" data-dismiss="alert" aria-label="Close" data-cookie-string="@cookieString">
-            <span aria-hidden="true">Accept</span>
+            <span class="btnConsent" aria-hidden="true">Accept</span>
         </button>
     </div>
     <script>

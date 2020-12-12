@@ -13,6 +13,12 @@
 }
 
 <style>
+    .avatar {
+        height: 70px;
+        width: 70px;
+        border-radius: 45%;
+        vertical-align: middle;
+    }
     .validation-summary-errors ul {
         list-style: none;
         padding-left: 1em;
@@ -250,7 +256,7 @@
             {<!-- Comment Row -->
                 <article>
                     <div class="d-flex flex-row comment-row m-t-0 commentSection">
-                        <div class="p-2"><img src="@comment.AvatarImgSrc" alt="user" width="50" class="rounded-circle"></div>
+                        <image class="avatar" src="@comment.AvatarImgSrc">
                         <div class="comment-text w-75">
                             <h6 class="font-medium" style="font-family:Bahnschrift; font-weight:600">@comment.Name</h6>
                             @for (int i = 0; i < comment.Stars; i++)
@@ -263,7 +269,7 @@
                                 @*<button type="button" class="btn btn-cyan btn-sm">Edit</button>*@
 
                                 @if (user?.Id == comment.UserId ||
-                               this.User.IsInRole(GlobalConstants.AdministratorRoleName))
+                              this.User.IsInRole(GlobalConstants.AdministratorRoleName))
                                 {
                                     <form asp-controller="Comments" asp-action="DeleteComment" asp-route-departmentId="@comment.DepartmentId" asp-route-commentId="@comment.CommentId" data-ajax="true" data-ajax-success="deleteItem(this)">
                                         <input style="visibility:hidden; position:absolute" id="departmentId" type="text" name="departmentId" value="@comment.DepartmentId" />

@@ -95,11 +95,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <li class="nav-item ">
                     <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">About</a>
-                </li>
                 @if (!this.User.IsInRole(GlobalConstants.AdministratorRoleName) &&
-                  this.SignInManager.IsSignedIn(this.User))
+                this.SignInManager.IsSignedIn(this.User))
                 {
                     <li class="nav-item">
                         <a class="nav-link" asp-area="" asp-controller="Orders" asp-action="All">My Orders</a>
@@ -140,13 +137,13 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <partial name="/Views/Shared/_AdminPanel.cshtml" />
     }
 
-    <div id="content-wrap">
-        @this.RenderBody()
-    </div>
 
+<div id="content-wrap">
+    <partial name="_CookieConsentPartial" />
+    @this.RenderBody()
+</div>
 
     @*COOKIES*@
-    @*<partial name="_CookieConsentPartial" />*@
 
     <!-- Footer-->
 

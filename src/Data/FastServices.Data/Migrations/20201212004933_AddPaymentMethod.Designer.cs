@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FastServices.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201210205226_RemovePaymentStatusFromOrderEntity")]
-    partial class RemovePaymentStatusFromOrderEntity
+    [Migration("20201212004933_AddPaymentMethod")]
+    partial class AddPaymentMethod
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

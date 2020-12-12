@@ -11,10 +11,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Remove="Views\Home\contact.cshtml" />
-    <Content Remove="Views\Home\index.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
     <AdditionalFiles Include="..\..\stylecop.json" />
   </ItemGroup>
   <ItemGroup>
