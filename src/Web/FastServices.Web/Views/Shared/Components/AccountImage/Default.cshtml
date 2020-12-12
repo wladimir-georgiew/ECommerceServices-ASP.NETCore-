@@ -1,26 +1,14 @@
 ﻿@model string[]
-@*<li class="nav-item">
-    <a class="nav-link" asp-area="Identity" asp-controller="Account" asp-action="Manage">
-        <image style="height:28px;width:28px;border-radius:50%" x="0" y="0" height="100%" preserveAspectRatio="xMidYMid slice" width="100%" src="@Model[0]"></image>
-        <span id="name"></span>
-    </a>
-</li>*@
-@*<li class="nav-item">
-    <a class="nav-link" asp-area="Identity" asp-controller="Account" asp-action="Manage">
-        <image style="height:28px;width:28px;border-radius:50%" x="0" y="0" height="100%" preserveAspectRatio="xMidYMid slice" width="100%" src="@Model[0]"></image>
-        <span id="name"></span>
-    </a>
-</li>*@
 
 <li class="nav-item dropdown">
     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <image style="height:28px;width:28px;border-radius:50%" x="0" y="0" height="100%" preserveAspectRatio="xMidYMid slice" width="100%" src="@Model[0]"></image>
-        <span style="font-family:Impact;color: #ffdd99;font-size:18px" id="name"></span>
+        <span style="font-family:'Franklin Gothic';color: #ffdd99;font-size:18px" id="name"></span>
     </a>
-    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-        <a  asp-area="Identity" asp-controller="Account" asp-action="Manage" class="btn" style="margin-top:-5px;" type="submit">Profile</a>
+    <ul class="dropdown-menu" style="left:-40px; margin-top:0px; padding:0px;" aria-labelledby="navbarDropdown">
+        <a  asp-area="Identity" asp-controller="Account" asp-action="Manage" class="btn" style="margin-top:-5px; width:100%;" type="submit">Profile</a>
         <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@(this.Url.Action("Index", "Home", new { area = string.Empty }))">
-            <button class="btn btn-danger" style="margin-top:-5px;" type="submit">Logout</button>
+            <button class="btn btn-danger" style="margin:0px; width:100%" type="submit">Logout</button>
         </form>
     </ul>
 </li>
