@@ -27,7 +27,12 @@
         font-family: Bahnschrift;
     }
 
-    .commentSection {
+    .comment-heading {
+        position: relative;
+        font-weight: 600;
+        cursor: text;
+        font-family: Bahnschrift;
+        font-size:30px
     }
 
     .vertical-center {
@@ -45,9 +50,9 @@
     .star-rating__wrap {
         display: inline-block;
         font-size: 40px;
-        margin-bottom: 10px;
-        margin-top: -30px;
-        margin-left: 100px;
+        margin-bottom:10px;
+        padding-left:10px;
+        margin-top:-30px;
     }
 
         .star-rating__wrap:after {
@@ -171,10 +176,10 @@
     }
 </style>
 
-<div class="col-lg-8"> 
-    <div style="width:160%" class="card">
+<div class="col-xl8"> 
+    <div style="width:100%" class="card">
         <div class="card-body text-center">
-            <h4 class="card-title">Rate and comment</h4>
+            <h4 class="card-title comment-heading">Rate and comment</h4>
         </div>
 
         <form asp-controller="Comments" asp-action="AddComment" method="post">

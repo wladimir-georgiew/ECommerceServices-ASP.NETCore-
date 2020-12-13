@@ -1,26 +1,29 @@
-﻿@using FastServices.Web.ViewModels.PaginationList; 
+﻿@using FastServices.Web.ViewModels.PaginationList;
 
 @model PaginationList<FastServices.Web.ViewModels.Employees.EmployeeViewModel>
+
 
 <body>
     <div class="topImageNavBlack">
     </div>
 
     @*GET*@
-    <form asp-area="Administration" asp-controller="Employees" asp-action="Employees" method="get">
-        <div style="padding-top:1.5em; position:absolute" class="form-actions no-color">
-            <p>
-                Find by name: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
-                <input type="submit" value="Search" class="btn btn-default" /> |
-                <a asp-action="Employees">Back to Full List</a>
-            </p>
+    <div class="row" style="padding-top:1.5em;">
+        <div class="form-actions no-color col-5">
+            <form asp-area="Administration" asp-controller="Employees" asp-action="Employees" method="get">
+                <div>
+                    <p>
+                        Find by name: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+                        <input type="submit" value="Search" class="btn btn-default" /> |
+                        <a asp-action="Employees">Back to Full List</a>
+                    </p>
 
+                </div>
+            </form>
         </div>
-    </form>
-    @*/GET*@
+        @*/GET*@
 
-    <div>
-        <div style="padding-left:40%" class="custom-select-lg">
+        <div class="col-7">
             <select id="selectChangeView" onchange="changeView(this,'@Url.Action("Employees")')">
                 <option disabled="disabled" value="0">Select Option</option>
                 <option value="1">All</option>
@@ -29,7 +32,6 @@
             </select>
         </div>
     </div>
-
     <table class="table table-light table-bordered">
         <thead class="thead-light">
             <tr>
@@ -63,7 +65,7 @@
                         <td>@employee.DeletedOn</td>
 
                         <input type="text" style="visibility:hidden;position:absolute" name="selectedOption" value="@this.TempData["SelectedOption"]" />
-                        <input type="text" style="visibility: hidden;position:absolute" name="pageNumber" value="@Context.Request.Query["pageNumber"]" />
+                        <input type="text" style="visibility: hidden;position:absolute" name="pageNumber" value="@(Model.PageIndex)" />
                         @if (employee.IsDeleted == true)
                         {
                             <td>
@@ -90,7 +92,7 @@
     </table>
 </body>
 
-@{ 
+@{
     var prevDisabled = !Model.HasPreviousPage ? "disabled" : "";
     var nextDisabled = !Model.HasNextPage ? "disabled" : "";
 }
@@ -106,7 +108,7 @@
 </a>
 <a asp-area="Administration" asp-controller="Employees" asp-action="Employees"
    asp-route-pageNumber="@(Model.PageIndex + 1)"
-    asp-route-selectedOption="@this.TempData["SelectedOption"]"
+   asp-route-selectedOption="@this.TempData["SelectedOption"]"
    class="btn btn-default @nextDisabled">
     Next
 </a>
