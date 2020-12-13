@@ -40,12 +40,13 @@
             });
 
             // Failed transaction
-            if (charge.Status != "succeeded")
+            if (charge.Status == "failed")
             {
                 this.TempData["msg"] = GlobalConstants.ErrorPayment;
+                return this.NoContent();
             }
 
-            // Success transaction
+            // Successful transaction
             await this.ordersService.ChangeOrderPayment(orderId, "CreditCard");
             this.TempData["msg"] = GlobalConstants.SuccessPayment;
 

@@ -135,8 +135,7 @@ namespace FastServices.Web
             }
             else
             {
-                app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
+                app.UseStatusCodePagesWithRedirects("/Home/Error?code={0}");
                 app.UseHsts();
             }
 
