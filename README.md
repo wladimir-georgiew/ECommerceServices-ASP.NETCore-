@@ -1,3 +1,4 @@
+Deployed to Azure on - https://fastservices.azurewebsites.net/
 # Technologies, Packages and Software :computer:
  - ASP.Net Core
  - Entity Framework Core
