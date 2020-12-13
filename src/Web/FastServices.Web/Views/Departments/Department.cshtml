@@ -1,57 +1,9 @@
 ﻿@model FastServices.Web.ViewModels.Departments.DepartmentViewModel
 
-<style>
+<link rel="stylesheet" type="text/css" href="/css/DepartmentViewCss.css" media="all" />
 
-    @*.topImageNav {
-        background:
-        linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ),
-        url('@ViewData["topImageNavUrl"]');
-        background-size: 100%;
-        background-attachment: fixed;
-        color: white;
-        height:30%;
-    }*@
-
-    .servicesLink {
-        margin-bottom: 3em;
-    }
-
-    .imgService {
-        height: 150px;
-        width: 100%;
-    }
-
-    div [class^="col-"] {
-        padding-left: 5px;
-        padding-right: 5px;
-    }
-
-
-    .card-title {
-        font-size: 15px;
-        transition: 1s;
-        cursor: pointer;
-    }
-
-        .card-title i {
-            font-size: 15px;
-            transition: 1s;
-            cursor: pointer;
-            color: #ffa710
-        }
-
-            .card-title i:hover {
-                transform: scale(1.25) rotate(100deg);
-                color: #18d4ca;
-            }
-
-</style>
-
-<!-- NAVIGATION BAR BACKGROUND IMAGE DEPENDING ON THE DEPARTMENT -->
 <div class="topImageNav">
-
     <h1 class="titleText"> @ViewData["title"] </h1>
-
 </div>
 
 <div style="margin-bottom:2em" class="row">

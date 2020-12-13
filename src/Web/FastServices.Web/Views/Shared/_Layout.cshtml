@@ -9,12 +9,10 @@
 <meta name="keywords" content="Fast Service a Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template,
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
 <title>FastServices</title>
-<!--  CSS  -->
 
+<!--  CSS  -->
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-@*<link href="/Template/css/bootstrap.min.css" rel="stylesheet" type="text/css" media="all">
-    <link href="/Template/css/fontawesome-all.min.css" rel="stylesheet" type="text/css" media="all">*@
 <link href="/Template/css/easy-responsive-tabs.css" rel='stylesheet' type='text/css' />
 <link rel="stylesheet" href="/Template/css/flexslider.css" type="text/css" media="all">
 <link rel="stylesheet" type="text/css" href="/Template/css/style.css" media="all" />
@@ -24,127 +22,79 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 <link rel="icon" type="image/x-icon" href="https://www.flaticon.com/svg/static/icons/svg/3600/3600917.svg">
 
+<link rel="stylesheet" type="text/css" href="~/css/LayoutCss.css" media="all" />
 <style>
-
-    .titleText {
-        text-align: center;
-        padding-top: 10%;
-        color: #ffdd99;
-        font-family: Impact;
-        font-size: 8vh;
-    }
-
-   body {overflow-x: hidden !important; }
-
-    .toast-top-center {
-        top: 8%;
-        left: 49%;
-        margin-left: -150px;
-    }
-    nav{
-        font-family:Tahoma;
-    }
-    body {
-        background-color: ghostwhite;
-        color: black;
-    }
-
-    footer {
-        position:absolute;
-        width:100%;
-        height:100px;
-    }
-    #content-wrap {
-        padding-bottom: 2.5rem;    /* Footer height */
-    }
-
-    .cursor-pointer {
-        cursor: pointer;
-    }
-    /*FIX BOOTSTRAP MODAL BUG*/
-    body:not(.modal) {
-        padding-right: 0px !important;
-        overflow: visible;
-    }
-            .topImageNav {
-        background:
-        linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ),
-        url('@ViewData["topImageNavUrl"]');
-        background-size: 100%;
-        background-attachment: fixed;
-        color: white;
-        height:30%;
-        }
-    .topImageNavBlack {
-        height: 3.5em;
-        background-color: black;
-    }
+.topImageNav {
+    background: linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url('@ViewData["topImageNavUrl"]');
+    background-size: 100%;
+    background-attachment: fixed;
+    color: white;
+    height: 30%;
+}
 </style>
 <!--  CSS end  -->
 <body>
     <header>
         <!-- header -->
         <nav class="navbar navbar-expand-lg navbar-light border: 10px solid transparent">
-            <button style="position:fixed; left:3em; top:2px" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <button style="margin-left:85%" class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
-            <ul  id="navbarSupportedContent"  class="navbar-nav ml-auto">
-                <li class="nav-item ">
-                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home </a>
-                </li>
-                @if (!this.User.IsInRole(GlobalConstants.AdministratorRoleName) &&
+            <div id="navbarSupportedContent" class="navbar-collapse collapse">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item ">
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home </a>
+                    </li>
+                    @if (!this.User.IsInRole(GlobalConstants.AdministratorRoleName) &&
                 this.SignInManager.IsSignedIn(this.User))
-                {
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Orders" asp-action="All">My Orders</a>
+                        </li>
+                    }
+
                     <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Orders" asp-action="All">My Orders</a>
+                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
                     </li>
-                }
-
-                <li class="nav-item">
-                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
-                </li>
 
 
 
-                @if (this.SignInManager.IsSignedIn(this.User))
-                {
-                    // account img
-                    <li>
-                        <vc:account-image></vc:account-image>
-                    </li>
-                }
-                else
-                {
-                    <li class="w3">
-                        <a class="nav-link" asp-area="Identity" asp-controller="Account" asp-action="Login">Login</a>
-                    </li>
-                    <li class="w3">
-                        <a class="nav-link" asp-area="Identity" asp-controller="Account" asp-action="Register">Register</a>
-                    </li>
-                }
+                    @if (this.SignInManager.IsSignedIn(this.User))
+                    {
+                        // account img
+                        <li>
+                            <vc:account-image></vc:account-image>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="w3">
+                            <a class="nav-link" asp-area="Identity" asp-controller="Account" asp-action="Login">Login</a>
+                        </li>
+                        <li class="w3">
+                            <a class="nav-link" asp-area="Identity" asp-controller="Account" asp-action="Register">Register</a>
+                        </li>
+                    }
 
-            </ul>
+                </ul>
+            </div>
         </nav>
     </header>
     <!-- //header -->
-    <!--  ADMIN PANEL  -->
 
+    <!--  ADMIN PANEL  -->
     @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
     {
         <partial name="/Views/Shared/_AdminPanel.cshtml" />
     }
 
-
-<div id="content-wrap">
-    <partial name="_CookieConsentPartial" />
-    @this.RenderBody()
-</div>
-
-    @*COOKIES*@
+    <div id="content-wrap">
+        <partial name="_CookieConsentPartial" />
+        @this.RenderBody()
+    </div>
 
     <!-- Footer-->
-
     <footer id="footer" style="margin-top:5em">
         <section class="footer">
             <div class="container">
@@ -155,13 +105,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             </div>
         </section>
     </footer>
-
-
-
 </body>
-<!-- /Footer-->
-<!-- SCRIPTS -->
+    <!-- /Footer-->
 
+<!-- SCRIPTS -->
 <script src="/Toastr/toastr.min.js"></script>
 <script src="/Unobtrusive Ajax/jquery.unobtrusive-ajax.js"></script>
 <script src="/Template/js/jquery.min.v3.js"></script>
@@ -169,67 +116,12 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="~/lib/jquery-validation/dist/jquery.validate.min.js" asp-append-version="true"></script>
 <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js" asp-append-version="true"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.min.js" asp-append-version="true"></script>
-@*<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>*@
-
 <script src="~/js/site.min.js" asp-append-version="true"></script>
-
 <script src="/Template/js/move-top.js"></script>
 <script src="/Template/js/easing.js"></script>
-
-<!-- banner Slider -->
 <script src="/Template/js/responsiveslides.min.js"></script>
-<script>
-    //$(window).load(function() {
-    $(function () {
-        // Slideshow 4
-        $("#slider3").responsiveSlides({
-            auto: true,
-            pager: true,
-            nav: false,
-            speed: 500,
-            namespace: "callbacks",
-            before: function () {
-                $('.events').append("<li>before event fired.</li>");
-            },
-            after: function () {
-                $('.events').append("<li>after event fired.</li>");
-            }
-        })
-    });
-
-    //});
-</script>
-<!-- //banner Slider -->
-
-
 <script src="/Template/js/easy-responsive-tabs.js"></script>
-<script>
-    $(document).ready(function () {
-        $('#horizontalTab').easyResponsiveTabs({
-            type: 'default', //Types: default, vertical, accordion
-            width: 'auto', //auto or any width like 600px
-            fit: true,   // 100% fit in a container
-            closed: 'accordion', // Start closed if in accordion view
-            activate: function (event) { // Callback function if tab is switched
-                var $tab = $(this);
-                var $info = $('#tabInfo');
-                var $name = $('span', $info);
-                $name.text($tab.text());
-                $info.show();
-            }
-        });
-        $('#verticalTab').easyResponsiveTabs({
-            type: 'vertical',
-            width: 'auto',
-            fit: true
-        });
-    });
-</script>
-<!--//tabs-->
-
-<script>
-    toastr.options.positionClass = 'toast-top-center'
-</script>
+<script src="~/js/LayoutJs.js"></script>
 
 <script>
     var msg = "@(TempData["msg"] as string)";
