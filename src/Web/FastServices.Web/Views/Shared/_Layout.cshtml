@@ -52,7 +52,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home </a>
                     </li>
                     @if (!this.User.IsInRole(GlobalConstants.AdministratorRoleName) &&
-               this.SignInManager.IsSignedIn(this.User))
+              this.SignInManager.IsSignedIn(this.User))
                     {
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Orders" asp-action="All">My Orders</a>
@@ -127,28 +127,10 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="/Template/js/easy-responsive-tabs.js"></script>
 <script src="~/js/LayoutJs.js"></script>
 
+@*SNOWFLAKES*@
+<script src="~/js/snowflakes/snowflakes.js"></script>
+
 <script>
-    $('body').flurry();
-
-    $('body').flurry({
-        character: "❄",
-        color: "white",
-        frequency: 100,
-        speed: 3000,
-        small: 8,
-        large: 28,
-        wind: 40,
-        windVariance: 20,
-        rotation: 90,
-        rotationVariance: 180,
-        startOpacity: 1,
-        endOpacity: 0,
-        opacityEasing: "cubic-bezier(1,.3,.6,.74)",
-        blur: true,
-        overflow: "hidden",
-        zIndex: 9999
-    });
-
     var msg = "@(TempData["msg"] as string)";
 
     if (msg.startsWith('Success!'))
