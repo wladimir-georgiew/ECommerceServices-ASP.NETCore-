@@ -12,6 +12,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 <!--  CSS  -->
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 <link href="/Template/css/easy-responsive-tabs.css" rel='stylesheet' type='text/css' />
 <link rel="stylesheet" href="/Template/css/flexslider.css" type="text/css" media="all">
@@ -23,6 +25,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <link rel="icon" type="image/x-icon" href="https://www.flaticon.com/svg/static/icons/svg/3600/3600917.svg">
 
 <link rel="stylesheet" type="text/css" href="~/css/LayoutCss.css" media="all" />
+
+
+
 <style>
 .topImageNav {
     background: linear-gradient( rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7) ), url('@ViewData["topImageNavUrl"]');
@@ -47,7 +52,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home </a>
                     </li>
                     @if (!this.User.IsInRole(GlobalConstants.AdministratorRoleName) &&
-                this.SignInManager.IsSignedIn(this.User))
+               this.SignInManager.IsSignedIn(this.User))
                     {
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Orders" asp-action="All">My Orders</a>
@@ -82,7 +87,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         </nav>
     </header>
     <!-- //header -->
-
     <!--  ADMIN PANEL  -->
     @if (this.User.IsInRole(GlobalConstants.AdministratorRoleName))
     {
@@ -106,8 +110,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         </section>
     </footer>
 </body>
-    <!-- /Footer-->
-
+<!-- /Footer-->
 <!-- SCRIPTS -->
 <script src="/Toastr/toastr.min.js"></script>
 <script src="/Unobtrusive Ajax/jquery.unobtrusive-ajax.js"></script>
@@ -117,6 +120,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.js" asp-append-version="true"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.min.js" asp-append-version="true"></script>
 <script src="~/js/site.min.js" asp-append-version="true"></script>
+<script src="/js/snowflakes/jquery.flurry.js"></script>
 <script src="/Template/js/move-top.js"></script>
 <script src="/Template/js/easing.js"></script>
 <script src="/Template/js/responsiveslides.min.js"></script>
@@ -124,6 +128,27 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="~/js/LayoutJs.js"></script>
 
 <script>
+    $('body').flurry();
+
+    $('body').flurry({
+        character: "❄",
+        color: "white",
+        frequency: 100,
+        speed: 3000,
+        small: 8,
+        large: 28,
+        wind: 40,
+        windVariance: 20,
+        rotation: 90,
+        rotationVariance: 180,
+        startOpacity: 1,
+        endOpacity: 0,
+        opacityEasing: "cubic-bezier(1,.3,.6,.74)",
+        blur: true,
+        overflow: "hidden",
+        zIndex: 9999
+    });
+
     var msg = "@(TempData["msg"] as string)";
 
     if (msg.startsWith('Success!'))
