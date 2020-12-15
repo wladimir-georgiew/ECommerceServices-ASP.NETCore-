@@ -1,8 +1,4 @@
-﻿using FastServices.Services;
-using FastServices.Services.Images;
-using Stripe;
-
-namespace FastServices.Web
+﻿namespace FastServices.Web
 {
     using System.Reflection;
     using System.Security.Principal;
@@ -13,11 +9,13 @@ namespace FastServices.Web
     using FastServices.Data.Models;
     using FastServices.Data.Repositories;
     using FastServices.Data.Seeding;
+    using FastServices.Services;
     using FastServices.Services.Comments;
     using FastServices.Services.Complaints;
     using FastServices.Services.Departments;
     using FastServices.Services.EmployeeOrders;
     using FastServices.Services.Employees;
+    using FastServices.Services.Images;
     using FastServices.Services.Mapping;
     using FastServices.Services.Messaging;
     using FastServices.Services.Orders;
@@ -38,6 +36,7 @@ namespace FastServices.Web
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
+    using Stripe;
 
     public class Startup
     {
@@ -65,6 +64,7 @@ namespace FastServices.Web
             services.AddSingleton(new JobSchedule(
                 jobType: typeof(IncreaseEmployeeSalary),
                 cronExpression: "0 30 10 1 * ?")); // runs on the first day of every month at 10:30 AM
+        //cronExpression: "0 0/1 * * * ?")); // runs every 1 minute
 
             services.AddHostedService<QuartzHostedService>();
 

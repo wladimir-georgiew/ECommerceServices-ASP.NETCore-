@@ -5,6 +5,8 @@
     ViewData["ActivePage"] = ManageNavPages.Index;
 }
 
+@using FastServices.Common
+
 <style>
     ul {
         list-style-type: none;
@@ -36,8 +38,15 @@
         <input value="@Model.Input.PhoneNumber" asp-for="Input.PhoneNumber" class="form-control" />
         <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
     </div>
+
+    @if (this.User.IsInRole(GlobalConstants.EmployeeRoleName))
+    {
+        <partial name="~/Areas/Administration/Views/_EmployeeSalary.cshtml"/>
+    }
+
     <button id="update-profile-button" type="submit" class="btn btn-primary">Save</button>
 </form>
+
 
 
 @section Scripts {
