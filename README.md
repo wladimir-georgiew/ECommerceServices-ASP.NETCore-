@@ -15,7 +15,7 @@ Deployed to Azure on - https://fastservices.azurewebsites.net/
  - Visual Studio 2019
  
 # Description :memo:
-**A web application system used for creating orders for specific home services.**
+**A responsive web application system used for creating orders for specific home services with included employee and admin roles.**
 
 ## User Functionality
  - ### Create account
