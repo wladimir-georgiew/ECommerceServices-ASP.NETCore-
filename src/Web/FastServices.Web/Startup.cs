@@ -27,6 +27,8 @@
     using global::Quartz;
     using global::Quartz.Impl;
     using global::Quartz.Spi;
+    using GoogleReCaptcha.V3;
+    using GoogleReCaptcha.V3.Interface;
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.AspNetCore.Http;
@@ -87,6 +89,9 @@
                         options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
                     }).AddRazorRuntimeCompilation();
             services.AddRazorPages();
+
+            // Google ReCaptcha v3
+            services.AddHttpClient<ICaptchaValidator, GoogleReCaptchaValidator>();
 
             services.AddSingleton(this.configuration);
 

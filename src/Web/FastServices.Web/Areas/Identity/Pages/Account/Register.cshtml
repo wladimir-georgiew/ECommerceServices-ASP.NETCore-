@@ -1,5 +1,6 @@
 ﻿@page
 @model RegisterModel
+@inject Microsoft.Extensions.Configuration.IConfiguration Configuration
 @{
     ViewData["Title"] = "Register";
 }
@@ -15,7 +16,7 @@
         text-align: center;
         background-attachment: fixed;
         overflow: hidden !important;
-        color:white;
+        color: white;
     }
 
     .centerForm {
@@ -31,30 +32,40 @@
         visibility: hidden;
     }
 </style>
-    <form class="centerForm col-md-3" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+<form class="centerForm col-md-3" asp-route-returnUrl="@Model.ReturnUrl" method="post">
+    <input type="hidden" name="captcha" id="captchaInput" />
 
-        <h1>@ViewData["Title"]</h1>
-        <h4>Create a new account.</h4>
-        <hr />
-        <div style="text-align:left;" asp-validation-summary="All" class="text-danger"></div>
-        <div class="form-group">
-            <input asp-for="Input.Email" class="form-control" placeholder="Email" />
-        </div>
-        <div class="form-group">
-            <input asp-for="Input.Name" class="form-control" placeholder="Name" />
-        </div>
-        <div class="form-group">
-            <input asp-for="Input.PhoneNumber" class="form-control" placeholder="Phone Number" />
-        </div>
-        <div class="form-group">
-            <input asp-for="Input.Password" class="form-control" placeholder="Password" />
-        </div>
-        <div class="form-group">
-            <input asp-for="Input.ConfirmPassword" class="form-control" placeholder="Confirm Password" />
-        </div>
-        <button type="submit" class="btn btn-primary">Register</button>
-    </form>
+    <h1>@ViewData["Title"]</h1>
+    <h4>Create a new account.</h4>
+    <hr />
+    <div style="text-align:left;" asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <input asp-for="Input.Email" class="form-control" placeholder="Email" />
+    </div>
+    <div class="form-group">
+        <input asp-for="Input.Name" class="form-control" placeholder="Name" />
+    </div>
+    <div class="form-group">
+        <input asp-for="Input.PhoneNumber" class="form-control" placeholder="Phone Number" />
+    </div>
+    <div class="form-group">
+        <input asp-for="Input.Password" class="form-control" placeholder="Password" />
+    </div>
+    <div class="form-group">
+        <input asp-for="Input.ConfirmPassword" class="form-control" placeholder="Confirm Password" />
+    </div>
+    <button type="submit" class="btn btn-primary">Register</button>
+</form>
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+
+    <script src="https://www.google.com/recaptcha/api.js?render=@Configuration.GetSection("GoogleReCaptcha")["PublicKey"]"></script>
+    <script>
+        grecaptcha.ready(function() {
+            window.grecaptcha.execute('@Configuration.GetSection("GoogleReCaptcha")["PublicKey"]', { action: 'home' }).then(function (token) {
+                $("#captchaInput").val(token);
+            });
+        });
+    </script>
 }

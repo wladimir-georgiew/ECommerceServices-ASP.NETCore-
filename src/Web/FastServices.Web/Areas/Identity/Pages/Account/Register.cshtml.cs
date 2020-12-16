@@ -14,6 +14,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
+using System.Net.Http;
+using Newtonsoft.Json.Linq;
+using GoogleReCaptcha.V3.Interface;
 
 namespace FastServices.Web.Areas.Identity.Pages.Account
 {
@@ -24,17 +28,24 @@ namespace FastServices.Web.Areas.Identity.Pages.Account
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IConfiguration _configuration;
+        private readonly ICaptchaValidator _captchaValidator;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            IConfiguration configuration,
+            ICaptchaValidator captchaValidator)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _configuration = configuration;
+            _captchaValidator = captchaValidator;
+            _captchaValidator.UpdateSecretKey(this._configuration.GetSection("GoogleReCaptcha")["PrivateKey"]);
         }
 
         [BindProperty]
@@ -79,10 +90,16 @@ namespace FastServices.Web.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
 
-        public async Task<IActionResult> OnPostAsync(string returnUrl = null)
+        public async Task<IActionResult> OnPostAsync(string captcha, string returnUrl = null)
         {
             returnUrl = returnUrl ?? Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
+
+            if (!await _captchaValidator.IsCaptchaPassedAsync(captcha))
+            {
+                ModelState.AddModelError("captcha", "Captcha validation failed");
+            }
+
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, PhoneNumber = Input.PhoneNumber, Name = Input.Name, AvatarImgSrc = "/Template/images/defAvatarImg.png" };
@@ -121,5 +138,6 @@ namespace FastServices.Web.Areas.Identity.Pages.Account
             // If we got this far, something failed, redisplay form
             return Page();
         }
+
     }
 }
