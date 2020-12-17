@@ -9,12 +9,13 @@ Deployed to Azure on - https://fastservices.azurewebsites.net/
  - AJAX
  - Vanilla JS
  - Toastr Notifications
+ - Google reCAPTCHA v3
  - Embed Google Maps
  - Microsoft SQL Server Management Studio
  - Visual Studio 2019
  
 # Description :memo:
-**A web application system used for creating orders for specific home services.**
+**A responsive web application system used for creating orders for specific home services with included employee and admin roles.**
 
 ## User Functionality
  - ### Create account
