@@ -30,7 +30,5 @@
 
         [Range(1, 4)]
         public int WorkersCount { get; set; }
-
-        public decimal Price { get; set; }
     }
 }

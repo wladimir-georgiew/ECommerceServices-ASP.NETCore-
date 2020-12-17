@@ -10,12 +10,10 @@
 
     public class EmployeeOrdersService : IEmployeeOrdersService
     {
-        private readonly IEmployeesService employeesService;
         private readonly IRepository<EmployeeOrder> repository;
 
         public EmployeeOrdersService(IEmployeesService employeesService, IRepository<EmployeeOrder> repository)
         {
-            this.employeesService = employeesService;
             this.repository = repository;
         }
 
@@ -23,7 +21,7 @@
         {
             for (int i = 0; i < order.WorkersCount; i++)
             {
-                var currEmpl = await this.employeesService.GetByIdWithDeletedAsync(availableEmployees[i].Id);
+                var currEmpl = availableEmployees[i];
 
                 EmployeeOrder emplOrder = new EmployeeOrder
                 {

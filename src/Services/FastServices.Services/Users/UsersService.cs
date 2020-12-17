@@ -19,25 +19,19 @@ namespace FastServices.Services.Users
     {
         private readonly IDeletableEntityRepository<ApplicationUser> repository;
         private readonly ICommentsService commentsService;
-        private readonly IOrdersService ordersService;
         private readonly RoleManager<ApplicationRole> roleManager;
         private readonly UserManager<ApplicationUser> userManager;
-        private readonly ApplicationDbContext db;
 
         public UsersService(
             IDeletableEntityRepository<ApplicationUser> repository,
             ICommentsService commentsService,
-            IOrdersService ordersService,
             RoleManager<ApplicationRole> roleManager,
-            UserManager<ApplicationUser> userManager,
-            ApplicationDbContext db)
+            UserManager<ApplicationUser> userManager)
         {
             this.repository = repository;
             this.commentsService = commentsService;
-            this.ordersService = ordersService;
             this.roleManager = roleManager;
             this.userManager = userManager;
-            this.db = db;
         }
 
         public bool IsUserAllowedToComment(string userId)
@@ -57,7 +51,11 @@ namespace FastServices.Services.Users
             return true;
         }
 
-        public Comment GetUserLatestComment(string userId) => this.commentsService.GetAll().Where(x => x.ApplicationUserId == userId).OrderByDescending(x => x.CreatedOn).FirstOrDefault();
+        public Comment GetUserLatestComment(string userId) =>
+            this.commentsService.GetAll()
+            .Where(x => x.ApplicationUserId == userId)
+            .OrderByDescending(x => x.CreatedOn)
+            .FirstOrDefault();
 
         public IQueryable<ApplicationUser> GetAll() => this.repository.All();
 
@@ -72,9 +70,13 @@ namespace FastServices.Services.Users
             await this.repository.SaveChangesAsync();
         }
 
-        public bool IsUserAllowedToSubmitOrder(string userId, OrderInputModel input)
+        public bool IsUserAllowedToSubmitOrder(string userId)
         {
-            if (this.db.Users.Where(x => x.Id == userId).SelectMany(x => x.Orders).Any(x => x.Status != Data.Models.Enumerators.OrderStatus.Completed))
+            // if user has any active order
+            if (this.repository.All()
+                .Where(x => x.Id == userId)
+                .SelectMany(x => x.Orders)
+                .Any(x => x.Status != Data.Models.Enumerators.OrderStatus.Completed))
             {
                 return false;
             }

@@ -32,22 +32,22 @@
         [HttpPost]
         public async Task<IActionResult> AddComment(CommentInputModel input)
         {
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
             if (!this.ModelState.IsValid)
             {
                 return this.RedirectToAction("Department", "Departments", new { depId = input.DepartmentId });
             }
+
+            // Don't proceed if 24 hours haven't passed since last comment (spam protection)
+            else if (!this.usersService.IsUserAllowedToComment(userId))
+            {
+                this.TempData["msg"] = GlobalConstants.ErrorCommentPostSpamMessage;
+            }
+
+            // Success
             else
             {
-                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-                // Don't proceed if 24 hours haven't passed since last comment (spam protection)
-                if (!this.usersService.IsUserAllowedToComment(userId))
-                {
-                    this.TempData["msg"] = GlobalConstants.ErrorCommentPostSpamMessage;
-                    //return this.Redirect($"/Departments/Department?depId={input.DepartmentId}");
-                    return this.RedirectToAction("Department", "Departments", new { depId = input.DepartmentId });
-                }
-
                 var comment = new Comment
                 {
                     CommentContent = input.CommentContent.Trim(),
@@ -58,9 +58,10 @@
                 };
 
                 await this.commentsService.AddCommentAsync(comment);
+
+                this.TempData["msg"] = GlobalConstants.SuccessCommentPostMessage;
             }
 
-            this.TempData["msg"] = GlobalConstants.SuccessCommentPostMessage;
             return this.RedirectToAction("Department", "Departments", new { depId = input.DepartmentId });
         }
 

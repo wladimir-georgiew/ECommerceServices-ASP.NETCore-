@@ -1,35 +1,22 @@
-﻿using System.IO;
-using System.Security.Cryptography;
-using System.Text;
-using FastServices.Common;
-using FastServices.Services.Departments;
-using FastServices.Services.Users;
-using FastServices.Web.ViewModels.Administration;
-using FastServices.Web.ViewModels.Departments;
-
-namespace FastServices.Services.Employees
+﻿namespace FastServices.Services.Employees
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
 
-    using FastServices.Data;
     using FastServices.Data.Common.Repositories;
     using FastServices.Data.Models;
-    using FastServices.Web.ViewModels.Employees;
+    using FastServices.Services.Departments;
+    using FastServices.Web.ViewModels.Administration;
 
     public class EmployeesService : IEmployeesService
     {
         private readonly IDeletableEntityRepository<Employee> repository;
-        private readonly IDepartmentsService departmentsService;
 
-        public EmployeesService(
-            IDeletableEntityRepository<Employee> repository,
-            IDepartmentsService departmentsService)
+        public EmployeesService(IDeletableEntityRepository<Employee> repository)
         {
             this.repository = repository;
-            this.departmentsService = departmentsService;
         }
 
         public async Task AddAsync(Employee employee)

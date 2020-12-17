@@ -21,7 +21,7 @@ namespace FastServices.Services.Users
 
         public Task UpdateUserAvatarImg(string userId, string uniqueFileName);
 
-        public bool IsUserAllowedToSubmitOrder(string userId, OrderInputModel input);
+        public bool IsUserAllowedToSubmitOrder(string userId);
 
         public Task AssignUserToRoleAsync(string roleName, ApplicationUser user);
 

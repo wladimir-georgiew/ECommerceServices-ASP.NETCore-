@@ -40,7 +40,8 @@
 
         public IQueryable<Order> GetUserOrders(string userId)
         {
-            var orders = this.repository.All().Where(x => x.ApplicationUserId == userId);
+            var orders = this.repository.All()
+                .Where(x => x.ApplicationUserId == userId);
 
             return orders;
         }
@@ -48,14 +49,18 @@
         public IQueryable<Order> GetEmployeeOrdersByUserId(string userId)
         {
             var employee = this.employeesService.GetByUserId(userId);
-            var orders = this.repository.All().Where(x => x.EmployeesOrder.Any(e => e.EmployeeId == employee.Id));
+            var orders = this.repository.All()
+                .Where(x => x.EmployeesOrder
+                .Any(e => e.EmployeeId == employee.Id));
 
             return orders;
         }
 
         public IQueryable<Order> GetEmployeeOrders(string employeeId)
         {
-            var orders = this.repository.All().Where(x => x.EmployeesOrder.Any(e => e.EmployeeId == employeeId));
+            var orders = this.repository.All()
+                .Where(x => x.EmployeesOrder
+                .Any(e => e.EmployeeId == employeeId));
 
             return orders;
         }
@@ -82,7 +87,6 @@
                 StartDate = model.StartDate.ToUniversalTime(),
                 DueDate = model.DueDate.ToUniversalTime(),
                 ServiceId = model.ServiceId,
-                Price = model.Price,
                 Status = OrderStatus.Undefined,
                 PaymentMethod = "Cash",
                 Address = model.Address,
@@ -104,10 +108,10 @@
         public IEnumerable<Complaint> GetComplaints(string orderId)
             => this.repository.All().Where(x => x.Id == orderId).Select(x => x.Complaints).FirstOrDefault();
 
-        public async Task ChangeOrderPayment(string orderId, string paymentStatus)
+        public async Task ChangeOrderPayment(string orderId, string paymentMethod)
         {
             var order = this.GetByIdWithDeleted(orderId);
-            order.PaymentMethod = paymentStatus;
+            order.PaymentMethod = paymentMethod;
             await this.SaveChangesAsync();
         }
     }

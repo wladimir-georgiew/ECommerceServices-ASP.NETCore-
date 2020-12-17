@@ -71,7 +71,10 @@ namespace FastServices.Services.Departments
 
         public int GetDepartmentRatingById(int id)
         {
-            var departmentStars = this.GetAllDepartments().Where(x => x.Id == id).SelectMany(x => x.Comments).Select(x => x.Stars);
+            var departmentStars = this.GetAllDepartments()
+                .Where(x => x.Id == id)
+                .SelectMany(x => x.Comments)
+                .Select(x => x.Stars);
 
             var result = (int)Math.Ceiling((double)departmentStars.Sum() / departmentStars.Count());
 

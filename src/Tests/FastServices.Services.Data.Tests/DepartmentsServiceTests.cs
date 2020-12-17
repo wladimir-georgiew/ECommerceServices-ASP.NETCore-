@@ -152,7 +152,25 @@
 
             var result = (int)Math.Ceiling((double)departmentStars.Sum() / departmentStars.Count());
 
-            Assert.Equal(4, result);
+            Assert.Equal(service.GetDepartmentRatingById(5), result);
+        }
+
+        [Fact]
+        public async Task GetDepartmentServicesShouldWorkProperly()
+        {
+            this.repository.Setup(r => r.All())
+                .Returns(this.list.AsQueryable().Where(x => x.IsDeleted == false));
+
+            this.repository.Setup(r => r.AddAsync(It.IsAny<Department>()))
+                .Callback((Department department) => this.list.Add(department));
+
+            var service = new DepartmentsService(
+                this.repository.Object,
+                new ImageServices(this.dep1));
+
+            await service.AddAsync(new Department { Id = 5, Services = new List<Service> { new Service() } });
+
+            Assert.Single(service.GetDepartmentServices(5));
         }
 
         //[Fact]

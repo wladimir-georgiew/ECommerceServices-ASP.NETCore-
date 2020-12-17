@@ -43,12 +43,14 @@
             if (charge.Status == "failed")
             {
                 this.TempData["msg"] = GlobalConstants.ErrorPayment;
-                return this.NoContent();
             }
 
             // Successful transaction
-            await this.ordersService.ChangeOrderPayment(orderId, "CreditCard");
-            this.TempData["msg"] = GlobalConstants.SuccessPayment;
+            else if (charge.Status == "succeeded")
+            {
+                await this.ordersService.ChangeOrderPayment(orderId, "CreditCard");
+                this.TempData["msg"] = GlobalConstants.SuccessPayment;
+            }
 
             return this.RedirectToAction("All", "Orders", new { searchOption = 1 });
         }

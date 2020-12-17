@@ -72,16 +72,16 @@ namespace FastServices.Web.Controllers
             var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
             var user = await this.usersService.GetByIdWithDeletedAsync(userId);
 
+            this.ViewData["topImageNavUrl"] = department.BackgroundImgSrc;
+            this.ViewData["serviceName"] = service.Name;
+            this.ViewData["description"] = service.Description.ToString();
+
             var availableEmployees = this.employeesService
                 .GetAllAvailableEmployees(department.Id, input.StartDate, input.DueDate);
 
             var order = this.ordersService.GetOrderFromInputModel(input);
             order.Price = ((GlobalConstants.HourlyFeePerWorker * input.WorkersCount) * input.HoursBooked) + service.Fee;
-            input.Price = order.Price;
 
-            this.ViewData["topImageNavUrl"] = department.BackgroundImgSrc;
-            this.ViewData["serviceName"] = service.Name;
-            this.ViewData["description"] = service.Description.ToString();
             var roles = this.userManager.GetRolesAsync(user).GetAwaiter().GetResult();
 
             if (roles.Contains(GlobalConstants.EmployeeRoleName) || roles.Contains(GlobalConstants.AdministratorRoleName))
@@ -95,7 +95,7 @@ namespace FastServices.Web.Controllers
                 return this.View(input);
             }
 
-            if (!this.usersService.IsUserAllowedToSubmitOrder(userId, input))
+            if (!this.usersService.IsUserAllowedToSubmitOrder(userId))
             {
                 this.ModelState.AddModelError(string.Empty, GlobalConstants.ErrorOrderSubmitOneOrderAtATime);
                 return this.View(input);

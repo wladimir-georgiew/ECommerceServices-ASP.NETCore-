@@ -109,9 +109,6 @@
             var user = await this.userManager.GetUserAsync(this.User);
             var content = input.Description;
 
-            // working - from "sneakypeekymustard@gmail.com"
-            // working - to "vladimir1.dev@gmail.com"
-
             await this.emailSender.SendEmailAsync($"sneakypeekymustard@gmail.com", $"{user.Email}", "vladimir1.dev@gmail.com", $"OrderID-{order.Id}", content);
 
             this.TempData["msg"] = GlobalConstants.SuccessComplaintSubmitted;
