@@ -13,15 +13,15 @@
 
         public Order GetByIdWithDeleted(string id);
 
-        public Order GetUserActiveOrder(string userId);
+        public Order GetActiveOrderByUserId(string userId);
 
-        public IQueryable<Order> GetUserOrders(string userId);
+        public IQueryable<Order> GetUserOrdersByUserId(string userId);
 
         public Task SaveChangesAsync();
 
         public IQueryable<Order> GetAll();
 
-        public IQueryable<Order> GetEmployeeOrders(string employeeId);
+        public IQueryable<Order> GetEmployeeOrdersByEmployeeId(string employeeId);
 
         public IQueryable<Order> GetEmployeeOrdersByUserId(string userId);
 

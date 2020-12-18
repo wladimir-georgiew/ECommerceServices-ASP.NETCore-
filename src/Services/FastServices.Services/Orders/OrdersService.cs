@@ -29,7 +29,7 @@
 
         public IQueryable<Order> GetAll() => this.repository.All();
 
-        public Order GetUserActiveOrder(string userId)
+        public Order GetActiveOrderByUserId(string userId)
         {
             var orders = this.repository.All().Where(x => x.ApplicationUserId == userId);
 
@@ -38,7 +38,7 @@
                         .FirstOrDefault();
         }
 
-        public IQueryable<Order> GetUserOrders(string userId)
+        public IQueryable<Order> GetUserOrdersByUserId(string userId)
         {
             var orders = this.repository.All()
                 .Where(x => x.ApplicationUserId == userId);
@@ -56,7 +56,7 @@
             return orders;
         }
 
-        public IQueryable<Order> GetEmployeeOrders(string employeeId)
+        public IQueryable<Order> GetEmployeeOrdersByEmployeeId(string employeeId)
         {
             var orders = this.repository.All()
                 .Where(x => x.EmployeesOrder

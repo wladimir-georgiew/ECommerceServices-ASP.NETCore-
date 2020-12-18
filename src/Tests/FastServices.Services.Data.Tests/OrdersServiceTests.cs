@@ -153,7 +153,7 @@
             this.list.Add(orderFake);
             this.list.Add(orderFake2);
 
-            var employeeOrders = service.GetEmployeeOrders("1");
+            var employeeOrders = service.GetEmployeeOrdersByEmployeeId("1");
 
             Assert.NotNull(employeeOrders);
             Assert.Equal(2, employeeOrders.Count());
@@ -188,14 +188,14 @@
             this.list.Add(orderFake);
             this.list.Add(orderFake2);
 
-            var employeeOrders = service.GetUserOrders("user1");
+            var employeeOrders = service.GetUserOrdersByUserId("user1");
 
             Assert.NotNull(employeeOrders);
             Assert.Equal(2, employeeOrders.Count());
         }
 
         [Fact]
-        public void GetUserActiveOrderShouldWorkCorrectly()
+        public void GetActiveOrderByUserIdShouldWorkCorrectly()
         {
             this.repository.Setup(r => r.All())
               .Returns(this.list.AsQueryable());
@@ -227,7 +227,7 @@
             this.list.Add(orderFake);
             this.list.Add(orderFake2);
 
-            var employeeOrders = service.GetUserActiveOrder("user1");
+            var employeeOrders = service.GetActiveOrderByUserId("user1");
 
             Assert.NotNull(employeeOrders);
             Assert.Equal("orderactive", employeeOrders.Id);

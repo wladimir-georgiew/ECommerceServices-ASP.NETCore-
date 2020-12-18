@@ -66,7 +66,7 @@ namespace FastServices.Web.Areas.Administration.Controllers
             }
 
             string uniqueFileName = this.imageServices.GetUploadedFileName(model.InputModel.BackgroundImage);
-            await this.servicesService.AddServiceAsync(model.InputModel, uniqueFileName);
+            await this.servicesService.AddServiceFromInputModelAsync(model.InputModel, uniqueFileName);
 
             this.TempData["msg"] = GlobalConstants.SuccessAddService;
             return this.RedirectToAction("Department", "Departments", new { area = "", depId = model.InputModel.DepartmentId });

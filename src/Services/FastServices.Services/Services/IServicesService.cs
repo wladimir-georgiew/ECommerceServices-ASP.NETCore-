@@ -18,6 +18,6 @@ namespace FastServices.Services.Services
 
         public Task AddAsync(Service service);
 
-        public Task AddServiceAsync(ServiceInputModel input, string uniqueFileName);
+        public Task AddServiceFromInputModelAsync(ServiceInputModel input, string uniqueFileName);
     }
 }

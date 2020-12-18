@@ -29,7 +29,7 @@ namespace FastServices.Services.Services
 
         public async Task<Service> GetByIdWithDeletedAsync(int id) => await this.repository.GetByIdWithDeletedAsync(id);
 
-        public async Task AddServiceAsync(ServiceInputModel input, string uniqueFileName)
+        public async Task AddServiceFromInputModelAsync(ServiceInputModel input, string uniqueFileName)
         {
             var service = new Service
             {

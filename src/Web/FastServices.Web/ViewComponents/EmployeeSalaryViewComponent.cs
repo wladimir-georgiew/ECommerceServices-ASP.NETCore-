@@ -28,11 +28,11 @@
             var employee = this.db.Employees.FirstOrDefault(x => x.ApplicationUserId == user.Id);
 
             var employeeOrders = this.ordersService
-                        .GetEmployeeOrders(employee.Id)
+                        .GetEmployeeOrdersByEmployeeId(employee.Id)
                         .Where(x => x.Status == Data.Models.Enumerators.OrderStatus.Completed)
                         .ToList();
 
-            var bonusOnCompletedOrders = employeeOrders.Sum(x => x.Price * 0.01M);
+            var bonusOnCompletedOrders = employeeOrders.Sum(x => x.Price * 0.003M);
 
             var englishCulture = CultureInfo.CurrentCulture = new CultureInfo("en-US");
 
@@ -41,6 +41,7 @@
                 employee.Salary.ToString("f2"),
                 bonusOnCompletedOrders.ToString("f2"),
                 DateTime.UtcNow.ToString("MMMM", provider: englishCulture),
+                DateTime.UtcNow.AddMonths(1).ToString("MMMM", provider: englishCulture),
             });
         }
     }

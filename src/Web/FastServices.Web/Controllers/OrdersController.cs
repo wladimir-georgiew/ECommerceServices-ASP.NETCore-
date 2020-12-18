@@ -56,7 +56,7 @@
 
             var orders = roles.Contains(GlobalConstants.EmployeeRoleName)
                 ? this.ordersService.GetEmployeeOrdersByUserId(userId)
-                : this.ordersService.GetUserOrders(userId);
+                : this.ordersService.GetUserOrdersByUserId(userId);
 
             var model = orders
                         .OrderBy(x => x.StartDate)

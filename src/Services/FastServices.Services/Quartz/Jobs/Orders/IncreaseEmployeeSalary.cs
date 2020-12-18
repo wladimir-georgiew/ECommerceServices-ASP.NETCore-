@@ -25,7 +25,7 @@
                 // Resolve the Scoped service
                 var ordersService = scope.ServiceProvider.GetService<IOrdersService>();
 
-                // Increase employee salary EVERY MONTH by 1% of the total price for each order they have ever completed
+                // Increase employee salary EVERY MONTH by 0.3% of the total price for each order they have ever completed
                 var completedOrders = ordersService
                     .GetAll()
                     .Where(x => x.Status == Data.Models.Enumerators.OrderStatus.Completed);
@@ -37,13 +37,13 @@
                 {
                     // Only EmployeeOrders which are completed
                     var employeeOrders = ordersService
-                        .GetEmployeeOrders(employee.Id)
+                        .GetEmployeeOrdersByEmployeeId(employee.Id)
                         .Where(x => x.Status == Data.Models.Enumerators.OrderStatus.Completed)
                         .ToList();
 
                     foreach (var order in employeeOrders)
                     {
-                        employee.Salary += order.Price * 0.01M;
+                        employee.Salary += order.Price * 0.003M;
                     }
                 }
 

@@ -128,7 +128,7 @@
                 else
                 {
                     <label>Bonus</label>
-                    <li style="color:green" class="list-group-item">@string.Format("{0:0.00}", (order.Price * 0.01M))$</li>
+                    <li style="color:green" class="list-group-item">@($"{(decimal)(order.Price * 0.003M):f2}")$</li>
                 }
 
 

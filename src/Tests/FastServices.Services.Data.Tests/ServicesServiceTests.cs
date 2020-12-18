@@ -60,8 +60,8 @@ namespace FastServices.Services.Data.Tests
             };
             var uniqueFileName = "filename";
 
-            await servicesService.AddServiceAsync(serviceModel, uniqueFileName);
-            await servicesService.AddServiceAsync(serviceModel, string.Empty);
+            await servicesService.AddServiceFromInputModelAsync(serviceModel, uniqueFileName);
+            await servicesService.AddServiceFromInputModelAsync(serviceModel, string.Empty);
 
             Assert.NotNull(this.list.FirstOrDefault());
             Assert.Equal("name", this.list.FirstOrDefault().Name);
