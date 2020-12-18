@@ -2,12 +2,14 @@ Deployed to Azure on - https://fastservices.azurewebsites.net/
 # Technologies, Packages and Software :computer:
  - ASP.Net Core
  - Entity Framework Core
- - Bootstrap
  - Stripe.NET
  - Quartz.NET
+ - XUnit.NET
+ - Moq
  - SendGrid
  - AJAX
- - Vanilla JS
+ - JavaScript
+ - Bootstrap
  - Toastr Notifications
  - Google reCAPTCHA v3
  - Embed Google Maps
