@@ -29,23 +29,19 @@ namespace FastServices.Web.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly IConfiguration _configuration;
-        private readonly ICaptchaValidator _captchaValidator;
 
         public RegisterModel(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
-            IConfiguration configuration,
-            ICaptchaValidator captchaValidator)
+            IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
             _configuration = configuration;
-            _captchaValidator = captchaValidator;
-            _captchaValidator.UpdateSecretKey(this._configuration.GetSection("GoogleReCaptcha")["PrivateKey"]);
         }
 
         [BindProperty]
@@ -94,11 +90,6 @@ namespace FastServices.Web.Areas.Identity.Pages.Account
         {
             returnUrl = returnUrl ?? Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
-
-            if (!await _captchaValidator.IsCaptchaPassedAsync(captcha))
-            {
-                ModelState.AddModelError("captcha", "Captcha validation failed");
-            }
 
             if (ModelState.IsValid)
             {
