@@ -29,12 +29,12 @@ Deployed to Azure on - https://fastservices.azurewebsites.net/
  - ### Submit Order<br>
  ![image](https://user-images.githubusercontent.com/61605749/217587586-8871b941-6039-4714-976a-fccdf22be897.png)
   -Only users can create orders (one active order at a time).<br>
-  -Order is considered active if the due date is in future time.<br>
-  -Order status is being set to completed automatically after the due date has passed current time.<br>
   -Order price is being calculated depending on the service fee amount, 'number of workers' and 'hours booked' amount selected by the user. (5$ per hour for every worker)
  - ### Orders History<br>
 ![image](https://user-images.githubusercontent.com/61605749/217588107-1e4057f0-cb35-4553-8a8e-b6a486b09368.png)
   -View active and completed orders.<br>
+  -Order is considered active if the due date is in future time.<br>
+  -Order status is being set to completed automatically after the due date has passed current time.<br>
   -Submit a complaint message for completed orders (the message is sent via email using SendGrid to the support, containing description, order and user data).<br>
   -Pay for the order via credit/debit card.<br>
  - ### Comment on department<br>
@@ -52,7 +52,7 @@ Deployed to Azure on - https://fastservices.azurewebsites.net/
  -View active orders which were assigned to them and are yet to be completed.<br>
  -They are automatically being assigned to an order, depending on their department and active orders schedule.Cannot be assigned to two orders with same or overlapping start hours.<br>
  -View completed orders.<br>
- -Employees salary is being incresed by 1% for every order they have completed. The increase is being calculated and added to the salary at the 1st day of every month at 10:30 and includes older increases(it's stacking).<br>
+ -Employees salary is being incresed by 1% of the price of every completed order. The increase is being calculated and added to the salary at the 1st day of every month at 10:30 and includes older increases(it's stacking).<br>
  ![image](https://user-images.githubusercontent.com/61605749/217588819-b65f6c01-d5ac-4334-9bf6-604cd2d2e188.png)
  
  ## Admin Functionality
