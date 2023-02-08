@@ -52,7 +52,7 @@ Deployed to Azure on - https://fastservices.azurewebsites.net/
  -View active orders which were assigned to them and are yet to be completed.<br>
  -They are automatically being assigned to an order, depending on their department and active orders schedule.Cannot be assigned to two orders with same or overlapping start hours.<br>
  -View completed orders.<br>
- -Employees salary is being incresed by 1% of the price of every completed order. The increase is being calculated and added to the salary at the 1st day of every month at 10:30 and includes older increases(it's stacking).<br>
+ -Employees salary is being incresed by 0.3% of the price of every completed order. The increase is being calculated and added to the salary at the 1st day of every month at 10:30 and includes older increases(it's stacking).<br>
  ![image](https://user-images.githubusercontent.com/61605749/217588819-b65f6c01-d5ac-4334-9bf6-604cd2d2e188.png)
  
  ## Admin Functionality
