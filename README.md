@@ -1,5 +1,5 @@
 Deployed to Azure on - https://fastservices.azurewebsites.net/
-# Technologies, Packages and Software :computer:
+# :computer: Technologies, Packages and Software
  - ASP.Net Core
  - Entity Framework Core
  - Stripe.NET
@@ -16,7 +16,7 @@ Deployed to Azure on - https://fastservices.azurewebsites.net/
  - Microsoft SQL Server Management Studio
  - Visual Studio 2019
  
-# Description :memo:
+# :memo: Description
 **A responsive web application system used for creating orders for specific home services with included employee and admin roles.**
 
 ## User Functionality
@@ -95,5 +95,5 @@ Deployed to Azure on - https://fastservices.azurewebsites.net/
   -Stripe.NET Account with dashboard for all the transactions made on the website with various information about them and an option for performing refunds.
   
   
-# Database Diagram :chart:
+# :chart: Database Diagram
 ![dbdiagram](https://user-images.githubusercontent.com/61605749/101865298-8d736480-3b7e-11eb-90f2-663d0e59cc0b.png)
